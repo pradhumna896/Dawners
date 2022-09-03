@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dawners/helper/custom_button.dart';
 import 'package:dawners/helper/tool_bar.dart';
 import 'package:dawners/model/otp_verify_modal.dart';
+import 'package:dawners/model/resend_otp_modal.dart';
 import 'package:dawners/model/sign_up_modal.dart';
 
 // import 'package:dawners/model/OtpVerification.dart';
@@ -65,6 +66,32 @@ class _OtpScreenState extends State<OtpScreen> {
       showSnackVar("invalid", Colors.red, context);
     }
   }
+  resendOtp(mobileNumber)async{
+    setState(() {
+      isResendSumitted = true;
+
+    });
+    Uri uri = Uri.parse(ApiNetwork.resendOtp);
+    Map<String , String> map = {
+      'mobile':mobileNumber
+    };
+
+    final response = await http.post(uri,body: map);
+    if(response.statusCode==200){
+      ResendOtpModal otp = ResendOtpModal.fromJson(jsonDecode(response.body));
+
+      if(otp.message=="otp send successfully"){
+        setState(() {
+          isResendSumitted = false;
+
+        });
+        showSnackVar("otp send successfully", Colors.red, context);
+      }else{
+        showSnackVar("failed", Colors.red, context);
+      }
+    }
+  }
+
 
   static showSnackVar(String message, Color color, BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -312,8 +339,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                                 Dimentions.height15)),
                                       )),
                                   onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (builder) => WelcomeScreen()));
+                                    resendOtp(widget.mobileNumber);
                                   },
                                   child: Text("Resent OTP",
                                       style: TextStyle(

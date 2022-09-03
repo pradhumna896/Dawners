@@ -60,6 +60,10 @@ class _HomeState extends State<Home> {
       Navigator.push(context, MaterialPageRoute(builder: (builder)=>WelcomeScreen()));
     }else{
       showSnackVar("invalid", Colors.red, context);
+      setState(() {
+        isSumitted =false;
+
+      });
 
 
     }
@@ -78,6 +82,7 @@ class _HomeState extends State<Home> {
       behavior: SnackBarBehavior.floating,
     ));
   }
+  final _formkey = GlobalKey<FormState>();
 
 
   @override
@@ -94,163 +99,172 @@ class _HomeState extends State<Home> {
           colors: [Color(0xff5D31DA), Color(0xff6739B7)],
         )),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: Dimentions.height56,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimentions.width28),
-                child: ToolBar(
-                  text: 'SIGN UP',
+          child: Form(
+            key: _formkey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Dimentions.height56,
                 ),
-              ),
-              SizedBox(
-                height: Dimentions.height30,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimentions.width28),
-                child: Row(
-                  children: [
-                    RichText(
-                        text: TextSpan(
-                            text: "Let's,\n",
-                            style: TextStyle(
-                                color: Color(0xffFFFFFF),
-                                fontSize: Dimentions.font24,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "NunitoSans"),
-                            children: [
-                          TextSpan(
-                            text: "Get Started!",
-                            style: TextStyle(
-                                color: Color(0xffFFFFFF),
-                                fontSize: Dimentions.font48,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "NunitoSans"),
-                          )
-                        ])),
-                  ],
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width28),
+                  child: ToolBar(
+                    text: 'SIGN UP',
+                  ),
                 ),
-              ),
-              SizedBox(height: Dimentions.height25),
-              Image.asset("assets/image/carwash.png"),
-              SizedBox(
-                height: Dimentions.height50,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimentions.width28),
-                child: Column(
-                  children: [
-                    CustomTextField(
-                      kvalidator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return "Pleasa enter valid input";
-                        } else {
-                          return null;
-                        }
-                      },
-                      hinttext: "First Name",
-                      image: ("assets/svg/Fistname.svg"),
-                      controller: firstNameController, keyboardtype: TextInputType.name,
-                    ),
-                    SizedBox(
-                      height: Dimentions.height10,
-                    ),
-                    CustomTextField(
-                      kvalidator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return "Pleasa enter valid input";
-                        } else {
-                          return null;
-                        }
-                      },
-                      hinttext: "Last Name",
-                      image: ("assets/svg/Fistname.svg"),
-                      controller: lastNameController, keyboardtype: TextInputType.name,
-                    ),
-                    SizedBox(
-                      height: Dimentions.height30,
-                    ),
-                    isSumitted == true ? Center(child: CircularProgressIndicator(),)
-                        :CustomButton(
-                      text: 'Continue',
-                      onclick: () {
-                        userInfo(firstNameController.text, lastNameController.text);
-
-
-                        },
-                    ),
-                    SizedBox(
-                      height: Dimentions.height10,
-                    ),
-                    Row(
-                      children: [
-                        Text("Already Have An Account?",
-                            style: TextStyle(
-                                color: Color(0xffFFFFFF),
-                                fontSize: Dimentions.font12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "NunitoSans"))
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (ctx) => LoginPage()));
-                          },
-                          child: Text("Login from here",
+                SizedBox(
+                  height: Dimentions.height30,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width28),
+                  child: Row(
+                    children: [
+                      RichText(
+                          text: TextSpan(
+                              text: "Let's,\n",
                               style: TextStyle(
-                                  color: Color(0xffFE8E00),
-                                  fontSize: Dimentions.font18,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: "NunitoSans")),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          height: 36,
-                          width: 81,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  elevation: MaterialStateProperty.all(10),
-                                  // maximumSize: MaterialStateProperty.all(),
-                                  shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16))),
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Color(0xff07A605))),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (ctx) =>WelcomeScreen()));
-                              },
-                              child: Text(
-                                "Log In",
-                                style: TextStyle(
-                                    color: Color(0xffFFFFFF),
-                                    fontSize: Dimentions.font14,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "Montserrat"),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ],
+                                  color: Color(0xffFFFFFF),
+                                  fontSize: Dimentions.font24,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: "NunitoSans"),
+                              children: [
+                            TextSpan(
+                              text: "Get Started!",
+                              style: TextStyle(
+                                  color: Color(0xffFFFFFF),
+                                  fontSize: Dimentions.font48,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: "NunitoSans"),
+                            )
+                          ])),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(height: Dimentions.height25),
+                Image.asset("assets/image/carwash.png"),
+                SizedBox(
+                  height: Dimentions.height50,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width28),
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        kvalidator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return showSnackVar("Please Enter First Name", Colors.red, context);
+                          } else {
+                            return null;
+                          }
+                        },
+                        hinttext: "First Name",
+                        image: ("assets/svg/Fistname.svg"),
+                        controller: firstNameController, keyboardtype: TextInputType.name,
+                      ),
+                      SizedBox(
+                        height: Dimentions.height10,
+                      ),
+                      CustomTextField(
+                        kvalidator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return showSnackVar("Please Enter Last Name", Colors.red, context);
+                          } else {
+                            return null;
+                          }
+                        },
+                        hinttext: "Last Name",
+                        image: ("assets/svg/Fistname.svg"),
+                        controller: lastNameController, keyboardtype: TextInputType.name,
+                      ),
+                      SizedBox(
+                        height: Dimentions.height30,
+                      ),
+                      isSumitted == true ? Center(child: CircularProgressIndicator(),)
+                          :CustomButton(
+                        text: 'Continue',
+                        onclick: () {
+                          if(_formkey.currentState!.validate()){
+                            userInfo(firstNameController.text, lastNameController.text);
+
+                          }else{
+                            showSnackVar("Enter a Valid Input", Colors.red, context);
+
+                          }
+
+
+                          },
+                      ),
+                      SizedBox(
+                        height: Dimentions.height10,
+                      ),
+                      Row(
+                        children: [
+                          Text("Already Have An Account?",
+                              style: TextStyle(
+                                  color: Color(0xffFFFFFF),
+                                  fontSize: Dimentions.font12,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: "NunitoSans"))
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (ctx) => LoginPage()));
+                            },
+                            child: Text("Login from here",
+                                style: TextStyle(
+                                    color: Color(0xffFE8E00),
+                                    fontSize: Dimentions.font18,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: "NunitoSans")),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 36,
+                            width: 81,
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(10),
+                                    // maximumSize: MaterialStateProperty.all(),
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16))),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Color(0xff07A605))),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (ctx) =>WelcomeScreen()));
+                                },
+                                child: Text(
+                                  "Log In",
+                                  style: TextStyle(
+                                      color: Color(0xffFFFFFF),
+                                      fontSize: Dimentions.font14,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: "Montserrat"),
+                                )),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
