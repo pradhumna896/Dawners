@@ -64,7 +64,7 @@ class ReviewThreeWidget extends StatelessWidget {
                     style: TextStyle(
                         color: Color(0xff6739B7),
                         fontWeight: FontWeight.w600,
-                        fontFamily: "Montserrat-SemiBold",
+                        fontFamily: "Montserrat",
                         fontSize: 12),
                   ),
                   Gap(10),
@@ -78,7 +78,7 @@ class ReviewThreeWidget extends StatelessWidget {
                         style: TextStyle(
                             color: Color(0xff83939E),
                             fontWeight: FontWeight.w600,
-                            fontFamily: "Montserrat-SemiBold",
+                            fontFamily: "Montserrat",
                             fontSize: 12),
                       ),
                       RatingBar(
@@ -144,7 +144,7 @@ class ReviewThreeWidget extends StatelessWidget {
                         style: TextStyle(
                             color: Color(0xff83939E),
                             fontWeight: FontWeight.w600,
-                            fontFamily: "Montserrat-SemiBold",
+                            fontFamily: "Montserrat",
                             fontSize: 12),
                       ),
                       RatingBar(

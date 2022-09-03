@@ -1,7 +1,10 @@
 import 'package:dawners/helper/appbar_back_button.dart';
 import 'package:dawners/helper/custom_botton_purple.dart';
+import 'package:dawners/helper/custom_button.dart';
 import 'package:dawners/helper/custom_text_style.dart';
+import 'package:dawners/screens/bottombar/bottom_app_bar.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:dawners/screens/loading_screen.dart';
 import 'package:dawners/screens/loginPage/payment_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -332,7 +335,7 @@ class PaymentPage extends StatelessWidget {
               CustomBottonPurple(
                 title: "Subscribe",textsize: Dimentions.font24,
                 onClick: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx)=>PaymentMethod()));
+                  _currentCleanersPopUp(context);
                 }, height: Dimentions.height56,
               ),
               Gap(Dimentions.height20)
@@ -341,5 +344,228 @@ class PaymentPage extends StatelessWidget {
         ),
       ),
     );
+  }
+  void _currentCleanersPopUp(BuildContext context) {
+    showModalBottomSheet(
+        backgroundColor: Colors.black87,
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return Container(
+              decoration: BoxDecoration(
+                  color: Color(0xffFFFFFF),
+                  borderRadius: BorderRadius.circular(Dimentions.height14)),
+              margin: EdgeInsets.symmetric(vertical: Dimentions.height100),
+              child: Column(
+                children: [
+                  Image.asset(
+                    "assets/image/currentcleanerimage.png",
+                    fit: BoxFit.fill,
+                  ),
+                  Gap(Dimentions.height20),
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                    child: Row(
+                      children: [
+                        Text(
+                          "We are also known to make Local cleaner,\nProfessional",
+                          style: TextStyle(
+                              fontSize: Dimentions.font12,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              color: Color(0xff7B8D9E)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Gap(Dimentions.height20),
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                    child: Material(
+                      borderRadius: BorderRadius.circular(Dimentions.height20),
+                      elevation: 5,
+                      child: Container(
+                        height: Dimentions.height56,
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                          color: Color(0xffFAA53A),
+                          gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomLeft,
+                              // stops: [0.3,0.6,0.9],
+                              colors: [
+                                Color(0xffe3e7ee),
+                                Color(0xffFFFFFF),
+                                Color(0xffFFFFFF),
+                                Color(0xffFFFFFF),
+                                Color(0xffFFFFFF),
+                                // Color(0xffA9ADB4),
+                              ]),
+                          borderRadius:
+                          BorderRadius.circular(Dimentions.height20),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            hintText: "Current Cleaners Number",
+                            hintStyle: TextStyle(
+                                fontSize: Dimentions.font18,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff7B8D9E)),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: Dimentions.width15),
+                              child: SvgPicture.asset(
+                                  "assets/svg_icon/mobile_icon.svg"),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.circular(Dimentions.height20),
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                )),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.circular(Dimentions.height20),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: Dimentions.height15,
+                  ),
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                    child: CustomButton(
+                        text: "Submit",
+                        onclick: () {
+                          _addressPopUp(context);
+                        }),
+                  ),
+                  SizedBox(
+                    height: Dimentions.height15,
+                  ),
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                    child: Material(
+                        borderRadius:
+                        BorderRadius.circular(Dimentions.height14),
+                        elevation: 5,
+                        child: Container(
+                          height: Dimentions.height56,
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomLeft,
+                                // stops: [0.3,0.6,0.9],
+                                colors: [
+                                  Color(0xffC1C1C1),
+                                  Color(0xffFFFFFF),
+                                  Color(0xffFFFFFF),
+                                  Color(0xffFFFFFF),
+                                  Color(0xffFFFFFF),
+                                  Color(0xffC1C1C1),
+                                ]),
+                            borderRadius:
+                            BorderRadius.circular(Dimentions.height14),
+                          ),
+                          child: Center(
+                              child: Text(
+                                "I Dont Have One",
+                                style: TextStyle(
+                                    fontSize: Dimentions.font24,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: "Montserrat",
+                                    color: Color(0xffFE8E00)),
+                              )),
+                        )),
+                  ),
+                  Gap(Dimentions.height5)
+                ],
+              ));
+        });
+  }
+
+  void _addressPopUp(BuildContext context) {
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext bc) {
+          return Container(
+              decoration: BoxDecoration(
+                  color: Color(0xb0000000),
+                  borderRadius: BorderRadius.circular(Dimentions.height14)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/image/addresspopup.png"),
+                  Gap(Dimentions.height30),
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: Dimentions.width15),
+                    child: CustomButton(
+                        text: "Great,Thanks",
+                        onclick: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (ctx) => const LoadingScreen()));
+                        }),
+                  ),
+                  SizedBox(
+                    height: Dimentions.height10,
+                  ),
+                  Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                    child: Material(
+                        borderRadius:
+                        BorderRadius.circular(Dimentions.height14),
+                        elevation: 5,
+                        child: Container(
+                          height: Dimentions.height56,
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomLeft,
+                                // stops: [0.3,0.6,0.9],
+                                colors: [
+                                  Color(0xffC1C1C1),
+                                  Color(0xffFFFFFF),
+                                  Color(0xffFFFFFF),
+                                  Color(0xffFFFFFF),
+                                  Color(0xffFFFFFF),
+                                  Color(0xffC1C1C1),
+                                ]),
+                            borderRadius:
+                            BorderRadius.circular(Dimentions.height14),
+                          ),
+                          child: Center(
+                              child: Text(
+                                "Review Details",
+                                style: TextStyle(
+                                    fontSize: Dimentions.font24,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: "Montserrat",
+                                    color: Color(0xffFE8E00)),
+                              )),
+                        )),
+                  ),
+                ],
+              ));
+        });
   }
 }

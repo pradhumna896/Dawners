@@ -11,25 +11,35 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(
-                  "assets/image/welcomescreenbg.png",
-                ),
-                fit: BoxFit.fitWidth)),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimentions.width25,vertical: Dimentions.height25),
-          child: Column(
-            children: [
-              Expanded(child: Image.asset("assets/image/welcomscreenfram.png",)),
-              Gap(Dimentions.height30),
-              CustomButton(text: "Great, Contiue!", onclick: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_)=>StepProgress()));
-              })
-            ],
+      body: SafeArea(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    "assets/image/backgroundcarimage.jpg",
+                  ),
+                  fit: BoxFit.cover)),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: Dimentions.width25, ),
+            child: Column(
+              children: [
+                Expanded(
+                    child: Image.asset(
+                  "assets/image/welcomscreenfram.png",fit: BoxFit.fitHeight,
+                )),
+                Gap(Dimentions.height44),
+                CustomButton(
+                    text: "Great, Contiue!",
+                    onclick: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => StepProgress()));
+                    }),
+                Gap(Dimentions.height44)
+              ],
+            ),
           ),
         ),
       ),

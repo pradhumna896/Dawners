@@ -277,178 +277,168 @@ class _ReworkPageState extends State<ReworkPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return Dialog(
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.6,
-                              child: Column(
-                                children: [
-                                  Gap(15),
-                                  Text(
-                                    "REWORK REQUESTED",
-                                    style: TextStyle(
-                                        color: Color(0xff0E1012),
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: "Montserrat"),
-                                  ),
-                                  Gap(8),
-                                  Text(
-                                    "FOR MH-14-KC-2787",
-                                    style: TextStyle(
-                                        color: Color(0xff83939E),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: "Montserrat"),
-                                  ),
-                                  Gap(25),
-                                  Material(
-                                    elevation: 5,
-                                    borderRadius: BorderRadius.circular(83),
-                                    child: Container(
-                                      height: 83,
-                                      width: 83,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(83),
-                                          color: Color(0xffDCEDF9)),
-                                      child: Center(
-                                        child: SvgPicture.asset(
-                                            "assets/svg/checksign.svg"),
-                                      ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Gap(15),
+                                Text(
+                                  "REWORK REQUESTED",
+                                  style: TextStyle(
+                                      color: Color(0xff0E1012),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: "Montserrat"),
+                                ),
+                                Gap(8),
+                                Text(
+                                  "FOR MH-14-KC-2787",
+                                  style: TextStyle(
+                                      color: Color(0xff83939E),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "Montserrat"),
+                                ),
+                                Gap(25),
+                                Material(
+                                  elevation: 5,
+                                  borderRadius: BorderRadius.circular(83),
+                                  child: Container(
+                                    height: 83,
+                                    width: 83,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(83),
+                                        color: Color(0xffDCEDF9)),
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                          "assets/svg/checksign.svg"),
                                     ),
                                   ),
-                                  Gap(25),
-                                  Text(
-                                    "JUST SIT BACK & RELAX",
-                                    style: TextStyle(
-                                        color: Color(0xff6739B7),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: "Montserrat-SemiBold"),
-                                  ),
-                                  Gap(10),
-                                  Text(
-                                    "WE WILL NOTIFY THE CLEANER",
-                                    style: TextStyle(
-                                        color: Color(0xff83939E),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: "Montserrat-SemiBold"),
-                                  ),
-                                  Gap(15),
-                                  InkWell(
-                                    onTap: () {
-                                      uploadFeedback(context);
-                                    },
-                                    child: Container(
-                                      height: 33,
-                                      width: 193,
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomLeft,
-                                              // stops: [0.3,0.6,0.9],
-                                              colors: [
-                                                Color(0xff4F2C8C),
-                                                Color(0xff6739B7),
-                                                Color(0xff8A68C6),
-                                                Color(0xff8A68C6),
-                                              ]),
-                                          borderRadius:
-                                              BorderRadius.circular(14),
-                                          color: Color(0xff6A3ABC)),
-                                      child: Center(
-                                        child: Text(
-                                          "Done",
-                                          style: TextStyle(
-                                              color: Color(0xffFFFFFF),
-                                              fontSize: 14,
-                                              fontFamily: "Montserrat-Bold",
-                                              fontWeight: FontWeight.w800),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Gap(10),
-                                  TextButton(
-                                      onPressed: () {
-                                        upgradePack(context);
-                                      },
+                                ),
+                                Gap(25),
+                                Text(
+                                  "JUST SIT BACK & RELAX",
+                                  style: TextStyle(
+                                      color: Color(0xff6739B7),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "Montserrat-SemiBold"),
+                                ),
+                                Gap(10),
+                                Text(
+                                  "WE WILL NOTIFY THE CLEANER",
+                                  style: TextStyle(
+                                      color: Color(0xff83939E),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: "Montserrat-SemiBold"),
+                                ),
+                                Gap(15),
+                                InkWell(
+                                  onTap: () {
+                                    uploadFeedback(context);
+                                  },
+                                  child: Container(
+                                    height: 33,
+                                    width: 193,
+                                    decoration: BoxDecoration(
+                                        gradient: kPurplegradient,
+                                        borderRadius:
+                                            BorderRadius.circular(14),
+                                        color: Color(0xff6A3ABC)),
+                                    child: Center(
                                       child: Text(
-                                        "UPGRADE PACK",
+                                        "Done",
                                         style: TextStyle(
-                                            color: Color(0xff6739B7),
+                                            color: Color(0xffFFFFFF),
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "Montserrat-Bold"),
-                                      )),
-                                  Gap(20),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                    child: Container(
-                                      child: Center(
-                                        child: Column(
-                                          children: [
-                                            RichText(
-                                              text: TextSpan(
-                                                  text:
-                                                      "2 OUT OF 4 REWORKS REQUESTED, ",
-                                                  style: TextStyle(
-                                                      color: Color(0xff83939E),
-                                                      fontWeight:
-                                                          FontWeight.w800,
-                                                      fontSize: 12,
-                                                      fontFamily:
-                                                          "Montserrat-SemiBold"),
-                                                  children: [
-                                                    TextSpan(
-                                                        text:
-                                                            "FOR MORE REQUESTS, ",
-                                                        style: TextStyle(
-                                                            color: Color(
-                                                                0xff83939E),
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            fontSize: 12,
-                                                            fontFamily:
-                                                                "Montserrat-Regular")),
-                                                    TextSpan(
-                                                      text: " - UPGRADE PACK.",
+                                            fontFamily: "Montserrat",
+                                            fontWeight: FontWeight.w800),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Gap(10),
+                                TextButton(
+                                    onPressed: () {
+                                      upgradePack(context);
+                                    },
+                                    child: Text(
+                                      "UPGRADE PACK",
+                                      style: TextStyle(
+                                          color: Color(0xff6739B7),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: "Montserrat"),
+                                    )),
+                                Gap(20),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8),
+                                  child: Container(
+                                    child: Center(
+                                      child: Column(
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                                text:
+                                                    "2 OUT OF 4 REWORKS REQUESTED, ",
+                                                style: TextStyle(
+                                                    color: Color(0xff83939E),
+                                                    fontWeight:
+                                                        FontWeight.w800,
+                                                    fontSize: 12,
+                                                    fontFamily:
+                                                        "Montserrat-SemiBold"),
+                                                children: [
+                                                  TextSpan(
+                                                      text:
+                                                          "FOR MORE REQUESTS, ",
                                                       style: TextStyle(
-                                                          color:
-                                                              Color(0xff83939E),
+                                                          color: Color(
+                                                              0xff83939E),
                                                           fontWeight:
-                                                              FontWeight.w800,
+                                                              FontWeight.w400,
                                                           fontSize: 12,
                                                           fontFamily:
-                                                              "Montserrat-SemiBold"),
-                                                    )
-                                                  ]),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            Gap(20),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                              child: Text(
-                                                  "ENJOY PRIORITY TREATMENT WITH PREMIUM SERVICES.",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Color(0xff83939E),
-                                                      fontWeight:
-                                                          FontWeight.w800,
-                                                      fontSize: 12,
-                                                      fontFamily:
-                                                          "Montserrat")),
-                                            )
-                                          ],
-                                        ),
+                                                              "Montserrat")),
+                                                  TextSpan(
+                                                    text: " - UPGRADE PACK.",
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xff83939E),
+                                                        fontWeight:
+                                                            FontWeight.w800,
+                                                        fontSize: 12,
+                                                        fontFamily:
+                                                            "Montserrat"),
+                                                  )
+                                                ]),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          Gap(20),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 8),
+                                            child: Text(
+                                                "ENJOY PRIORITY TREATMENT WITH PREMIUM SERVICES.",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Color(0xff83939E),
+                                                    fontWeight:
+                                                        FontWeight.w800,
+                                                    fontSize: 12,
+                                                    fontFamily:
+                                                        "Montserrat")),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
+                                  ),
+                                )
+                              ],
                             ),
                           );
                         });
@@ -541,114 +531,104 @@ void uploadFeedback(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.6,
-            child: Column(
-              children: [
-                Gap(15),
-                Text(
-                  "UPLOAD FEEDBACK",
-                  style: TextStyle(
-                      color: Color(0xff0E1012),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Montserrat"),
-                ),
-                Gap(8),
-                Text(
-                  "FOR 13TH MARCH 2022, 10:00 AM",
-                  style: TextStyle(
-                      color: Color(0xff83939E),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "Montserrat-SemiBold"),
-                ),
-                Gap(25),
-                Material(
-                  elevation: 5,
-                  borderRadius: BorderRadius.circular(83),
-                  child: Container(
-                    height: 83,
-                    width: 83,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(83),
-                        color: Color(0xffDCEDF9)),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        "assets/svg_icon/fluent_star-12-filled.svg",
-                        height: 50,
-                        width: 50,
-                      ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Gap(15),
+              Text(
+                "UPLOAD FEEDBACK",
+                style: TextStyle(
+                    color: Color(0xff0E1012),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat"),
+              ),
+              Gap(8),
+              Text(
+                "FOR 13TH MARCH 2022, 10:00 AM",
+                style: TextStyle(
+                    color: Color(0xff83939E),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "Montserrat-SemiBold"),
+              ),
+              Gap(25),
+              Material(
+                elevation: 5,
+                borderRadius: BorderRadius.circular(83),
+                child: Container(
+                  height: 83,
+                  width: 83,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(83),
+                      color: Color(0xffDCEDF9)),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      "assets/svg_icon/fluent_star-12-filled.svg",
+                      height: 50,
+                      width: 50,
                     ),
                   ),
                 ),
-                Gap(25),
-                Text(
-                  "HOW WAS THE QUALITY?",
-                  style: TextStyle(
-                      color: Color(0xff6739B7),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: "Montserrat-SemiBold"),
-                ),
-                Gap(10),
-                Gap(40),
-                RatingBar(
-                    itemCount: 5,
-                    ratingWidget: RatingWidget(
-                        full: SvgPicture.asset(
-                            "assets/svg_icon/fluent_star-12-filled.svg"),
-                        empty: SvgPicture.asset(
-                            "assets/svg_icon/fluent_star-12-filled.svg"),
-                        half: SvgPicture.asset(
-                            "assets/svg_icon/fluent_star-12-filled.svg")),
-                    onRatingUpdate: (rating) {}),
-                Gap(20),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    height: 33,
-                    width: 193,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomLeft,
-                            // stops: [0.3,0.6,0.9],
-                            colors: [
-                              Color(0xff4F2C8C),
-                              Color(0xff6739B7),
-                              Color(0xff8A68C6),
-                              Color(0xff8A68C6),
-                            ]),
-                        borderRadius: BorderRadius.circular(14),
-                        color: Color(0xff6A3ABC)),
-                    child: Center(
-                      child: Text(
-                        "Done",
-                        style: TextStyle(
-                            color: Color(0xffFFFFFF),
-                            fontSize: 14,
-                            fontFamily: "Montserrat-Bold",
-                            fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                  ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      viewDetails(context);
-                    },
+              ),
+              Gap(25),
+              Text(
+                "HOW WAS THE QUALITY?",
+                style: TextStyle(
+                    color: Color(0xff6739B7),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "Montserrat-SemiBold"),
+              ),
+              Gap(10),
+              Gap(40),
+              RatingBar(
+                  itemCount: 5,
+                  ratingWidget: RatingWidget(
+                      full: SvgPicture.asset(
+                          "assets/svg_icon/fluent_star-12-filled.svg"),
+                      empty: SvgPicture.asset(
+                          "assets/svg_icon/fluent_star-12-filled.svg"),
+                      half: SvgPicture.asset(
+                          "assets/svg_icon/fluent_star-12-filled.svg")),
+                  onRatingUpdate: (rating) {}),
+              Gap(20),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 33,
+                  width: 193,
+                  decoration: BoxDecoration(
+                      gradient: kPurplegradient,
+                      borderRadius: BorderRadius.circular(14),
+                      color: Color(0xff6A3ABC)),
+                  child: Center(
                     child: Text(
-                      "VIEW DETAILS",
+                      "Done",
                       style: TextStyle(
-                          color: Color(0xff6739B7),
+                          color: Color(0xffFFFFFF),
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "Montserrat-Bold"),
-                    )),
-                Gap(20),
-              ],
-            ),
+                          fontFamily: "Montserrat-Bold",
+                          fontWeight: FontWeight.w800),
+                    ),
+                  ),
+                ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    viewDetails(context);
+                  },
+                  child: Text(
+                    "VIEW DETAILS",
+                    style: TextStyle(
+                        color: Color(0xff6739B7),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "Montserrat-Bold"),
+                  )),
+              Gap(20),
+            ],
           ),
         );
       });
@@ -656,15 +636,18 @@ void uploadFeedback(BuildContext context) {
 
 void viewDetails(BuildContext context) {
   showDialog(
+
       context: context,
       builder: (BuildContext context) {
         return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.6,
             width: double.maxFinite,
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Color(0xff6739B7), width: 2)),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Gap(20),
                 const Text(
@@ -716,7 +699,7 @@ void viewDetails(BuildContext context) {
                 const Gap(10),
                 Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
                       "OF EXTERIOR SERVICE",
@@ -812,16 +795,7 @@ void viewDetails(BuildContext context) {
                         height: 33,
                         width: 193,
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomLeft,
-                                // stops: [0.3,0.6,0.9],
-                                colors: [
-                                  Color(0xff4F2C8C),
-                                  Color(0xff6739B7),
-                                  Color(0xff8A68C6),
-                                  Color(0xff8A68C6),
-                                ]),
+                            gradient: kPurplegradient,
                             borderRadius: BorderRadius.circular(14),
                             color: Color(0xff6A3ABC)),
                         child: Center(
@@ -830,14 +804,15 @@ void viewDetails(BuildContext context) {
                             style: TextStyle(
                                 color: Color(0xffFFFFFF),
                                 fontSize: 14,
-                                fontFamily: "Montserrat-Bold",
+                                fontFamily: "Montserrat",
                                 fontWeight: FontWeight.w800),
                           ),
                         ),
                       ),
                     ),
                   ],
-                )
+                ),
+                Gap(20)
               ],
             ),
           ),
@@ -850,9 +825,11 @@ void upgradePack(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.6,
+            
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Gap(15),
                 Text(
@@ -958,16 +935,7 @@ void upgradePack(BuildContext context) {
                     height: 40,
                     width: 193,
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomLeft,
-                            // stops: [0.3,0.6,0.9],
-                            colors: [
-                              Color(0xff4F2C8C),
-                              Color(0xff6739B7),
-                              Color(0xff8A68C6),
-                              Color(0xff8A68C6),
-                            ]),
+                        gradient: kPurplegradient,
                         borderRadius: BorderRadius.circular(14),
                         color: Color(0xff6A3ABC)),
                     child: Center(

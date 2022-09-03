@@ -7,6 +7,7 @@ import 'package:dawners/helper/ktext_class.dart';
 import 'package:dawners/provider/app_controller.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:dawners/screens/set_up_payments.dart';
+import 'package:dawners/screens/step_progress.dart';
 import 'package:dawners/widget/container_slider.dart';
 import 'package:dawners/widget/select_your_vehicles.dart';
 import 'package:flutter/material.dart';
@@ -785,6 +786,7 @@ class PackageDetails extends StatelessWidget {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext bc) {
+          final provider = Provider.of<AppController>(context);
           return Container(
 
               decoration: BoxDecoration(
@@ -801,40 +803,49 @@ class PackageDetails extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: CustomButton(text: "Great,Thanks", onclick: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (ctx)=>SetUpPayment()));
+                      Navigator.push(context, MaterialPageRoute(builder: (ctx)=>StepProgress()));
+                      provider.stepperProgressPage(2);
+                      provider.changeButtonName("Continue");
                     }),
                   ),
                   SizedBox(height: 10,),
                   Padding(
 
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Material(
-                        borderRadius: BorderRadius.circular(14),
-                        elevation: 5,
-                        child: Container(
-                          height: 56,
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomLeft,
-                                // stops: [0.3,0.6,0.9],
-                                colors: [
-                                  Color(0xffC1C1C1),
-                                  Color(0xffFFFFFF),
-                                  Color(0xffFFFFFF),
-                                  Color(0xffFFFFFF),
-                                  Color(0xffFFFFFF),
-                                  Color(0xffC1C1C1),
-                                ]),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          child: Center(child: Text("Review Details",style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "Montserrat",
-                              color: Color(0xffFE8E00)),)),
-                        )),
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (ctx)=>StepProgress()));
+                        provider.stepperProgressPage(2);
+                        provider.changeButtonName("Continue");
+                      },
+                      child: Material(
+                          borderRadius: BorderRadius.circular(14),
+                          elevation: 5,
+                          child: Container(
+                            height: 56,
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomLeft,
+                                  // stops: [0.3,0.6,0.9],
+                                  colors: [
+                                    Color(0xffC1C1C1),
+                                    Color(0xffFFFFFF),
+                                    Color(0xffFFFFFF),
+                                    Color(0xffFFFFFF),
+                                    Color(0xffFFFFFF),
+                                    Color(0xffC1C1C1),
+                                  ]),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Center(child: Text("Review Details",style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Montserrat",
+                                color: Color(0xffFE8E00)),)),
+                          )),
+                    ),
                   ),
                   Spacer()
                 ],

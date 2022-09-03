@@ -63,6 +63,12 @@ class AppController with ChangeNotifier{
     checkCleanerPositioned = index;
     notifyListeners();
   }
+
+  String buttonName = "Choose Package";
+  void changeButtonName(String button){
+    buttonName = button;
+    notifyListeners();
+  }
 }
 
 

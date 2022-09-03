@@ -61,9 +61,9 @@ class SetUpPayment extends StatelessWidget {
               height: Dimentions.height10,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 13),
+              padding: const EdgeInsets.symmetric(horizontal: 19),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Select Mode of Payment",
@@ -317,8 +317,8 @@ class AutopayContainer extends StatelessWidget {
                                                   color:
                                                       Color(0xffFFFFFF),
                                                   fontFamily:
-                                                      "Montserrat-Regular",
-                                                  fontSize: 24),
+                                                      "Montserrat",
+                                                  fontSize: Dimentions.font24),
                                             ),
                                             Icon(
                                               Icons.currency_rupee,
@@ -336,7 +336,7 @@ class AutopayContainer extends StatelessWidget {
                                                       color: Color(
                                                           0xffFFFFFF),
                                                       fontFamily:
-                                                          "Montserrat-Regular",
+                                                          "Montserrat",
                                                       fontSize: 12),
                                                 ),
                                               ],
@@ -356,7 +356,7 @@ class AutopayContainer extends StatelessWidget {
                                 children: [
                                   Gap(12),
                                   SvgPicture.asset(
-                                      "assets/svg_icon/fluent_shield-checkmark-28-filled.svg",height: 30,width: 30,),
+                                      "assets/svg_icon/fluent_shield-checkmark-28-filled.svg",height: 20,width: 20,),
                                   Text(
                                     "Free Cancellation\nanytime",
                                     textAlign: TextAlign.center,
@@ -364,8 +364,8 @@ class AutopayContainer extends StatelessWidget {
                                         color: Color(0xffFFFFFF),
                                         fontSize: 8,
                                         fontFamily:
-                                            "Montserrat-ExtraBold",
-                                        fontWeight: FontWeight.bold),
+                                            "Montserrat",
+                                        fontWeight: FontWeight.w700),
                                   ),
 
                                   Row(
@@ -377,7 +377,7 @@ class AutopayContainer extends StatelessWidget {
                                             decoration: TextDecoration
                                                 .lineThrough,
                                             fontFamily:
-                                                "Montserrat-Regular",
+                                                "Montserrat",
                                             fontSize: 12),
                                       ),
                                     ],
@@ -649,8 +649,8 @@ class ManualPayment extends StatelessWidget {
                                                   color: Color(
                                                       0xff6739B7),
                                                   fontFamily:
-                                                      "Montserrat-Regular",
-                                                  fontSize: 24),
+                                                      "Montserrat",
+                                                  fontSize: 15),
                                             ),
                                             Icon(
                                               Icons.currency_rupee,
@@ -767,37 +767,36 @@ class ManualPayment extends StatelessWidget {
                   top: 4,
                   right: 5,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-
-                        child: Container(
-                          height: 20,
-                          decoration: BoxDecoration(
-                              color: Color(0xffFD1102),
-                              borderRadius:
-                                  BorderRadius.circular(50)),
-                          child: Center(
-                            child: RichText(
-                                text: TextSpan(
-                                    text: "Payment Stress",
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        height: 20,
+                        decoration: BoxDecoration(
+                            color: Color(0xffFD1102),
+                            borderRadius:
+                                BorderRadius.circular(50)),
+                        child: Center(
+                          child: RichText(
+                              text: TextSpan(
+                                  text: "Payment Stress",
+                                  style: TextStyle(
+                                    color: Color(0xffFFFFFF),
+                                    fontSize: 10,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                  children: [
+                                TextSpan(
+                                    text: "  Every Month",
                                     style: TextStyle(
                                       color: Color(0xffFFFFFF),
                                       fontSize: 10,
-                                      fontFamily: "Montserrat",
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                    children: [
-                                  TextSpan(
-                                      text: "  Every Month",
-                                      style: TextStyle(
-                                        color: Color(0xffFFFFFF),
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily:
-                                            "Montserrat",
-                                      )),
-                                ])),
-                          ),
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily:
+                                          "Montserrat",
+                                    )),
+                              ])),
                         ),
                       ),
                       Gap(5),

@@ -76,9 +76,7 @@ class _StepProgressState extends State<StepProgress> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                height: Dimentions.height30,
-              ),
+
               /*
               InkWell(
                   onTap: (){

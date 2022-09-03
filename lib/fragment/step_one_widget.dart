@@ -1,7 +1,9 @@
 import 'package:dawners/helper/custom_button.dart';
 import 'package:dawners/provider/app_controller.dart';
+import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class StepOneWidget extends StatefulWidget {
@@ -15,6 +17,7 @@ class StepOneWidget extends StatefulWidget {
 
 class _StepOneWidgetState extends State<StepOneWidget> {
   int selectContainer = -1;
+  int quantity = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -161,17 +164,36 @@ class _StepOneWidgetState extends State<StepOneWidget> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SvgPicture.asset("assets/svg_icon/minusicon.svg"),
+                          InkWell(
+                              onTap: (){
+                                setState(() {
+                                  selectContainer = index;
+                                  quantity--;
+                                });
+
+                              },
+
+                              child: SvgPicture.asset("assets/svg_icon/minusicon.svg")),
                           Text(
-                            "2",
+                           "${quantity}",
                             style: TextStyle(
                                 color: Color(0xff6739B7),
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                fontFamily: "Inter"),
+                                fontFamily: "Montserrat"),
                           ),
-                          SvgPicture.asset(
-                              "assets/svg_icon/fa_plus-square-o.svg")
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+
+                                selectContainer = index;
+                                quantity++;
+                              });
+
+                            },
+                            child: SvgPicture.asset(
+                                "assets/svg_icon/fa_plus-square-o.svg"),
+                          )
                         ],
                       ),
                     )
@@ -190,6 +212,7 @@ class _StepOneWidgetState extends State<StepOneWidget> {
               },
             ),
           ),
+          Gap(Dimentions.height20)
         ],
       ),
     );

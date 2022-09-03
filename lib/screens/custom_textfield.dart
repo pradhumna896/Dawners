@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+
 class CustomTextField extends StatelessWidget {
   String hinttext;
   String image;
@@ -46,20 +47,12 @@ class CustomTextField extends StatelessWidget {
               ]),
           borderRadius: BorderRadius.circular(14),
         ),
-        // child:Center(
-        //     child: Text(text, style: TextStyle(
-        //     color: Color(0xffFFFFFF),
-        //     fontSize: 24,
-        //     fontWeight: FontWeight.w700,
-        //     fontFamily: "Montserrat"
-        // ),))
+
         child: TextFormField(
           keyboardType: keyboardtype,
           controller: controller,
           validator: kvalidator,
           decoration: InputDecoration(
-
-
             hintText: hinttext,
             hintStyle: ksubHeading.copyWith(
                 fontSize: Dimentions.font20, fontWeight: FontWeight.w400),

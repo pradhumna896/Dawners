@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:dawners/helper/custom_button.dart';
-import 'package:dawners/model/LandingPageVerification.dart';
+import 'package:dawners/model/user_info_modal.dart';
+
 import 'package:dawners/screens/custom_textfield.dart';
 import 'package:dawners/screens/helper/api_network.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:dawners/screens/loginPage/login_page.dart';
 import 'package:dawners/screens/otp_screen.dart';
+import 'package:dawners/screens/welcome_screen_.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -15,8 +17,11 @@ import 'package:http/http.dart' as http;
 import '../helper/tool_bar.dart';
 
 class Home extends StatefulWidget {
-  final String? mobileNumber;
-  Home( this.mobileNumber, {Key? key}) : super(key: key);
+
+
+
+  Home( {Key? key, required this.Id}) : super(key: key);
+  final   String Id;
 
   @override
   State<Home> createState() => _HomeState();
@@ -27,6 +32,53 @@ class _HomeState extends State<Home> {
 
   TextEditingController lastNameController = TextEditingController();
   bool isSumitted = false;
+
+  void userInfo(firsName , lastName)async{
+    setState(() {
+      isSumitted =true;
+
+    });
+    Uri uri = Uri.parse(ApiNetwork.userInfo);
+    Map<String, String> map = {
+      'first_name':firsName,
+      'last_name':lastName,
+      'id':widget.Id
+
+    };
+    final response = await http.post(uri,body: map);
+
+
+    UserInfoModal info = UserInfoModal.fromJson(jsonDecode(response.body));
+
+
+    if(info.message=="user info successfully"){
+      setState(() {
+        isSumitted =false;
+
+      });
+      print(info.message);
+      Navigator.push(context, MaterialPageRoute(builder: (builder)=>WelcomeScreen()));
+    }else{
+      showSnackVar("invalid", Colors.red, context);
+
+
+    }
+
+
+
+  }
+  static showSnackVar(String message, Color color, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        message,
+        style: const TextStyle(fontSize: 16.0),
+      ),
+      backgroundColor: color,
+      duration: const Duration(seconds: 2),
+      behavior: SnackBarBehavior.floating,
+    ));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -124,12 +176,13 @@ class _HomeState extends State<Home> {
                         :CustomButton(
                       text: 'Continue',
                       onclick: () {
-                        login(firstNameController.text.toString(), lastNameController.text.toString(),);
+                        userInfo(firstNameController.text, lastNameController.text);
+
 
                         },
                     ),
                     SizedBox(
-                      height: Dimentions.height30,
+                      height: Dimentions.height10,
                     ),
                     Row(
                       children: [
@@ -160,7 +213,7 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     Row(
                       children: [
@@ -181,7 +234,7 @@ class _HomeState extends State<Home> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (ctx) => OtpScreen(widget.mobileNumber)));
+                                        builder: (ctx) =>WelcomeScreen()));
                               },
                               child: Text(
                                 "Log In",
@@ -204,60 +257,5 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void login(String firstName,lastName) async{
 
-    if(firstNameController.text.isEmpty){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(
-              'Please Enter A Valid Input'),backgroundColor: Colors.red,));
-      return;
-    }
-    if(lastNameController.text.isEmpty){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(
-              'Please Enter A Valid Input'),backgroundColor: Colors.red,));
-      return;
-    }
-    setState(() {
-      isSumitted =true;
-
-    });
-    Uri uri =Uri.parse(ApiNetwork.signUp);
-    String username = "${firstNameController.text} ${lastNameController.text}";
-    Map<String , String > map ={
-      'user_name':username,
-      'mobile':widget.mobileNumber!
-    };
-
-    final response = await http.post(uri,body: map,);
-    if(response.statusCode==200){
-      setState(() {
-        isSumitted =false;
-
-      });
-
-      print(response.body);
-
-      LandingPageVerification login=LandingPageVerification.fromJson(jsonDecode(response.body));
-
-      if(login.result == 'signup Successfull'){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpScreen(widget.mobileNumber)));
-
-      }else{
-
-        ScaffoldMessenger.of(context).showSnackBar(
-
-            const SnackBar(content: Text(
-                'error'),backgroundColor: Colors.red,));
-        return;
-
-
-      }
-
-    }
-
-
-
-
-  }
 }
