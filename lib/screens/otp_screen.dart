@@ -88,6 +88,10 @@ class _OtpScreenState extends State<OtpScreen> {
         showSnackVar("otp send successfully", Colors.red, context);
       }else{
         showSnackVar("failed", Colors.red, context);
+        setState(() {
+          isResendSumitted = false;
+
+        });
       }
     }
   }

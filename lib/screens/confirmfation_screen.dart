@@ -417,7 +417,7 @@ class ConfirmMationScreen extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           print(data.isVisible);
-                          data.isvisibleContainer(true);
+
                         },
                         child: Container(
                           decoration: BoxDecoration(
