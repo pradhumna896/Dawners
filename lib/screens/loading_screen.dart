@@ -115,7 +115,8 @@ class LoadingScreen extends StatelessWidget {
                                     style: TextStyle
                                       (color: Color(0xff6739B7),
                                         fontSize: 14,
-                                        fontFamily: "Montserrat-Bold",
+                                        fontFamily: "Montserrat"
+                                            "",
                                         fontWeight: FontWeight.w700
                                     ),))
                                 ],
@@ -172,7 +173,7 @@ class LoadingScreen extends StatelessWidget {
                         image: DecorationImage(
                             image: AssetImage("assets/image/b7C.gif"),
                             fit: BoxFit.fill)),
-                    child: Image.asset("assets/image/tourch.png",height: Dimentions.height77,width: Dimentions.width168,)),
+                    child: Image.asset("assets/image/tourch.png",height: Dimentions.height77,width: Dimentions.width130,)),
                 Spacer(),
 
                 CustomButton(onclick: (){Navigator.push(context, MaterialPageRoute(builder: (ctx)=>CurveAppBar()));},text: "Great, Thanks",),

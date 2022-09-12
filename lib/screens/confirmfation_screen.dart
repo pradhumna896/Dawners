@@ -440,9 +440,7 @@ class ConfirmMationScreen extends StatelessWidget {
                       ),
                       Gap(Dimentions.height30),
                       InkWell(
-                        onTap: data.isVisible == false
-                            ? null
-                            : () {
+                        onTap:() {
                                 Navigator.push(context, MaterialPageRoute(builder: (builder)=>SetUpPayment()));
                               },
                         child: Container(
