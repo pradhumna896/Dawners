@@ -5,4 +5,5 @@ class ApiNetwork{
   static const otpVerify = baseUrl+"process.php?action=otp_verify";
   static const resendOtp = baseUrl+"process.php?action=resend_otp";
   static const userInfo = baseUrl +"process.php?action=user_info";
+  static const userAddVehicle = baseUrl+"process.php?action=user_add_vehicle&category_id";
 }

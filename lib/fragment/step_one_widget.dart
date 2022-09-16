@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:dawners/helper/custom_button.dart';
+
 import 'package:dawners/provider/app_controller.dart';
+import 'package:dawners/screens/helper/api_network.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class StepOneWidget extends StatefulWidget {
   const StepOneWidget({
@@ -18,6 +23,28 @@ class StepOneWidget extends StatefulWidget {
 class _StepOneWidgetState extends State<StepOneWidget> {
   int selectContainer = -1;
   int quantity = 0;
+  bool isSummited=false;
+ // List<AddVehicleModal> addVehicleList= [];
+ //
+ //
+ // Future<List<AddVehicleModal>> getVehicle()async{
+ //   final response = await http.post(Uri.parse(ApiNetwork.userAddVehicle),body: {
+ //     'category_id':'1'
+ //   });
+ //   var data = jsonDecode(response.body.toString());
+ //   print(data.toString());
+ //   if(response.statusCode==200){
+ //     for(Map i in data){
+ //       addVehicleList.add(AddVehicleModal.fromJson(i));
+ //     }
+ //     return addVehicleList;
+ //   }else{
+ //     return addVehicleList;
+ //
+ //   }
+ // }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +90,7 @@ class _StepOneWidgetState extends State<StepOneWidget> {
               itemCount: 6,
               physics: const BouncingScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  // mainAxisExtent: 200,
+                // mainAxisExtent: 200,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                   crossAxisCount: 2),
@@ -85,8 +112,8 @@ class _StepOneWidgetState extends State<StepOneWidget> {
                                 color: index == 0 || index == 3
                                     ? Color(0xffE1D7F1)
                                     : index == 2 || index == 5
-                                        ? Color(0xffFAF1DF)
-                                        : Color(0xffD6F6FF),
+                                    ? Color(0xffFAF1DF)
+                                    : Color(0xffD6F6FF),
                                 border: Border.all(
                                     color: selectContainer == index
                                         ? Color(0xffFE8E00)
@@ -122,26 +149,26 @@ class _StepOneWidgetState extends State<StepOneWidget> {
                               ],
                             )
                                 : index == 2 || index == 5
-                                    ? LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomLeft,
-                                        // stops: [0.3,0.6,0.9],
-                                        colors: [
-                                            Color(0xffFAA53A),
-                                            Color(0xffFE8E00),
-                                            Color(0xffFE8E00),
-                                            Color(0xffC06B00),
-                                          ])
-                                    : LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomLeft,
-                                        // stops: [0.3,0.6,0.9],
-                                        colors: [
-                                            Color(0xff00A3CF),
-                                            Color(0xff3DB4D4),
-                                            Color(0xff3DB4D4),
-                                            Color(0xff00A3CF),
-                                          ]),
+                                ? LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomLeft,
+                                // stops: [0.3,0.6,0.9],
+                                colors: [
+                                  Color(0xffFAA53A),
+                                  Color(0xffFE8E00),
+                                  Color(0xffFE8E00),
+                                  Color(0xffC06B00),
+                                ])
+                                : LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomLeft,
+                                // stops: [0.3,0.6,0.9],
+                                colors: [
+                                  Color(0xff00A3CF),
+                                  Color(0xff3DB4D4),
+                                  Color(0xff3DB4D4),
+                                  Color(0xff00A3CF),
+                                ]),
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20)),
@@ -175,7 +202,7 @@ class _StepOneWidgetState extends State<StepOneWidget> {
 
                               child: SvgPicture.asset("assets/svg_icon/minusicon.svg")),
                           Text(
-                           "${quantity}",
+                            "${quantity}",
                             style: TextStyle(
                                 color: Color(0xff6739B7),
                                 fontSize: 15,

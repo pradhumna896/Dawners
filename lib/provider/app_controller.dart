@@ -69,6 +69,13 @@ class AppController with ChangeNotifier{
     buttonName = button;
     notifyListeners();
   }
+
+  int storiesIndex = 0;
+  void storiesStatus(int index){
+    storiesIndex = index;
+    notifyListeners();
+
+  }
 }
 
 
