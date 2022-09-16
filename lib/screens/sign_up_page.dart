@@ -150,6 +150,7 @@ class _HomeState extends State<Home> {
                   child: Column(
                     children: [
                       CustomTextField(
+
                         kvalidator: (String? value) {
                           if (value == null || value.isEmpty) {
                             return showSnackVar("Please Enter First Name", Colors.red, context);

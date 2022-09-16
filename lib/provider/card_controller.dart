@@ -70,4 +70,10 @@ class CardController with ChangeNotifier{
     notifyListeners();
   }
 
+  bool isReferral= false;
+  void isReferralStatus(bool status){
+    isReferral = status;
+    notifyListeners();
+  }
+
 }

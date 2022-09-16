@@ -133,7 +133,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       return null;
                     }
                   },
-                  keyboardtype: TextInputType.number,
+                  keyboardtype: TextInputType.phone,
                 ),
               ),
               Gap(Dimentions.height18),

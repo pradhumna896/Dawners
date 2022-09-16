@@ -18,7 +18,7 @@ class LoadingScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/image/loadingscreen.png"),
                   fit: BoxFit.fill)),
@@ -60,7 +60,7 @@ class LoadingScreen extends StatelessWidget {
                                   SizedBox(
                                     height: Dimentions.height10,
                                   ),
-                                  Text(
+                                  const Text(
                                     "we are always available for you ",
                                     style: TextStyle(
                                         color: Color(0xff83939E),
@@ -91,7 +91,7 @@ class LoadingScreen extends StatelessWidget {
                                       color: Color(0xff000000),
                                       fontFamily: "Montserrat-SemiBold"
                                   ),),
-                                  SizedBox(height: 30,),
+                                  const SizedBox(height: 30,),
                                   InkWell(
                                     onTap: (){},
                                     child: Container(
@@ -102,16 +102,16 @@ class LoadingScreen extends StatelessWidget {
                                             borderRadius: BorderRadius.circular(14)
                                         ),
 
-                                        child: Center(child: Text("Call",
+                                        child: const Center(child: Text("Call",
                                             style: TextStyle
                                               (color: Color(0xffFFFFFF),
                                                 fontSize: 14,
-                                                fontFamily: "NunitoSans-Bold",
+                                                fontFamily: "NunitoSans",
                                                 fontWeight: FontWeight.w700
                                             )
                                         ))),
                                   ),
-                                  TextButton(onPressed: (){}, child: Text("Not Now",
+                                  TextButton(onPressed: (){}, child: const Text("Not Now",
                                     style: TextStyle
                                       (color: Color(0xff6739B7),
                                         fontSize: 14,

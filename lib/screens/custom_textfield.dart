@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   String image;
   String? Function(String?)? kvalidator;
   TextInputType keyboardtype;
+  TextInputAction textInputAction;
 
   CustomTextField({
     Key? key,
@@ -19,7 +20,8 @@ class CustomTextField extends StatelessWidget {
     required this.hinttext,
     required this.image,
     required this.controller,
-    required this.kvalidator
+    required this.kvalidator,
+    this.textInputAction= TextInputAction.next,
   }) : super(key: key);
   TextEditingController controller;
 
@@ -49,6 +51,7 @@ class CustomTextField extends StatelessWidget {
         ),
 
         child: TextFormField(
+          textInputAction: textInputAction,
           keyboardType: keyboardtype,
           controller: controller,
           validator: kvalidator,
