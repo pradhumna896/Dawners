@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dawners/helper/custom_button.dart';
+import 'package:dawners/model/add_vehicle_modal.dart';
 
 import 'package:dawners/provider/app_controller.dart';
 import 'package:dawners/screens/helper/api_network.dart';
@@ -23,28 +24,18 @@ class StepOneWidget extends StatefulWidget {
 class _StepOneWidgetState extends State<StepOneWidget> {
   int selectContainer = -1;
   int quantity = 0;
-  bool isSummited=false;
- // List<AddVehicleModal> addVehicleList= [];
- //
- //
- // Future<List<AddVehicleModal>> getVehicle()async{
- //   final response = await http.post(Uri.parse(ApiNetwork.userAddVehicle),body: {
- //     'category_id':'1'
- //   });
- //   var data = jsonDecode(response.body.toString());
- //   print(data.toString());
- //   if(response.statusCode==200){
- //     for(Map i in data){
- //       addVehicleList.add(AddVehicleModal.fromJson(i));
- //     }
- //     return addVehicleList;
- //   }else{
- //     return addVehicleList;
- //
- //   }
- // }
+  bool isSummited = false;
 
 
+  Future<AddVehicleModal> getVehicle() async {
+    final response = await http
+        .post(Uri.parse(ApiNetwork.userAddVehicle), body: {'category_id': '1'});
+    if (response.statusCode == 200) {
+      return AddVehicleModal.fromJson(jsonDecode(response.body));
+    } else {
+      return AddVehicleModal(message: 'failed');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,149 +75,162 @@ class _StepOneWidgetState extends State<StepOneWidget> {
           SizedBox(
             height: 20,
           ),
-          GridView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: 6,
-              physics: const BouncingScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                // mainAxisExtent: 200,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  crossAxisCount: 2),
-              itemBuilder: (BuildContext context, index) {
-                return Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          selectContainer = index;
-                        });
-                      },
-                      child: Stack(
-                        children: [
-                          Container(
-                            height: 94,
-                            width: 150,
-                            decoration: BoxDecoration(
-                                color: index == 0 || index == 3
-                                    ? Color(0xffE1D7F1)
-                                    : index == 2 || index == 5
-                                    ? Color(0xffFAF1DF)
-                                    : Color(0xffD6F6FF),
-                                border: Border.all(
-                                    color: selectContainer == index
-                                        ? Color(0xffFE8E00)
-                                        : Color(0xffFFFFFF)),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20))),
-                          ),
-                          Positioned(
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: 0,
-                              child: Image.asset("assets/image/carimage.png")),
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        width: 150,
-                        height: 35,
-                        decoration: BoxDecoration(
-                            gradient: index == 0 || index == 3
-                                ? LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                                Colors.deepPurple.shade900,
-                                Color(0xff6739B7),
-                                Color(0xff6739B7),
-                                Color(0xff6739B7),
-                              ],
-                            )
-                                : index == 2 || index == 5
-                                ? LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomLeft,
-                                // stops: [0.3,0.6,0.9],
-                                colors: [
-                                  Color(0xffFAA53A),
-                                  Color(0xffFE8E00),
-                                  Color(0xffFE8E00),
-                                  Color(0xffC06B00),
-                                ])
-                                : LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomLeft,
-                                // stops: [0.3,0.6,0.9],
-                                colors: [
-                                  Color(0xff00A3CF),
-                                  Color(0xff3DB4D4),
-                                  Color(0xff3DB4D4),
-                                  Color(0xff00A3CF),
-                                ]),
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20)),
-                            color: Color(0xff6A3ABC)),
-                        child: Center(
-                          child: Text(
-                            "Hatchback",
-                            style: TextStyle(
-                                color: Color(0xffFFFFFF),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Montserrat"),
+          FutureBuilder<AddVehicleModal>(
+            future: getVehicle(),
+            builder: (context, snapshot) {
+
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return const Center(child: CircularProgressIndicator(),);
+              }
+
+              List<AddModelData> data = snapshot.data!.data!;
+
+              if(data.isEmpty){
+                return Text('Data emtpyu');
+              }
+              return GridView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount:data.length,
+                  physics: const BouncingScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    // mainAxisExtent: 200,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      crossAxisCount: 2),
+                  itemBuilder: (BuildContext context, index) {
+                    return Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              selectContainer = index;
+                            });
+                          },
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: 94,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: index == 0 || index == 3
+                                        ? Color(0xffE1D7F1)
+                                        : index == 2 || index == 5
+                                        ? Color(0xffFAF1DF)
+                                        : Color(0xffD6F6FF),
+                                    border: Border.all(
+                                        color: selectContainer == index
+                                            ? Color(0xffFE8E00)
+                                            : Color(0xffFFFFFF)),
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20))),
+                                child:
+                                ClipRRect(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20)),
+                                    child: Image.network(data[index].path!+data[index].image!,fit: BoxFit.fill,)),
+                              ),
+
+
+                            ],
                           ),
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      height: 15,
-                      width: 73,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                              onTap: (){
-                                setState(() {
-                                  selectContainer = index;
-                                  quantity--;
-                                });
-
-                              },
-
-                              child: SvgPicture.asset("assets/svg_icon/minusicon.svg")),
-                          Text(
-                            "${quantity}",
-                            style: TextStyle(
-                                color: Color(0xff6739B7),
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: "Montserrat"),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                            width: 150,
+                            height: 35,
+                            decoration: BoxDecoration(
+                                gradient: index == 0 || index == 3
+                                    ? LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Colors.deepPurple.shade900,
+                                    Color(0xff6739B7),
+                                    Color(0xff6739B7),
+                                    Color(0xff6739B7),
+                                  ],
+                                )
+                                    : index == 2 || index == 5
+                                    ? LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomLeft,
+                                    // stops: [0.3,0.6,0.9],
+                                    colors: [
+                                      Color(0xffFAA53A),
+                                      Color(0xffFE8E00),
+                                      Color(0xffFE8E00),
+                                      Color(0xffC06B00),
+                                    ])
+                                    : LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomLeft,
+                                    // stops: [0.3,0.6,0.9],
+                                    colors: [
+                                      Color(0xff00A3CF),
+                                      Color(0xff3DB4D4),
+                                      Color(0xff3DB4D4),
+                                      Color(0xff00A3CF),
+                                    ]),
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20)),
+                                color: Color(0xff6A3ABC)),
+                            child: Center(
+                              child: Text(
+                                data[index].productName!,
+                                style: TextStyle(
+                                    color: Color(0xffFFFFFF),
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: "Montserrat"),
+                              ),
+                            ),
                           ),
-                          InkWell(
-                            onTap: (){
-                              setState(() {
-
-                                selectContainer = index;
-                                quantity++;
-                              });
-
-                            },
-                            child: SvgPicture.asset(
-                                "assets/svg_icon/fa_plus-square-o.svg"),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                );
-              }),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: 15,
+                          width: 73,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selectContainer = index;
+                                      quantity--;
+                                    });
+                                  },
+                                  child: SvgPicture.asset(
+                                      "assets/svg_icon/minusicon.svg")),
+                              Text(
+                                data[index].quantity!,
+                                style: TextStyle(
+                                    color: Color(0xff6739B7),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Montserrat"),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    selectContainer = index;
+                                    quantity++;
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                    "assets/svg_icon/fa_plus-square-o.svg"),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  });
+            },
+          ),
           SizedBox(
             height: 20,
           ),

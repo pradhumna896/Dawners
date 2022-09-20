@@ -28,7 +28,9 @@ class StoriesScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: AppBarBackButton(onclick: () {}),
+        leading: AppBarBackButton(onclick: () {
+          Navigator.pop(context);
+        }),
       ),
       body: Column(
         children: [
