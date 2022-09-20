@@ -1,12 +1,16 @@
+import 'package:dawners/provider/api_provider.dart';
 import 'package:dawners/provider/app_controller.dart';
 import 'package:dawners/provider/card_controller.dart';
+import 'package:dawners/screens/helper/sessionmanager.dart';
 import 'package:dawners/screens/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await SessionManager.init();
   runApp(const MyApp());
 }
 
@@ -40,7 +44,8 @@ class _MyAppState extends State<MyApp> {
 
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (context)=>AppController()),
-      ChangeNotifierProvider(create: (context)=>CardController())
+      ChangeNotifierProvider(create: (context)=>CardController()),
+      ChangeNotifierProvider(create: (context)=>ApiProvider())
 
     ],
       child: GetMaterialApp(

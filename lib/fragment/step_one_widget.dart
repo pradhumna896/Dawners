@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:dawners/helper/custom_button.dart';
 import 'package:dawners/model/add_vehicle_modal.dart';
+import 'package:dawners/provider/api_provider.dart';
 
 import 'package:dawners/provider/app_controller.dart';
 import 'package:dawners/screens/helper/api_network.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -22,24 +24,17 @@ class StepOneWidget extends StatefulWidget {
 }
 
 class _StepOneWidgetState extends State<StepOneWidget> {
-  int selectContainer = -1;
-  int quantity = 0;
+
+
   bool isSummited = false;
 
 
-  Future<AddVehicleModal> getVehicle() async {
-    final response = await http
-        .post(Uri.parse(ApiNetwork.userAddVehicle), body: {'category_id': '1'});
-    if (response.statusCode == 200) {
-      return AddVehicleModal.fromJson(jsonDecode(response.body));
-    } else {
-      return AddVehicleModal(message: 'failed');
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<AppController>(context);
+    final apiData = Provider.of<ApiProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -76,17 +71,17 @@ class _StepOneWidgetState extends State<StepOneWidget> {
             height: 20,
           ),
           FutureBuilder<AddVehicleModal>(
-            future: getVehicle(),
+            future: apiData.getVehicle(),
             builder: (context, snapshot) {
 
               if(snapshot.connectionState == ConnectionState.waiting){
-                return const Center(child: CircularProgressIndicator(),);
+                return const Center(child: CupertinoActivityIndicator(radius: 20,),);
               }
 
               List<AddModelData> data = snapshot.data!.data!;
 
               if(data.isEmpty){
-                return Text('Data emtpyu');
+                return Text('Data empty');
               }
               return GridView.builder(
                   scrollDirection: Axis.vertical,
@@ -103,41 +98,33 @@ class _StepOneWidgetState extends State<StepOneWidget> {
                       children: [
                         InkWell(
                           onTap: () {
-                            setState(() {
-                              selectContainer = index;
-                            });
+                            apiData.isSelectedContainer(index);
                           },
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: 94,
-                                width: 150,
-                                decoration: BoxDecoration(
-                                    color: index == 0 || index == 3
-                                        ? Color(0xffE1D7F1)
-                                        : index == 2 || index == 5
-                                        ? Color(0xffFAF1DF)
-                                        : Color(0xffD6F6FF),
-                                    border: Border.all(
-                                        color: selectContainer == index
-                                            ? Color(0xffFE8E00)
-                                            : Color(0xffFFFFFF)),
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        topRight: Radius.circular(20))),
-                                child:
-                                ClipRRect(
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
-                                        topRight: Radius.circular(20)),
-                                    child: Image.network(data[index].path!+data[index].image!,fit: BoxFit.fill,)),
-                              ),
-
-
-                            ],
+                          child: Container(
+                            height: 94,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                color: index == 0 || index == 3
+                                    ? Color(0xffE1D7F1)
+                                    : index == 2 || index == 5
+                                    ? Color(0xffFAF1DF)
+                                    : Color(0xffD6F6FF),
+                                border: Border.all(
+                                    color: apiData.selectContainer == index
+                                        ? Color(0xffFE8E00)
+                                        : Color(0xffFFFFFF)),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20))),
+                            child:
+                            ClipRRect(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20)),
+                                child: Image.network(data[index].path!+data[index].image!,fit: BoxFit.fill,)),
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {apiData.isSelectedContainer(index);},
                           child: Container(
                             width: 150,
                             height: 35,
@@ -198,10 +185,8 @@ class _StepOneWidgetState extends State<StepOneWidget> {
                             children: [
                               InkWell(
                                   onTap: () {
-                                    setState(() {
-                                      selectContainer = index;
-                                      quantity--;
-                                    });
+                                    apiData.selectContainer = index;
+                                    apiData.quantitiMinus();
                                   },
                                   child: SvgPicture.asset(
                                       "assets/svg_icon/minusicon.svg")),
@@ -215,10 +200,8 @@ class _StepOneWidgetState extends State<StepOneWidget> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    selectContainer = index;
-                                    quantity++;
-                                  });
+                                 apiData.isSelectedContainer(index);
+                                 apiData.quantitiPlus();
                                 },
                                 child: SvgPicture.asset(
                                     "assets/svg_icon/fa_plus-square-o.svg"),
