@@ -53,6 +53,8 @@ dependencies:
   image_picker: ^0.8.5+3
   dotted_line: ^3.1.0
   shared_preferences: ^2.0.15
+  string_to_hex: ^0.2.2
+  status_view: ^0.0.2
 
 
 

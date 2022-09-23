@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:dawners/helper/appbar_back_button.dart';
 import 'package:dawners/helper/box_shadow.dart';
 import 'package:dawners/helper/ktext_class.dart';
+import 'package:dawners/model/package_details_modal.dart';
+import 'package:dawners/screens/helper/api_network.dart';
 import 'package:dawners/screens/package_details.dart';
 import 'package:dawners/screens/upgrade_package.dart';
 import 'package:dawners/widget/my_package_card.dart';
@@ -8,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+
 
 class PackagePageScreen extends StatefulWidget {
   const PackagePageScreen({Key? key}) : super(key: key);
@@ -20,6 +25,7 @@ class _PackagePageScreenState extends State<PackagePageScreen> {
   bool status = false;
   bool _switchvalue = true;
   String title="Daily";
+
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +151,7 @@ class _PackagePageScreenState extends State<PackagePageScreen> {
                 ],
               ),
             ),
-            Expanded(
+            const Expanded(
 
               child: MyPackageCard(),
             )

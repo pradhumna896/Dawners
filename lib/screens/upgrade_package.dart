@@ -7,6 +7,7 @@ import 'package:dawners/provider/app_controller.dart';
 import 'package:dawners/provider/card_controller.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:dawners/screens/loginPage/login_set_up_payment.dart';
+import 'package:dawners/screens/package_details.dart';
 import 'package:dawners/widget/upgrade_dot_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -472,7 +473,7 @@ class _UpgradePackageState extends State<UpgradePackage> {
               height: Dimentions.height56,
               onClick: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => LoginSetUpPayment()));
+                    MaterialPageRoute(builder: (ctx) => PackageDetails()));
               },
             ),
           ),

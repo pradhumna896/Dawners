@@ -73,99 +73,95 @@ class _StepProgressState extends State<StepProgress> {
             ,
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
+        body: Column(
+          children: [
 
-              /*
-              InkWell(
-                  onTap: (){
-                  data.stepperProgress++;
-                  },
-                  child: getStepText(data.stepperProgressPage())),
-              */
-              SizedBox(
-                height: Dimentions.height20,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      SvgPicture.asset(data.stepperProgress > 1
-                          ? "assets/svg_icon/donecircle1.svg"
-                          : "assets/svg/currentcircle1.svg"),
-                      Text("1")
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SvgPicture.asset("assets/svg_icon/doneline1.svg"),
-                      Container(
-                        height: Dimentions.height14,
-                        width: Dimentions.width7,
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SvgPicture.asset(data.stepperProgress > 2
-                          ? "assets/svg_icon/donecircle1.svg"
-                          : data.stepperProgress > 1
-                              ? "assets/svg/currentcircle1.svg"
-                              : "assets/svg_icon/nextcircle1.svg"),
-                      Text("2")
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SvgPicture.asset(data.stepperProgress > 1
-                          ? "assets/svg_icon/doneline1.svg"
-                          : "assets/svg_icon/nextline1.svg"),
-                      Container(
-                        height: Dimentions.height14,
-                        width: Dimentions.width7,
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SvgPicture.asset(data.stepperProgress > 3
-                          ? "assets/svg_icon/donecircle1.svg"
-                          : data.stepperProgress > 2
-                              ? "assets/svg/currentcircle1.svg"
-                              : data.stepperProgress > 1
-                                  ? "assets/svg_icon/nextcircle1.svg"
-                                  : "assets/svg_icon/lastcircle1.svg"),
-                      Text("3")
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SvgPicture.asset("assets/svg_icon/nextline1.svg"),
-                      Container(
-                        height: Dimentions.height14,
-                        width: Dimentions.width7,
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SvgPicture.asset(data.stepperProgress > 3
-                          ? "assets/svg/currentcircle1.svg"
-                          : "assets/svg_icon/lastcircle1.svg"),
-                      Text("4")
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(
-                height: Dimentions.height20,
-              ),
-              getStep(data),
-            ],
-          ),
+            /*
+            InkWell(
+                onTap: (){
+                data.stepperProgress++;
+                },
+                child: getStepText(data.stepperProgressPage())),
+            */
+           
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    SvgPicture.asset(data.stepperProgress > 1
+                        ? "assets/svg_icon/donecircle1.svg"
+                        : "assets/svg/currentcircle1.svg"),
+                    Text("1")
+                  ],
+                ),
+                Column(
+                  children: [
+                    SvgPicture.asset("assets/svg_icon/doneline1.svg"),
+                    Container(
+                      height: Dimentions.height14,
+                      width: Dimentions.width7,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    SvgPicture.asset(data.stepperProgress > 2
+                        ? "assets/svg_icon/donecircle1.svg"
+                        : data.stepperProgress > 1
+                            ? "assets/svg/currentcircle1.svg"
+                            : "assets/svg_icon/nextcircle1.svg"),
+                    Text("2")
+                  ],
+                ),
+                Column(
+                  children: [
+                    SvgPicture.asset(data.stepperProgress > 1
+                        ? "assets/svg_icon/doneline1.svg"
+                        : "assets/svg_icon/nextline1.svg"),
+                    Container(
+                      height: Dimentions.height14,
+                      width: Dimentions.width7,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    SvgPicture.asset(data.stepperProgress > 3
+                        ? "assets/svg_icon/donecircle1.svg"
+                        : data.stepperProgress > 2
+                            ? "assets/svg/currentcircle1.svg"
+                            : data.stepperProgress > 1
+                                ? "assets/svg_icon/nextcircle1.svg"
+                                : "assets/svg_icon/lastcircle1.svg"),
+                    Text("3")
+                  ],
+                ),
+                Column(
+                  children: [
+                    SvgPicture.asset("assets/svg_icon/nextline1.svg"),
+                    Container(
+                      height: Dimentions.height14,
+                      width: Dimentions.width7,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    SvgPicture.asset(data.stepperProgress > 3
+                        ? "assets/svg/currentcircle1.svg"
+                        : "assets/svg_icon/lastcircle1.svg"),
+                    Text("4")
+                  ],
+                )
+              ],
+            ),
+            SizedBox(
+              height: Dimentions.height20,
+            ),
+            Expanded(child: getStep(data)),
+          ],
         ),
       ),
     );

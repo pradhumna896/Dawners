@@ -1,15 +1,15 @@
 class AddVehicleModal {
   String? message;
-  List<AddModelData>? data;
+  List<AddVehicleData>? data;
 
   AddVehicleModal({this.message, this.data});
 
   AddVehicleModal.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     if (json['data'] != null) {
-      data = <AddModelData>[];
+      data = <AddVehicleData>[];
       json['data'].forEach((v) {
-        data!.add(new AddModelData.fromJson(v));
+        data!.add(AddVehicleData.fromJson(v));
       });
     }
   }
@@ -24,27 +24,33 @@ class AddVehicleModal {
   }
 }
 
-class AddModelData {
+class AddVehicleData {
   String? id;
   String? categoryId;
-  String? productName;
+  String? vehicleName;
   String? image;
+  String? dailyPrice;
+  String? alternatePrice;
   String? quantity;
   String? path;
 
-  AddModelData(
+  AddVehicleData(
       {this.id,
         this.categoryId,
-        this.productName,
+        this.vehicleName,
         this.image,
+        this.dailyPrice,
+        this.alternatePrice,
         this.quantity,
         this.path});
 
-  AddModelData.fromJson(Map<String, dynamic> json) {
+  AddVehicleData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     categoryId = json['category_id'];
-    productName = json['product_name'];
+    vehicleName = json['vehicle_name'];
     image = json['image'];
+    dailyPrice = json['daily_price'];
+    alternatePrice = json['alternate_price'];
     quantity = json['quantity'];
     path = json['path'];
   }
@@ -53,8 +59,10 @@ class AddModelData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['category_id'] = this.categoryId;
-    data['product_name'] = this.productName;
+    data['vehicle_name'] = this.vehicleName;
     data['image'] = this.image;
+    data['daily_price'] = this.dailyPrice;
+    data['alternate_price'] = this.alternatePrice;
     data['quantity'] = this.quantity;
     data['path'] = this.path;
     return data;

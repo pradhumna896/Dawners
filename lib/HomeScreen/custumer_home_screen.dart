@@ -22,6 +22,7 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:slider_button/slider_button.dart';
+import 'package:status_view/status_view.dart';
 
 class CustomerHomeScreen extends StatelessWidget {
   CustomerHomeScreen({Key? key}) : super(key: key);
@@ -141,20 +142,32 @@ class CustomerHomeScreen extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (ctx) => StoriesScreen()));
                         },
-                        child: Container(
-                          height: Dimentions.height44,
-                          width: Dimentions.width44,
-                          decoration: BoxDecoration(
-                              color: Color(0xffF0EBF8),
-                              borderRadius:
-                              BorderRadius.circular(Dimentions.height14)),
-                          child: Center(
-                              child: SvgPicture.asset(
-                                "assets/svg_icon/clarity_bell-solid-badged.svg",
-                                height: Dimentions.height15,
-                                width: Dimentions.width17,
-                              )),
+                        child: StatusView(
+                          radius: 25,
+                          spacing: 15,
+                          strokeWidth: 2,
+                          indexOfSeenStatus: 2,
+                          numberOfStatus: 4,
+                          padding: 4,
+                          seenColor: Color(0xffC2B0E2),
+                          unSeenColor: Color(0xff6739B7),
+                          centerImageUrl: "https://picsum.photos/200/300",
                         ),
+
+                        // Container(
+                        //   height: Dimentions.height44,
+                        //   width: Dimentions.width44,
+                        //   decoration: BoxDecoration(
+                        //       color: Color(0xffF0EBF8),
+                        //       borderRadius:
+                        //       BorderRadius.circular(Dimentions.height14)),
+                        //   child: Center(
+                        //       child: SvgPicture.asset(
+                        //         "assets/svg_icon/clarity_bell-solid-badged.svg",
+                        //         height: Dimentions.height15,
+                        //         width: Dimentions.width17,
+                        //       )),
+                        // ),
                       ),
                     ],
                   ),
@@ -164,7 +177,7 @@ class CustomerHomeScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
                 child: Text(
-                  "Todays Notification",
+                  "Today's Notification",
                   style: TextStyle(
                       color: Color(0xff7B8D9E),
                       fontFamily: "Montserrat",
@@ -744,7 +757,7 @@ class AfterSheduleContainer extends StatelessWidget {
                     child: SvgPicture.asset("assets/svg_icon/reshedule.svg")),
                 Spacer(),
                 CustomText(
-                    title: "Dark Mode",
+                    title: "Mark Mode",
                     fontWeight: FontWeight.w400,
                     color: Color(0xff000000),
                     fontSize: Dimentions.font8),
