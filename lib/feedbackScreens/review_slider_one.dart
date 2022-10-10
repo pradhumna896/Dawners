@@ -29,8 +29,8 @@ class ReviewOneDotSlider extends StatelessWidget {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
                   margin: const EdgeInsets.only(right: 10.0),
-                  width:data. reviewDetailOne == 0?30: 12,
-                  height: 12,
+                  width:data. reviewDetailOne == 0?18: 8,
+                  height: 8,
                   decoration: BoxDecoration(
                       color:Color(0xff6739B7),
                       borderRadius: BorderRadius.circular(20.0)),
@@ -38,8 +38,8 @@ class ReviewOneDotSlider extends StatelessWidget {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
                   margin: const EdgeInsets.only(right: 10.0),
-                  width:data. reviewDetailOne == 1?30: 12,
-                  height: 12,
+                  width:data. reviewDetailOne == 1?18: 8,
+                  height: 8,
                   decoration: BoxDecoration(
                       color:Color(0xff6739B7),
                       borderRadius: BorderRadius.circular(20.0)),
@@ -47,8 +47,8 @@ class ReviewOneDotSlider extends StatelessWidget {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
                   margin: const EdgeInsets.only(right: 10.0),
-                  width:data. reviewDetailOne == 2?30: 12,
-                  height: 12,
+                  width:data. reviewDetailOne == 2?18: 8,
+                  height: 8,
                   decoration: BoxDecoration(
                       color:Color(0xff6739B7),
                       borderRadius: BorderRadius.circular(20.0)),
@@ -56,8 +56,8 @@ class ReviewOneDotSlider extends StatelessWidget {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
                   margin: const EdgeInsets.only(right: 10.0),
-                  width: data. reviewDetailOne == 3?30:12,
-                  height: 12,
+                  width: data. reviewDetailOne == 3?18:8,
+                  height: 8,
                   decoration: BoxDecoration(
                       color:Color(0xff6739B7),
                       borderRadius: BorderRadius.circular(20.0)),

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:dawners/helper/custom_button.dart';
+import 'package:dawners/helper/helper.dart';
 import 'package:dawners/helper/tool_bar.dart';
+import 'package:dawners/model/otp_model.dart';
 import 'package:dawners/model/otp_verify_modal.dart';
 import 'package:dawners/model/resend_otp_modal.dart';
 import 'package:dawners/model/sign_up_modal.dart';
@@ -38,77 +40,62 @@ class _OtpScreenState extends State<OtpScreen> {
   void otpVerify(O1, O2, O3, O4) async {
     setState(() {
       isSumitted = true;
-
     });
 
-    Uri uri = Uri.parse(ApiNetwork.otpVerify);
+    Uri uri = Uri.parse(ApiNetwork.otp);
 
     var otp = "${O1}${O2}${O3}${O4}";
     print(otp);
 
-    Map<String, String> map = {
-      'otp': otp,
-      'mobile':widget.mobileNumber
-    };
+    Map<String, String> map = {'otp': otp, 'mobile': widget.mobileNumber};
 
     final response = await http.post(uri, body: map);
 
-    OtpVerifyModal auth = OtpVerifyModal.fromJson(jsonDecode(response.body));
+    OtpModel auth = OtpModel.fromJson(jsonDecode(response.body));
 
     if (auth.message == "verify successfully") {
       setState(() {
-        isSumitted =false;
-
+        isSumitted = false;
       });
       String id = auth.id!;
-      Navigator.push(context, MaterialPageRoute(builder: (ctx) => Home( Id: id,)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (ctx) => WelcomeScreen(
+
+                  )));
     } else {
-      showSnackVar("invalid", Colors.red, context);
+      Helper.showSnackBar("invalid", Colors.red, context);
+      setState(() {
+        isSumitted = false;
+      });
     }
   }
-  resendOtp(mobileNumber)async{
+
+  resendOtp(mobileNumber) async {
     setState(() {
       isResendSumitted = true;
-
     });
-    Uri uri = Uri.parse(ApiNetwork.resendOtp);
-    Map<String , String> map = {
-      'mobile':mobileNumber
-    };
+    Uri uri = Uri.parse(ApiNetwork.otpResend);
+    Map<String, String> map = {'mobile': mobileNumber};
 
-    final response = await http.post(uri,body: map);
-    if(response.statusCode==200){
+    final response = await http.post(uri, body: map);
+    if (response.statusCode == 200) {
       ResendOtpModal otp = ResendOtpModal.fromJson(jsonDecode(response.body));
 
-      if(otp.message=="otp send successfully"){
+      if (otp.message == "otp send successfully") {
         setState(() {
           isResendSumitted = false;
-
         });
-        showSnackVar("otp send successfully", Colors.red, context);
-      }else{
-        showSnackVar("failed", Colors.red, context);
+        Helper.showSnackBar("otp send successfully", Colors.red, context);
+      } else {
+        Helper.showSnackBar("failed", Colors.red, context);
         setState(() {
           isResendSumitted = false;
-
         });
       }
     }
   }
-
-
-  static showSnackVar(String message, Color color, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(
-        message,
-        style: const TextStyle(fontSize: 16.0),
-      ),
-      backgroundColor: color,
-      duration: const Duration(seconds: 2),
-      behavior: SnackBarBehavior.floating,
-    ));
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -116,248 +103,249 @@ class _OtpScreenState extends State<OtpScreen> {
         backgroundColor: Color(0xff6739B7),
         body: Container(
             height: double.maxFinite,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            decoration: BoxDecoration(
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xff5D31DA), Color(0xff6739B7)],
-                )),
-            child: SingleChildScrollView(
-                child: Column(children: [
-                  SizedBox(
-                    height: Dimentions.height56,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xff5D31DA), Color(0xff6739B7)],
+            )),
+            child: Column(children: [
+              SizedBox(
+                height: Dimentions.height56,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimentions.width28),
+                child: ToolBar(
+                  text: 'SIGN UP',
+                ),
+              ),
+              SizedBox(
+                height: Dimentions.height30,
+              ),
+              Expanded(
+                  child: SingleChildScrollView(
+                child: Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: Dimentions.width28),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          RichText(
+                              text: TextSpan(
+                                  text: "Please,\n",
+                                  style: TextStyle(
+                                      color: Color(0xffFFFFFF),
+                                      fontSize: Dimentions.font24,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: "NunitoSans"),
+                                  children: [
+                                TextSpan(
+                                  text: "Enter OTP!",
+                                  style: TextStyle(
+                                      color: Color(0xffFFFFFF),
+                                      fontSize: Dimentions.font48,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: "NunitoSans"),
+                                )
+                              ])),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Dimentions.height30,
+                      ),
+                      Image.asset("assets/icons/massegeicon.png"),
+                      SizedBox(
+                        height: Dimentions.height56,
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    height: Dimentions.height60,
+                                    width: Dimentions.height60,
+                                    child: TextFormField(
+                                      controller: firstDigitController,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1)
+                                      ],
+                                      onChanged: (val) {
+                                        if (val.length == 1) {
+                                          FocusScope.of(context).nextFocus();
+                                        }
+                                      },
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimentions.height20))),
+                                    ),
+                                  )),
+                              SizedBox(
+                                width: Dimentions.width18,
+                              ),
+                              Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    height: Dimentions.height60,
+                                    width: Dimentions.height60,
+                                    child: TextFormField(
+                                      controller: secondDigitController,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1)
+                                      ],
+                                      onChanged: (val) {
+                                        if (val.length == 1) {
+                                          FocusScope.of(context).nextFocus();
+                                        }
+                                      },
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimentions.height20))),
+                                    ),
+                                  )),
+                              SizedBox(
+                                width: Dimentions.width18,
+                              ),
+                              Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    height: Dimentions.height60,
+                                    width: Dimentions.height60,
+                                    child: TextFormField(
+                                      controller: thirdDigitController,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1)
+                                      ],
+                                      onChanged: (val) {
+                                        if (val.length == 1) {
+                                          FocusScope.of(context).nextFocus();
+                                        }
+                                      },
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimentions.height20))),
+                                    ),
+                                  )),
+                              SizedBox(
+                                width: Dimentions.width18,
+                              ),
+                              Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    height: Dimentions.height60,
+                                    width: Dimentions.height60,
+                                    child: TextFormField(
+                                      controller: fourthDigitController,
+                                      inputFormatters: [
+                                        LengthLimitingTextInputFormatter(1)
+                                      ],
+                                      onChanged: (val) {
+                                        if (val.length == 1) {
+                                          FocusScope.of(context).nextFocus();
+                                        }
+                                      },
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimentions.height20))),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                          SizedBox(
+                            height: Dimentions.height30,
+                          ),
+                          isSumitted == true
+                              ? Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : CustomButton(
+                                  text: 'Submit',
+                                  onclick: () {
+                                    otpVerify(
+                                        firstDigitController.text,
+                                        secondDigitController.text,
+                                        thirdDigitController.text,
+                                        fourthDigitController.text);
+                                  }),
+                          SizedBox(
+                            height: Dimentions.height30,
+                          ),
+                          Row(
+                            children: [
+                              Text("Didnt receive OTP?",
+                                  style: TextStyle(
+                                      color: Color(0xffFFFFFF),
+                                      fontSize: Dimentions.font12,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: "NunitoSans"))
+                            ],
+                          ),
+                          SizedBox(
+                            height: Dimentions.height10,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                child: isResendSumitted == true
+                                    ? Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : OutlinedButton(
+                                        style: ButtonStyle(
+                                            side: MaterialStateProperty.all(
+                                                BorderSide(
+                                                    color: Color(0xffFFFFFF))),
+                                            shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          Dimentions.height15)),
+                                            )),
+                                        onPressed: () {
+                                          resendOtp(widget.mobileNumber);
+                                        },
+                                        child: Text("Resent OTP",
+                                            style: TextStyle(
+                                                color: Color(0xffFFFFFF),
+                                                fontSize: Dimentions.font14,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: "NunitoSans"))),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Dimentions.width28),
-                    child: ToolBar(
-                      text: 'SIGN UP',
-                    ),
-                  ),
-                  SizedBox(
-                    height: Dimentions.height30,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Dimentions.width28),
-                    child: Row(
-                      children: [
-                        RichText(
-                            text: TextSpan(
-                                text: "Please,\n",
-                                style: TextStyle(
-                                    color: Color(0xffFFFFFF),
-                                    fontSize: Dimentions.font24,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "NunitoSans"),
-                                children: [
-                                  TextSpan(
-                                    text: "Enter OTP!",
-                                    style: TextStyle(
-                                        color: Color(0xffFFFFFF),
-                                        fontSize: Dimentions.font48,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: "NunitoSans"),
-                                  )
-                                ])),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: Dimentions.height30,
-                  ),
-                  Image.asset("assets/icons/massegeicon.png"),
-                  SizedBox(
-                    height: Dimentions.height56,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Dimentions.width28),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                  height: Dimentions.height60,
-                                  width: Dimentions.height60,
-                                  child: TextFormField(
-                                    controller: firstDigitController,
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(1)
-                                    ],
-                                    onChanged: (val) {
-                                      if (val.length == 1) {
-                                        FocusScope.of(context).nextFocus();
-                                      }
-                                    },
-                                    textAlign: TextAlign.center,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(
-                                                Dimentions.height20))),
-                                  ),
-                                )),
-                            SizedBox(
-                              width: Dimentions.width18,
-                            ),
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                  height: Dimentions.height60,
-                                  width: Dimentions.height60,
-                                  child: TextFormField(
-                                    controller: secondDigitController,
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(1)
-                                    ],
-                                    onChanged: (val) {
-                                      if (val.length == 1) {
-                                        FocusScope.of(context).nextFocus();
-                                      }
-                                    },
-                                    textAlign: TextAlign.center,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(
-                                                Dimentions.height20))),
-                                  ),
-                                )),
-                            SizedBox(
-                              width: Dimentions.width18,
-                            ),
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                  height: Dimentions.height60,
-                                  width: Dimentions.height60,
-                                  child: TextFormField(
-                                    controller: thirdDigitController,
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(1)
-                                    ],
-                                    onChanged: (val) {
-                                      if (val.length == 1) {
-                                        FocusScope.of(context).nextFocus();
-                                      }
-                                    },
-                                    textAlign: TextAlign.center,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(
-                                                Dimentions.height20))),
-                                  ),
-                                )),
-                            SizedBox(
-                              width: Dimentions.width18,
-                            ),
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                  height: Dimentions.height60,
-                                  width: Dimentions.height60,
-                                  child: TextFormField(
-                                    controller: fourthDigitController,
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(1)
-                                    ],
-                                    onChanged: (val) {
-                                      if (val.length == 1) {
-                                        FocusScope.of(context).nextFocus();
-                                      }
-                                    },
-                                    textAlign: TextAlign.center,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(
-                                                Dimentions.height20))),
-                                  ),
-                                ))
-                          ],
-                        ),
-                        SizedBox(
-                          height: Dimentions.height30,
-                        ),
-                        isSumitted == true
-                            ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                            : CustomButton(
-                            text: 'Submit',
-                            onclick: () {
-                              otpVerify(firstDigitController.text,
-                                  secondDigitController.text,
-                                  thirdDigitController.text,
-                                  fourthDigitController.text);
-                            }),
-                        SizedBox(
-                          height: Dimentions.height30,
-                        ),
-                        Row(
-                          children: [
-                            Text("Didnt receive OTP?",
-                                style: TextStyle(
-                                    color: Color(0xffFFFFFF),
-                                    fontSize: Dimentions.font12,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: "NunitoSans"))
-                          ],
-                        ),
-                        SizedBox(
-                          height: Dimentions.height10,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              child: isResendSumitted == true
-                                  ? Center(
-                                child: CircularProgressIndicator(),
-                              ) : OutlinedButton(
-                                  style: ButtonStyle(
-                                      side: MaterialStateProperty.all(
-                                          BorderSide(color: Color(0xffFFFFFF))),
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimentions.height15)),
-                                      )),
-                                  onPressed: () {
-                                    resendOtp(widget.mobileNumber);
-                                  },
-                                  child: Text("Resent OTP",
-                                      style: TextStyle(
-                                          color: Color(0xffFFFFFF),
-                                          fontSize: Dimentions.font14,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: "NunitoSans"))),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ]))));
+                ),
+              ))
+            ])));
   }
 
 // void otpVerify(String otp1, otp2, otp3, otp4) async {

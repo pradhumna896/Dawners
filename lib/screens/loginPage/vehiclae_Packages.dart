@@ -1,7 +1,11 @@
 import 'package:dawners/helper/custom_button.dart';
+import 'package:dawners/helper/custom_text.dart';
 import 'package:dawners/helper/ktext_class.dart';
+
 // import 'package:dawners/pages/package_page_screen.dart';
 import 'package:dawners/provider/app_controller.dart';
+import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:dawners/screens/loginPage/parter_side_date_selected_screen.dart';
 import 'package:dawners/screens/package_page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,16 +40,16 @@ class VehiclePackage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16)),
                 child: Center(
                     child: SvgPicture.asset(
-                  "assets/image/backarrow.svg",
-                  color: Color(0xff7B8D9E),
-                )),
+                      "assets/image/backarrow.svg",
+                      color: Color(0xff7B8D9E),
+                    )),
               ),
             ),
           ),
         ),
         title: Text(
           "Choose Package",
-          style:KTextClass.AppBarStyle,
+          style: KTextClass.AppBarStyle,
         ),
       ),
       body: SingleChildScrollView(
@@ -192,7 +196,7 @@ class VehiclePackage extends StatelessWidget {
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w700,
                                                     fontFamily:
-                                                        "Montserrat"),
+                                                    "Montserrat"),
 
                                               ),
                                             )
@@ -317,7 +321,7 @@ class VehiclePackage extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (ctx) =>PackagePageScreen()));
+                                  builder: (ctx) => PackagePageScreen()));
                         },
                         child: Container(
                           // color: Colors.black,
@@ -566,104 +570,11 @@ class VehiclePackage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: CustomButton(
-                text: 'Continue',
-                onclick: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext contex) {
-                        return Dialog(
-                          child: Container(
+                text: 'Continue', onclick: () {
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (builder) => PartnerSideDateSelectedScreen()));
+              },
 
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Gap(14),
-                              Text(
-                                "CONGRATULATIONS",
-                                style: TextStyle(
-                                    color: Color(0xff000000),
-                                    fontFamily: "Montserrat",
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              Text(
-                                "YOUR CLEANER GAVE YOU FREE COINS",
-                                style: TextStyle(
-                                    color: Color(0xff83939E),
-                                    fontFamily: "Montserrat",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Gap(25),
-                              Material(
-                                borderRadius: BorderRadius.circular(40),
-                                elevation: 10,
-                                child: CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: Color(0xffDCEDF9),
-                                  child: Image.asset(
-                                      "assets/icons/Dbigcircle.png"),
-                                ),
-                              ),
-                              Gap(20),
-                              Text(
-                                '100 x 3 = 300 ',
-                                style: TextStyle(
-                                    color: Color(0xff6739B7),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    fontFamily: "Montserrat-Bold"),
-                              ),
-                              Text(
-                                'DAWNERS COINS RECIEVED',
-                                style: TextStyle(
-                                    color: Color(0xff6739B7),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                    fontFamily: "Montserrat-SemiBold"),
-                              ),
-                              Gap(10),
-                              Text(
-                                'USE THEM TO PAY FOR PREMIUM ADD ON SERVICES',textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Color(0xff83939E),
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12,
-                                    fontFamily: "Montserrat-SemiBold"),
-                              ),
-                              Gap(30),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 38),
-                                child: InkWell(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (ctx)=>PackagePageScreen()));
-                                  },
-                                  child: Container(
-                                    width: double.maxFinite,
-                                    height: 33,
-                                    decoration: BoxDecoration(
-                                        gradient: kPurplegradient,
-                                        borderRadius: BorderRadius.circular(14),
-                                        color: Color(0xff6A3ABC)),
-                                    child: Center(
-                                      child: Text(
-                                        "Use To Pay",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Color(0xffFFFFFF),
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "Montserrat"),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Gap(20)
-                            ],
-                          )),
-                        );
-                      });
-                },
               ),
             ),
             Gap(20)
@@ -671,5 +582,166 @@ class VehiclePackage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void AddVehicleDetails(context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Gap(10),
+                  CustomText(
+                      title: "Add Vehicle Details",
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xff000000),
+                      fontSize: 20),
+
+                  Gap(30),
+                  Row(
+                    children: [
+                      CustomText(title: "ENTER VEHICLE NAME",
+                          textAlign: TextAlign.start,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff000000),
+                          fontSize: 11),
+                    ],
+                  ),
+                  Material(
+                    borderRadius: BorderRadius.circular(Dimentions.height14),
+                    elevation: 5,
+                    child: Container(
+                      width: double.maxFinite,
+                      height: Dimentions.height56,
+                      decoration: BoxDecoration(
+                        color: Color(0xffFAA53A),
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomLeft,
+                            // stops: [0.3,0.6,0.9],
+                            colors: [
+                              Color(0xffe3e7ee),
+                              Color(0xffFFFFFF),
+                              Color(0xffFFFFFF),
+                              Color(0xffFFFFFF),
+                              Color(0xffFFFFFF),
+                              // Color(0xffA9ADB4),
+                            ]),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.circular(Dimentions.height14),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              )),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.circular(Dimentions.height14),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Gap(20),
+                  Row(
+                    children: [
+                      CustomText(title: "ENTER VEHICLE REGISTRATION NUMBER",
+                          textAlign: TextAlign.start,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff000000),
+                          fontSize: 11),
+                    ],
+                  ),
+                  Material(
+                    borderRadius: BorderRadius.circular(Dimentions.height14),
+                    elevation: 5,
+                    child: Container(
+                      width: double.maxFinite,
+                      height: Dimentions.height56,
+                      decoration: BoxDecoration(
+                        color: Color(0xffFAA53A),
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomLeft,
+                            // stops: [0.3,0.6,0.9],
+                            colors: [
+                              Color(0xffe3e7ee),
+                              Color(0xffFFFFFF),
+                              Color(0xffFFFFFF),
+                              Color(0xffFFFFFF),
+                              Color(0xffFFFFFF),
+                              // Color(0xffA9ADB4),
+                            ]),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.circular(Dimentions.height14),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              )),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.circular(Dimentions.height14),
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Gap(40),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => PackagePageScreen()));
+                    },
+                    child: Container(
+                      height: 45,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          gradient: kPurplegradient,
+                          borderRadius: BorderRadius.circular(14),
+                          color: Color(0xff6A3ABC)),
+                      child: Center(
+                        child: Text(
+                          "CONTINUE",
+                          style: TextStyle(
+                              color: Color(0xffFFFFFF),
+                              fontSize: 14,
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Gap(20)
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

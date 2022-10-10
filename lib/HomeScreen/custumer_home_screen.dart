@@ -9,12 +9,15 @@ import 'package:dawners/helper/custom_car_caontainer.dart';
 import 'package:dawners/helper/custom_text.dart';
 import 'package:dawners/helper/ktext_class.dart';
 import 'package:dawners/model/drawers_package_model.dart';
+import 'package:dawners/model/show_user_model.dart';
+import 'package:dawners/provider/api_provider.dart';
 import 'package:dawners/provider/card_controller.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:dawners/screens/loginPage/payment_method.dart';
 import 'package:dawners/screens/loginPage/payment_page.dart';
 import 'package:dawners/switch_screen.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -24,14 +27,24 @@ import 'package:provider/provider.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:status_view/status_view.dart';
 
-class CustomerHomeScreen extends StatelessWidget {
+class CustomerHomeScreen extends StatefulWidget {
   CustomerHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CustomerHomeScreen> createState() => _CustomerHomeScreenState();
+}
+
+class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   final globalKey = GlobalKey<ScaffoldState>();
+
+
+
 
   @override
   Widget build(BuildContext context) {
     final dataForSwitch = Provider.of<CardController>(context);
     final data = Provider.of<CardController>(context);
+    final apiData = Provider.of<ApiProvider>(context);
     return Scaffold(
       extendBody: true,
       key: globalKey,
@@ -57,13 +70,13 @@ class CustomerHomeScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Color(0xffF0EBF8),
                               borderRadius:
-                              BorderRadius.circular(Dimentions.height14)),
+                                  BorderRadius.circular(Dimentions.height14)),
                           child: Center(
                               child: SvgPicture.asset(
-                                "assets/svg_icon/menuicon.svg",
-                                height: Dimentions.height15,
-                                width: Dimentions.width17,
-                              )),
+                            "assets/svg_icon/menuicon.svg",
+                            height: Dimentions.height15,
+                            width: Dimentions.width17,
+                          )),
                         ),
                       ),
                       Container(
@@ -143,7 +156,7 @@ class CustomerHomeScreen extends StatelessWidget {
                                   builder: (ctx) => StoriesScreen()));
                         },
                         child: StatusView(
-                          radius: 25,
+                          radius: 20,
                           spacing: 15,
                           strokeWidth: 2,
                           indexOfSeenStatus: 2,
@@ -200,19 +213,19 @@ class CustomerHomeScreen extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             return Padding(
                               padding:
-                              EdgeInsets.only(left: Dimentions.width10),
+                                  EdgeInsets.only(left: Dimentions.width10),
                               child: Stack(fit: StackFit.expand, children: [
                                 Positioned(
                                     child: Image.asset(
-                                      "assets/image/beutyfullVehicle.png",
-                                      fit: BoxFit.fill,
-                                    )),
+                                  "assets/image/beutyfullVehicle.png",
+                                  fit: BoxFit.fill,
+                                )),
                                 Positioned(
                                     right: 0,
                                     top: 0,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color: Color(0xff07A605),
+                                          color: const Color(0xff07A605),
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(
                                                   Dimentions.height14),
@@ -224,11 +237,11 @@ class CustomerHomeScreen extends StatelessWidget {
                                             vertical: Dimentions.height3),
                                         child: Center(
                                             child: Text(
-                                              "mH-14-KC-2787",
-                                              style: ksubHeading.copyWith(
-                                                  color: Color(0xffFFFFFF),
-                                                  fontSize: Dimentions.font9),
-                                            )),
+                                          "mH-14-KC-2787",
+                                          style: ksubHeading.copyWith(
+                                              color: Color(0xffFFFFFF),
+                                              fontSize: Dimentions.font9),
+                                        )),
                                       ),
                                     ))
                               ]),
@@ -246,24 +259,18 @@ class CustomerHomeScreen extends StatelessWidget {
               Gap(Dimentions.height20),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
-                child: Text(
-                  "Exciting Offers For You!",
-                  style: TextStyle(
-                      color: Color(0xff7B8D9E),
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w800,
-                      fontSize: Dimentions.font12),
-                ),
+                child: CustomText(
+                  title: "Exciting Offers For You",
+                  color: const Color(0xff7B8D9E),
+                  fontWeight: FontWeight.w800,
+                  fontSize: Dimentions.height12,),
               ),
               Gap(Dimentions.height10),
               Container(
                 width: double.maxFinite,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.3,
                 child: PageView.builder(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   onPageChanged: (index) {
                     data.homeIndexPage(index);
                   },
@@ -296,20 +303,20 @@ class CustomerHomeScreen extends StatelessWidget {
                                       Color(0xffC06B00),
                                     ]),
                                 borderRadius:
-                                BorderRadius.circular(Dimentions.height14),
+                                    BorderRadius.circular(Dimentions.height14),
                               ),
                               child: Center(
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: Dimentions.width20),
-                                    child: Text(
-                                      "Subscribe Now",
-                                      style: GoogleFonts.nunitoSans(
-                                        color: Color(0xffFFFFFF),
-                                        fontSize: Dimentions.font14,
-                                      ),
-                                    ),
-                                  )),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: Dimentions.width20),
+                                child: Text(
+                                  "Subscribe Now",
+                                  style: GoogleFonts.nunitoSans(
+                                    color: Color(0xffFFFFFF),
+                                    fontSize: Dimentions.font14,
+                                  ),
+                                ),
+                              )),
                             ),
                           )
                         ],
@@ -321,51 +328,51 @@ class CustomerHomeScreen extends StatelessWidget {
               Gap(Dimentions.height10),
               HomeSlider(),
               Gap(Dimentions.height5),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
-                child: Text(
-                  "Enjoy Premium Rewards",
-                  style: GoogleFonts.montserrat(
-                      color: Color(0xff7B8D9E),
-                      fontWeight: FontWeight.w700,
-                      fontSize: Dimentions.font12),
-                ),
-              ),
-              Gap(Dimentions.height10),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
-                child: Container(
-                  width: double.maxFinite,
-                  child: SliderButton(
-                    dismissThresholds: 0.8,
-                    alignLabel: Alignment.center,
-                    shimmer: true,
-                    height: Dimentions.height64,
-                    buttonSize: Dimentions.height64,
-                    buttonColor: const Color(0xff6739B7),
-                    backgroundColor: const Color(0xff6739B7),
-                    action: () {
-                      ///Do something here
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RedeemGiftCard()));
-                    },
-                    label: Text(
-                      "Slide to pay with DAWNERS Coins",
-                      style: TextStyle(
-                          color: Color(0xffFFFFFF),
-                          fontWeight: FontWeight.w800,
-                          fontFamily: "Montserrat",
-                          fontSize: Dimentions.font10),
-                    ),
-                    icon: Image.asset(
-                      "assets/image/istockphoto-1129726518-170667a 2.png",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
+              //   child: Text(
+              //     "Enjoy Premium Rewards",
+              //     style: GoogleFonts.montserrat(
+              //         color: Color(0xff7B8D9E),
+              //         fontWeight: FontWeight.w700,
+              //         fontSize: Dimentions.font12),
+              //   ),
+              // ),
+              // Gap(Dimentions.height10),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
+              //   child: Container(
+              //     width: double.maxFinite,
+              //     child: SliderButton(
+              //       dismissThresholds: 0.8,
+              //       alignLabel: Alignment.center,
+              //       shimmer: true,
+              //       height: Dimentions.height64,
+              //       buttonSize: Dimentions.height64,
+              //       buttonColor: const Color(0xff6739B7),
+              //       backgroundColor: const Color(0xff6739B7),
+              //       action: () {
+              //         ///Do something here
+              //         Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //                 builder: (context) => const RedeemGiftCard()));
+              //       },
+              //       label: Text(
+              //         "Slide to pay with DAWNERS Coins",
+              //         style: TextStyle(
+              //             color: Color(0xffFFFFFF),
+              //             fontWeight: FontWeight.w800,
+              //             fontFamily: "Montserrat",
+              //             fontSize: Dimentions.font10),
+              //       ),
+              //       icon: Image.asset(
+              //         "assets/image/istockphoto-1129726518-170667a 2.png",
+              //         fit: BoxFit.cover,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
                 child: Row(
@@ -393,14 +400,23 @@ class CustomerHomeScreen extends StatelessWidget {
               ),
               SizedBox(
                 height: 150,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (BuildContext context, index) {
-                  return index==2? ScheduleNow():AfterSheduleContainer(dataForSwitch: dataForSwitch);
-                }),
+                child: FutureBuilder(future:apiData.showUserShedule() ,
+                  builder: (context , snapshot){
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return const Center(child: CupertinoActivityIndicator(radius: 20,),);
+                    }
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: apiData.showUserSheduleList.length+1,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (BuildContext context, index) {
+                        return index == apiData.showUserSheduleList.length
+                            ? ScheduleNow()
+                            : AfterSheduleContainer(dataForSwitch: dataForSwitch ,index:index);
+                      });
+                  },
+                ),
               ),
               Gap(Dimentions.height10)
             ],
@@ -408,10 +424,7 @@ class CustomerHomeScreen extends StatelessWidget {
         ),
       ),
       drawer: Drawer(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.8,
+        width: MediaQuery.of(context).size.width * 0.8,
         child: Column(
           children: [
             Gap(Dimentions.height33),
@@ -575,6 +588,7 @@ class CustomerHomeScreen extends StatelessWidget {
             ),
             Flexible(
               child: ListView.builder(
+                shrinkWrap:true,
                   itemCount: DrawersPackageModel.drawersPackageModel.length,
                   itemBuilder: (BuildContext context, index) {
                     return Padding(
@@ -586,8 +600,7 @@ class CustomerHomeScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) =>
-                                  DrawersPackageModel
+                                  builder: (_) => DrawersPackageModel
                                       .drawersPackageModel[index].page!));
                         },
                         child: Row(
@@ -612,29 +625,41 @@ class CustomerHomeScreen extends StatelessWidget {
                     );
                   }),
             ),
-            Gap(7)
+            Gap(7),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Icon(Icons.logout,color: Colors.red,),
+                Gap(5),
+                CustomText(title: "Log Out", fontWeight: FontWeight.w700, color: Color(0xffFF6060), fontSize: 17)
+            ],)
           ],
         ),
       ),
     );
+
   }
 }
 
 class AfterSheduleContainer extends StatelessWidget {
-  const AfterSheduleContainer({
+  int index;
+   AfterSheduleContainer({
     Key? key,
-    required this.dataForSwitch,
+    required this.dataForSwitch,required this.index
   }) : super(key: key);
 
   final CardController dataForSwitch;
 
   @override
   Widget build(BuildContext context) {
+
+
+    final apiData = Provider.of<ApiProvider>(context);
     return Container(
       height: 150,
       width: 300,
-      margin: EdgeInsets.only(left: 10,right: 10),
-      
+      margin: EdgeInsets.only(left: 10, right: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimentions.height24),
           color: Color(0xffE1D7F1)),
@@ -649,8 +674,7 @@ class AfterSheduleContainer extends StatelessWidget {
                     horizontal: Dimentions.width10,
                     vertical: Dimentions.height5),
                 decoration: BoxDecoration(
-                    borderRadius:
-                    BorderRadius.circular(Dimentions.height14),
+                    borderRadius: BorderRadius.circular(Dimentions.height14),
                     color: Color(0xffFE8E00)),
                 child: Text(
                   "3 days to go",
@@ -662,10 +686,9 @@ class AfterSheduleContainer extends StatelessWidget {
               )
             ],
           ),
-          Gap(Dimentions.height10),
+          Gap(Dimentions.height5),
           Container(
-            margin:
-            EdgeInsets.symmetric(horizontal: Dimentions.width15),
+            margin: EdgeInsets.symmetric(horizontal: Dimentions.width15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -673,8 +696,7 @@ class AfterSheduleContainer extends StatelessWidget {
                   height: Dimentions.height56,
                   width: Dimentions.width56,
                   decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(Dimentions.height15),
+                      borderRadius: BorderRadius.circular(Dimentions.height15),
                       color: Color(0xff6739B7)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -685,7 +707,7 @@ class AfterSheduleContainer extends StatelessWidget {
                           color: Color(0xffFFFFFF),
                           fontSize: Dimentions.font12),
                       CustomText(
-                          title: "Interior",
+                          title: apiData.showUserSheduleList[index].type!,
                           fontWeight: FontWeight.w600,
                           color: Color(0xffFFFFFF),
                           fontSize: Dimentions.font10)
@@ -695,13 +717,13 @@ class AfterSheduleContainer extends StatelessWidget {
                 Column(
                   children: [
                     CustomText(
-                        title: "MH-14-KC-2932",
+                        title: apiData.showUserSheduleList[index].userName!.vehicleReg!,
                         fontWeight: FontWeight.w700,
                         color: Color(0xff6739B7),
                         fontSize: Dimentions.font16),
                     Gap(Dimentions.height5),
                     CustomText(
-                        title: "@ 10:30 AM",
+                        title: apiData.showUserSheduleList[index].time!,
                         fontWeight: FontWeight.w400,
                         color: Color(0xff6739B7),
                         fontSize: Dimentions.font14)
@@ -711,8 +733,7 @@ class AfterSheduleContainer extends StatelessWidget {
                   width: Dimentions.width56,
                   height: Dimentions.height56,
                   decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(Dimentions.height15),
+                      borderRadius: BorderRadius.circular(Dimentions.height15),
                       color: Color(0xff6739B7)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -751,8 +772,11 @@ class AfterSheduleContainer extends StatelessWidget {
                     color: Color(0xff000000),
                     fontSize: Dimentions.font8),
                 InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (ctx)=>SelectServiceSlot()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => SelectService()));
                     },
                     child: SvgPicture.asset("assets/svg_icon/reshedule.svg")),
                 Spacer(),
@@ -765,28 +789,22 @@ class AfterSheduleContainer extends StatelessWidget {
                   height: 23,
                   width: 79,
                   child: FlutterSwitch(
-
                     valueFontSize: 12,
                     showOnOff: true,
                     padding: 0.0,
                     activeTextColor: Color(0xffFFFFFF),
                     activeTextFontWeight: FontWeight.w400,
-
-
                     inactiveTextColor: Color(0xffFFFFFF),
                     inactiveTextFontWeight: FontWeight.w400,
                     inactiveColor: Color(0xffFFFFFF),
                     activeColor: Color(0xffFFFFFF),
                     toggleColor: Color(0xff6739B7),
-
-
                     value: dataForSwitch.isSwitch,
                     onToggle: (bool value) {
                       dataForSwitch.isToggleSwitch(false);
-                    },),
+                    },
+                  ),
                 )
-
-
               ],
             ),
           ),
@@ -819,52 +837,52 @@ class ScheduleNow extends StatelessWidget {
               children: [
                 Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimentions.width10),
-                      child: Text(
-                        "There Are No Upcoming Services!",
-                        style: TextStyle(
-                            color: Color(0xff7B8D9E),
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w500,
-                            fontSize: Dimentions.font12),
-                      ),
-                    )),
+                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width10),
+                  child: Text(
+                    "There Are No Upcoming Services!",
+                    style: TextStyle(
+                        color: Color(0xff7B8D9E),
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w500,
+                        fontSize: Dimentions.font12),
+                  ),
+                )),
                 Expanded(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimentions.width10),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => SelectService()));
-                        },
-                        child: Container(
-                          height: Dimentions.height33,
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  Dimentions.height24),
-                              color: Color(0xff009DC7)),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Schedule Now",
-                                  style: GoogleFonts.nunitoSans(
-                                    color: Color(0xffFFFFFF),
-                                    fontSize: Dimentions.font12,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Gap(Dimentions.height10),
-                                SvgPicture.asset(
-                                    "assets/svg_icon/fluent_calendar-add-16-regular.svg")
-                              ],
+                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width10),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => SelectService()));
+                    },
+                    child: Container(
+                      height: Dimentions.height33,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(Dimentions.height24),
+                          color: Color(0xff009DC7)),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Schedule Now",
+                              style: GoogleFonts.nunitoSans(
+                                color: Color(0xffFFFFFF),
+                                fontSize: Dimentions.font12,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
+                            Gap(Dimentions.height10),
+                            SvgPicture.asset(
+                                "assets/svg_icon/fluent_calendar-add-16-regular.svg")
+                          ],
                         ),
                       ),
-                    ))
+                    ),
+                  ),
+                ))
               ],
             ),
           ),

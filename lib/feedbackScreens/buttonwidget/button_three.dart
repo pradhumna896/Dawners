@@ -13,7 +13,7 @@ class ButtonThree extends StatelessWidget {
           data.reviewDetalOnePage(3);
         },
         child: Container(
-          height: 33,
+          height: 45,
           width: 192,
           decoration: BoxDecoration(
             color: Color(0xffFAA53A),
@@ -34,9 +34,9 @@ class ButtonThree extends StatelessWidget {
               "Submit",
               style: TextStyle(
                   color: Color(0xffFFFFFF),
-                  fontFamily: "Montserrat-Bold",
+                  fontFamily: "Montserrat",
                   fontWeight: FontWeight.w700,
-                  fontSize: 14),
+                  fontSize: 16),
             ),
           ),
         ),

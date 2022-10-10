@@ -13,14 +13,25 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddOnServicePage extends StatefulWidget {
- AddOnServicePage({Key? key}) : super(key: key);
+  String dateTime;
+  String time;
+  String typeOfService;
+  String vehicleNumber;
+
+  AddOnServicePage(
+      {Key? key,
+      required this.dateTime,
+      required this.time,
+      required this.vehicleNumber,
+      required this.typeOfService})
+      : super(key: key);
 
   @override
   State<AddOnServicePage> createState() => _AddOnServicePageState();
 }
 
 class _AddOnServicePageState extends State<AddOnServicePage> {
-  int selectIndex=0;
+  int selectIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -91,73 +102,82 @@ class _AddOnServicePageState extends State<AddOnServicePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 38),
               child: TabBar(
-
-                labelStyle: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 12,
-                  color: Color(0xffFFFFFF)
-                ),
-                onTap: (val){
-                  setState(() {
-                    selectIndex=val;
-
-                  });
-                },
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorColor: Color(0xff6737B7),
-                indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-
-                ),
-
-                  tabs:[
-                Tab(child: Container(
-                  height: 40,
-                  width: 128,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: selectIndex== 0 ?Color(0xff6739B7):Color(0xffC2B0E2)
-
+                  labelStyle: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 12,
+                      color: Color(0xffFFFFFF)),
+                  onTap: (val) {
+                    setState(() {
+                      selectIndex = val;
+                    });
+                  },
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorColor: Color(0xff6737B7),
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-
-                  child: const Center(child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text("Subscription Offers",textAlign: TextAlign.center,),
-                  )),),),
-                Tab(child: Container(
-                  height: 40,
-                    width: 128,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: selectIndex== 1 ?Color(0xff6739B7):Color(0xffC2B0E2)
+                  tabs: [
+                    Tab(
+                      child: Container(
+                        height: 40,
+                        width: 128,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: selectIndex == 0
+                                ? Color(0xff6739B7)
+                                : Color(0xffC2B0E2)),
+                        child: const Center(
+                            child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            "Subscription Offers",
+                            textAlign: TextAlign.center,
+                          ),
+                        )),
+                      ),
                     ),
-                  child: const Center(child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text("One Time Offers",textAlign: TextAlign.center,),
-                  )),),)
-              ]),
+                    Tab(
+                      child: Container(
+                        height: 40,
+                        width: 128,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: selectIndex == 1
+                                ? Color(0xff6739B7)
+                                : Color(0xffC2B0E2)),
+                        child: const Center(
+                            child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            "One Time Offers",
+                            textAlign: TextAlign.center,
+                          ),
+                        )),
+                      ),
+                    )
+                  ]),
             ),
             Gap(10),
             Expanded(
-                child:TabBarView(children: [
-
-
-                  _card(),
-                  Container()
-
-                ],)),
+                child: TabBarView(
+              children: [_card(), Container()],
+            )),
             Gap(10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 27),
-              child: CustomBottonPurple(title: "Upgrade Pack", onClick: () {
-                _settingModalBottomSheet(context);
-              }, height: 56,),
+              child: CustomBottonPurple(
+                title: "Upgrade Pack",
+                onClick: () {
+                  _settingModalBottomSheet(context);
+                },
+                height: 56,
+              ),
             ),
             Gap(11),
             TextButton(
                 onPressed: () {
-
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx)=>BookingSummary()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (ctx) => BookingSummary()));
                 },
                 child: Text(
                   "Keep Current Pack",
@@ -174,284 +194,242 @@ class _AddOnServicePageState extends State<AddOnServicePage> {
     );
   }
 
-  Widget _card(){
+  Widget _card() {
     return ListView.builder(
       itemCount: 2,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
-      return InkWell(
-
-        onTap: (){
-          Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (ctx) => PackageDetails()));
-        },
-        child: Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14)
-          ),
-          margin: EdgeInsets.symmetric(horizontal: 25,vertical: 10),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 16,
-                    width: 128,
-                    decoration: BoxDecoration(
-                        color: Color(0xff07A605),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(14),
-                            bottomRight: Radius.circular(14))),
-                    child: Center(
-                      child: Text(
-                        "Recommended",
-                        style: GoogleFonts.montserrat(
-                            color: Color(0xffFFFFFF),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700),
+        return InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (ctx) => PackageDetails()));
+          },
+          child: Card(
+            elevation: 2,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 16,
+                      width: 128,
+                      decoration: BoxDecoration(
+                          color: Color(0xff07A605),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(14),
+                              bottomRight: Radius.circular(14))),
+                      child: Center(
+                        child: Text(
+                          "Recommended",
+                          style: GoogleFonts.montserrat(
+                              color: Color(0xffFFFFFF),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
                     ),
-                  ),
-                  Gap(15),
-
-                  Expanded(
-                    child: RichText(text: TextSpan(text: "153291" ,style: GoogleFonts.montserrat(
-                        color: Color(0xff07A605),
-                        fontSize: 9,
-                        fontWeight: FontWeight.w400),children: [TextSpan(text: "happy Subscribers in your area",style: GoogleFonts.montserrat(
-                        color: Color(0xff000000),
-                        fontSize: 9,
-                        fontWeight: FontWeight.w400))]
-                    ),),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  )
-                ],
-              ),
-              Gap(5),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 14,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Basic Pack",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
-                              color: Color(0xff000000)),
-                        ),
-
-                        Text(
-                          "We all love Sparkling Cars",
-                          style: GoogleFonts.montserrat(
-                              color: Color(0xff000000),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12),
-                        ),
-                        Gap(5),
-                        Text("-Everything in Basic Pack and",
+                    Gap(15),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                            text: "153291",
                             style: GoogleFonts.montserrat(
-                                decoration: TextDecoration.underline,
+                                color: Color(0xff07A605),
+                                fontSize: 9,
+                                fontWeight: FontWeight.w400),
+                            children: [
+                              TextSpan(
+                                  text: "happy Subscribers in your area",
+                                  style: GoogleFonts.montserrat(
+                                      color: Color(0xff000000),
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.w400))
+                            ]),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    )
+                  ],
+                ),
+                Gap(5),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 14,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Basic Pack",
+                            style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15,
+                                color: Color(0xff000000)),
+                          ),
+                          Text(
+                            "We all love Sparkling Cars",
+                            style: GoogleFonts.montserrat(
+                                color: Color(0xff000000),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12),
+                          ),
+                          Gap(5),
+                          Text("-Everything in Basic Pack and",
+                              style: GoogleFonts.montserrat(
+                                  decoration: TextDecoration.underline,
+                                  color: Color(0xff7B8D9E),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 10)),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, top: 5),
+                            child: Column(
+                              children: List.generate(
+                                  5,
+                                  (index) => Row(
+                                        children: [
+                                          Container(
+                                            height: 2,
+                                            width: 2,
+                                            decoration: BoxDecoration(
+                                                color: Color(0xff7B8D9E),
+                                                borderRadius:
+                                                    BorderRadius.circular(3)),
+                                          ),
+                                          Gap(5),
+                                          Text(
+                                            "Exterior Foam Wash - 4 times",
+                                            style: GoogleFonts.montserrat(
+                                                color: Color(0xff7B8D9E),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 9),
+                                          ),
+                                        ],
+                                      )),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Text("6 Services",
+                            style: GoogleFonts.montserrat(
                                 color: Color(0xff7B8D9E),
-                                fontWeight: FontWeight.w600,
-                                fontSize: 10)),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5, top: 5),
-                          child: Column(
-                            children: List.generate(
-                                5,
-                                    (index) => Row(
-                                  children: [
-                                    Container(
-                                      height: 2,
-                                      width: 2,
-                                      decoration: BoxDecoration(
-                                          color:
-                                          Color(0xff7B8D9E),
-                                          borderRadius:
-                                          BorderRadius
-                                              .circular(3)),
-                                    ),
-                                    Gap(5),
-                                    Text(
-                                      "Exterior Foam Wash - 4 times",
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700)),
+                        Gap(16),
+                        Container(
+                          height: 102,
+                          width: 84,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Container(
+                                  width: 84,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/image/carclean.png"),
+                                          fit: BoxFit.fill),
+                                      color: Color(0xffE0D7F0),
+                                      borderRadius: BorderRadius.circular(14)),
+                                  height: 93,
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 15),
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xffFE8E00),
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Text(
+                                      "ADD",
                                       style: GoogleFonts.montserrat(
-                                          color: Color(0xff7B8D9E),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 9),
+                                          color: Color(0xffFFFFFF),
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700),
                                     ),
-                                  ],
-                                )),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         )
                       ],
                     ),
-                  ),
-                  Column(
-                    children: [
-
-                      Text("6 Services",style: GoogleFonts.montserrat(
-                          color: Color(0xff7B8D9E),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700)),
-                      Gap(16),
-                      Container(
-                        height: 102,
-                        width: 84,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                width: 84,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage("assets/image/carclean.png"),fit: BoxFit.fill
-                                    ),
-                                    color: Color(0xffE0D7F0),
-                                    borderRadius:
-                                    BorderRadius.circular(14)),
-                                height: 93,
-
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Container(
-                                margin:
-                                EdgeInsets.symmetric(horizontal: 15),
-                                height: 20,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffFE8E00),
-                                    borderRadius:
-                                    BorderRadius.circular(50)),
-                                child:Center(
-                                  child: Text(
-                                    "ADD",
-                                    style: GoogleFonts.montserrat(
-                                        color: Color(0xffFFFFFF),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  const Gap(10)
-                ],
-              ),
-              Row(
-                children: [
-                  Spacer(),
-                  Text(
-                    "view more",
-                    style: GoogleFonts.montserrat(
-                        color: Color(0xff6739B7),
-                        fontSize: 8,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SvgPicture.asset(
-                      "assets/svg/fluent_arrow-circle-right-32-regular.svg"),
-                  Gap(94)
-                ],
-              ),
-              Gap(2),
-              Container(
-                height: 29,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Color(0xff80C2B0E2),
-                          Color(0xff006739B7),
-                          Color(0xff006739B7)
-                        ])),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                    const Gap(10)
+                  ],
+                ),
+                Row(
                   children: [
-                    Gap(10),
-                    Icon(
-                      Icons.currency_rupee,
-                      color: Color(0xff141023),
-                      size: 6,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "599",
-                          style: GoogleFonts.montserrat(
-                              decoration: TextDecoration.lineThrough,
-                              color: Color(0xff141023),
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Gap(2)
-                      ],
-                    ),
-                    Gap(5),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.currency_rupee,
+                    Spacer(),
+                    Text(
+                      "view more",
+                      style: GoogleFonts.montserrat(
                           color: Color(0xff6739B7),
-                          size: 8,
-                        ),
-                        Gap(10)
-                      ],
+                          fontSize: 8,
+                          fontWeight: FontWeight.w600),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "500",
-                          style: GoogleFonts.montserrat(
-                              color: Color(0xff6739B7),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        Gap(2)
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "first month",
-                          style: GoogleFonts.montserrat(
-                              color: Color(0xff000000),
-                              fontSize: 8,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        Gap(5)
-                      ],
-                    ),
-                    Gap(38),
-                    Row(children: [
+                    SvgPicture.asset(
+                        "assets/svg/fluent_arrow-circle-right-32-regular.svg"),
+                    Gap(94)
+                  ],
+                ),
+                Gap(2),
+                Container(
+                  height: 29,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                        Color(0xff80C2B0E2),
+                        Color(0xff006739B7),
+                        Color(0xff006739B7)
+                      ])),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Gap(10),
+                      Icon(
+                        Icons.currency_rupee,
+                        color: Color(0xff141023),
+                        size: 6,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "599",
+                            style: GoogleFonts.montserrat(
+                                decoration: TextDecoration.lineThrough,
+                                color: Color(0xff141023),
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Gap(2)
+                        ],
+                      ),
+                      Gap(5),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.currency_rupee,
-                            color: Color(0xff141023),
-                            size: 6,
+                            color: Color(0xff6739B7),
+                            size: 8,
                           ),
-
+                          Gap(10)
                         ],
                       ),
                       Column(
@@ -460,77 +438,115 @@ class _AddOnServicePageState extends State<AddOnServicePage> {
                           Text(
                             "500",
                             style: GoogleFonts.montserrat(
-                                color: Color(0xff141023),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600),
+                                color: Color(0xff6739B7),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700),
                           ),
-
+                          Gap(2)
                         ],
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "from 01/08/22",
+                            "first month",
                             style: GoogleFonts.montserrat(
                                 color: Color(0xff000000),
                                 fontSize: 8,
                                 fontWeight: FontWeight.w400),
                           ),
-
+                          Gap(5)
+                        ],
+                      ),
+                      Gap(38),
+                      Row(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.currency_rupee,
+                                color: Color(0xff141023),
+                                size: 6,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                "500",
+                                style: GoogleFonts.montserrat(
+                                    color: Color(0xff141023),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                "from 01/08/22",
+                                style: GoogleFonts.montserrat(
+                                    color: Color(0xff000000),
+                                    fontSize: 8,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          )
                         ],
                       )
-                    ],)
-                  ],
-                ),
-              ),
-              Gap(9),
-              Row(
-                children: [
-                  Gap(9),
-                  Text(
-                    "Limited Period Offer",
-                    style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 8,
-                        color: Color(0xff000000)),
+                    ],
                   ),
-                  Gap(20),
-                  Expanded(
-                      child: Container(
-                        height: 16,
-                        decoration: const BoxDecoration(
-                            color: Color(0xff009DC7),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(14),
-                                bottomRight: Radius.circular(14))),
-                        child: Center(
-                          child: RichText(textAlign: TextAlign.center,
-                            text: TextSpan(
-                                text: "1 Month",
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 8,
-                                    color: Color(0xffFFFFFF)),
-                                children: [
-                                  TextSpan(
-                                      text: " Free premium add on trial",
-                                      style: GoogleFonts.montserrat(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 12,
-                                          color: Color(0xffFFFFFF)))
-                                ]),
-                          ),
+                ),
+                Gap(9),
+                Row(
+                  children: [
+                    Gap(9),
+                    Text(
+                      "Limited Period Offer",
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 8,
+                          color: Color(0xff000000)),
+                    ),
+                    Gap(20),
+                    Expanded(
+                        child: Container(
+                      height: 16,
+                      decoration: const BoxDecoration(
+                          color: Color(0xff009DC7),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(14),
+                              bottomRight: Radius.circular(14))),
+                      child: Center(
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                              text: "1 Month",
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 8,
+                                  color: Color(0xffFFFFFF)),
+                              children: [
+                                TextSpan(
+                                    text: " Free premium add on trial",
+                                    style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 12,
+                                        color: Color(0xffFFFFFF)))
+                              ]),
                         ),
-                      ))
-                ],
-              )
-            ],
+                      ),
+                    ))
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      );
-    },
-
+        );
+      },
     );
   }
 
@@ -594,111 +610,111 @@ class _AddOnServicePageState extends State<AddOnServicePage> {
                                     margin: EdgeInsets.only(left: 15),
                                     child: index == 3
                                         ? Container(
-                                      width: 66,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 66,
                                             width: 66,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Color(
-                                                        0xff6739B7)),
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    66)),
-                                            child: Padding(
-                                              padding:
-                                              const EdgeInsets.all(
-                                                  8.0),
-                                              child: Image.asset(
-                                                  "assets/image/fluent_add-square-multiple-16-regular.png"),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text( "Add\nMore",
-                                            textAlign: TextAlign.center,
-
-                                            style: TextStyle(
-                                                color: Color(0xff6739B7),
-                                                fontSize: 12,
-                                                fontFamily:
-                                                "Montserrat-Regular"),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                        : Container(
-                                      width: 71,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 80,
-                                            child: Stack(children: [
-                                              Positioned(
-                                                top: 5,
-                                                right: 5,
-                                                child: Container(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
                                                   height: 66,
                                                   width: 66,
                                                   decoration: BoxDecoration(
-                                                      border: index == 0
-                                                          ? Border.all(
+                                                      border: Border.all(
                                                           color: Color(
-                                                              0xff6739B7))
-                                                          : Border(),
-                                                      color: Color(
-                                                          0xffF0EBF8),
+                                                              0xff6739B7)),
                                                       borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          70)),
-                                                  child: Center(
+                                                          BorderRadius.circular(
+                                                              66)),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                     child: Image.asset(
-                                                      "assets/icons/popupcirclecarimage.png",
-                                                      height: 39,
-                                                      width: 62,
-                                                    ),
+                                                        "assets/image/fluent_add-square-multiple-16-regular.png"),
                                                   ),
                                                 ),
-                                              ),
-                                              Positioned(
-                                                top: 0,
-                                                right: 0,
-                                                child: Visibility(
-                                                  visible: index == 0
-                                                      ? true
-                                                      : false,
-                                                  child: Image.asset(
-                                                    "assets/icons/platinumpremium.png",
-                                                    height: 30,
-                                                    width: 30,
-                                                  ),
+                                                SizedBox(
+                                                  height: 10,
                                                 ),
-                                              )
-                                            ]),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text("MH-14-KC 2932",
-                                            textAlign: TextAlign.center,
-
-                                            style: TextStyle(
-                                                color: Color(0xff6739B7),
-                                                fontSize: 12,
-                                                fontFamily:
-                                                "Montserrat-Regular"),
+                                                Text(
+                                                  "Add\nMore",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Color(0xff6739B7),
+                                                      fontSize: 12,
+                                                      fontFamily:
+                                                          "Montserrat-Regular"),
+                                                )
+                                              ],
+                                            ),
                                           )
-                                        ],
-                                      ),
-                                    ),
+                                        : Container(
+                                            width: 71,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  height: 80,
+                                                  child: Stack(children: [
+                                                    Positioned(
+                                                      top: 5,
+                                                      right: 5,
+                                                      child: Container(
+                                                        height: 66,
+                                                        width: 66,
+                                                        decoration: BoxDecoration(
+                                                            border: index == 0
+                                                                ? Border.all(
+                                                                    color: Color(
+                                                                        0xff6739B7))
+                                                                : Border(),
+                                                            color: Color(
+                                                                0xffF0EBF8),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        70)),
+                                                        child: Center(
+                                                          child: Image.asset(
+                                                            "assets/icons/popupcirclecarimage.png",
+                                                            height: 39,
+                                                            width: 62,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      top: 0,
+                                                      right: 0,
+                                                      child: Visibility(
+                                                        visible: index == 0
+                                                            ? true
+                                                            : false,
+                                                        child: Image.asset(
+                                                          "assets/icons/platinumpremium.png",
+                                                          height: 30,
+                                                          width: 30,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ]),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  "MH-14-KC 2932",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Color(0xff6739B7),
+                                                      fontSize: 12,
+                                                      fontFamily:
+                                                          "Montserrat-Regular"),
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                   );
                                 })),
                       ],
@@ -755,7 +771,13 @@ class _AddOnServicePageState extends State<AddOnServicePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: CustomBottonPurple(onClick: () { _congratulationPopUp(context); }, title: 'Continue', height: 56,),
+                    child: CustomBottonPurple(
+                      onClick: () {
+                        _congratulationPopUp(context);
+                      },
+                      title: 'Continue',
+                      height: 56,
+                    ),
                   ),
                 ],
               ));
@@ -771,23 +793,28 @@ class _AddOnServicePageState extends State<AddOnServicePage> {
           return Container(
               height: MediaQuery.of(context).size.height * 0.85,
               decoration: BoxDecoration(
-                   color: Color(0xb0000000),
+                  color: Color(0xb0000000),
                   borderRadius: BorderRadius.circular(14)),
-
               child: Column(
                 children: [
                   Image.asset("assets/image/greatchoice.png"),
-
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: CustomButton(text: "Great,Thanks", onclick: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (ctx)=>ForServiceRequisetSetUpPayment()));
-                    }),
+                    child: CustomButton(
+                        text: "Great,Thanks",
+                        onclick: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (ctx) =>
+                                      ForServiceRequisetSetUpPayment()));
+                        }),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Padding(
-
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Material(
                         borderRadius: BorderRadius.circular(14),
@@ -810,11 +837,15 @@ class _AddOnServicePageState extends State<AddOnServicePage> {
                                 ]),
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          child: Center(child: Text("Review Details",style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Montserrat-ExtraBold",
-                              color: Color(0xffFE8E00)),)),
+                          child: Center(
+                              child: Text(
+                            "Review Details",
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Montserrat-ExtraBold",
+                                color: Color(0xffFE8E00)),
+                          )),
                         )),
                   ),
                   Spacer()

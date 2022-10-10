@@ -11,7 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart'as http;
 import 'package:string_to_hex/string_to_hex.dart';
 class MyPackageCard extends StatefulWidget {
-  const MyPackageCard({Key? key}) : super(key: key);
+
+  const MyPackageCard({Key? key,}) : super(key: key);
 
   @override
   State<MyPackageCard> createState() => _MyPackageCardState();

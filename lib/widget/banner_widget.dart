@@ -10,7 +10,7 @@ class BannerWidget extends StatelessWidget {
 
   }) : super(key: key);
 
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
 
 

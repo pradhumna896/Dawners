@@ -30,41 +30,41 @@ class DrawersPackageModel {
       title: "My Profile",
       page: ConfirmMationScreen(),
     ),
-    DrawersPackageModel(
-        icon: "assets/svg_icon/myreward.svg",
-
-        title: "My Reward",
-        page: SetUpPaymentNonRewardFound()),
+    // DrawersPackageModel(
+    //     icon: "assets/svg_icon/myreward.svg",
+    //
+    //     title: "My Reward",
+    //     page: SetUpPaymentNonRewardFound()),
     DrawersPackageModel(
       icon: "assets/drawersicons/drawerssubscription.svg",
       title: "My Subscriptions",
       page: SubscribeScreen(),
     ),
-    DrawersPackageModel(
-      icon: "assets/drawersicons/dpaymentmode.svg",
-      title: "My Payment Mode",
-      page: DrawersMyPaymentMode(),
-    ),
-    DrawersPackageModel(
-      icon: "assets/drawersicons/drawersmyorder.svg",
-      title: "My Orders",
-      page: PaymentPage(),
-    ),
-    DrawersPackageModel(
-      icon: "assets/drawersicons/drawerscarcaretakers.svg",
-      title: "My Car Care Taker",
-      page: VehiclesCareTaker(),
-    ),
+    // DrawersPackageModel(
+    //   icon: "assets/drawersicons/dpaymentmode.svg",
+    //   title: "My Payment Mode",
+    //   page: DrawersMyPaymentMode(),
+    // ),
+    // DrawersPackageModel(
+    //   icon: "assets/drawersicons/drawersmyorder.svg",
+    //   title: "My Orders",
+    //   page: PaymentPage(),
+    // ),
+    // DrawersPackageModel(
+    //   icon: "assets/drawersicons/drawerscarcaretakers.svg",
+    //   title: "My Car Care Taker",
+    //   page: VehiclesCareTaker(),
+    // ),
     DrawersPackageModel(
       icon: "assets/drawersicons/drawersmyidea.svg",
       title: "My Ideas",
       page: DrawersMyIdea(),
     ),
-    DrawersPackageModel(
-      icon: "assets/drawersicons/drawersmyreworkrequest.svg",
-      title: "My Rework Requests",
-      page: ReworkPage(),
-    ),
+    // DrawersPackageModel(
+    //   icon: "assets/drawersicons/drawersmyreworkrequest.svg",
+    //   title: "My Rework Requests",
+    //   page: ReworkPage(),
+    // ),
     DrawersPackageModel(
       icon: "assets/drawersicons/drawersshare.svg",
       title: "Earn Free Washes",

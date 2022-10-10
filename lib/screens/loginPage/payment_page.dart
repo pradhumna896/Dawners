@@ -1,3 +1,4 @@
+import 'package:dawners/feedbackScreens/service_details_one.dart';
 import 'package:dawners/helper/appbar_back_button.dart';
 import 'package:dawners/helper/custom_botton_purple.dart';
 import 'package:dawners/helper/custom_button.dart';
@@ -335,8 +336,7 @@ class PaymentPage extends StatelessWidget {
               CustomBottonPurple(
                 title: "Subscribe",textsize: Dimentions.font24,
                 onClick: () {
-                  _currentCleanersPopUp(context);
-                }, height: Dimentions.height56,
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx)=>ServiceDetailsOne()));}, height: Dimentions.height56,
               ),
               Gap(Dimentions.height20)
             ],

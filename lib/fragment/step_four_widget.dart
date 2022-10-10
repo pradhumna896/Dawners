@@ -31,18 +31,18 @@ class _StepFourWidgetState extends State<StepFourWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Column(
         children: [
-          Row(
-            children: [
-              Text(
-                "Your Address Details",
-                style: TextStyle(
-                    color: Color(0xff0E1012),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Montserrat-ExtraBold"),
-              ),
-            ],
-          ),
+        Expanded(child: Column(children: [      Row(
+          children: [
+            Text(
+              "Your Address Details",
+              style: TextStyle(
+                  color: Color(0xff0E1012),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "Montserrat-ExtraBold"),
+            ),
+          ],
+        ),
           SizedBox(
             height: 5,
           ),
@@ -250,15 +250,14 @@ class _StepFourWidgetState extends State<StepFourWidget> {
                 )),
           ),
 
-          SizedBox(
-            height: 30,
-          ),
+          ],)),
           CustomButton(
               text: "Submit",
               onclick: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (ctx) => ConfirmMationScreen()));
               }),
+          Gap(20)
         ],
       ),
     );

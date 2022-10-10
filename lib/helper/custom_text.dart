@@ -23,7 +23,7 @@ class CustomText extends StatelessWidget {
     return Text(
       title,
 
-      style:GoogleFonts.nunito(
+      style:GoogleFonts.montserrat(
           fontSize: fontSize,
           fontWeight: fontWeight,
           color: color,

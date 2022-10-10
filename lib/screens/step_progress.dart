@@ -32,6 +32,7 @@ class _StepProgressState extends State<StepProgress> {
       return StepTwoWidget();
     } else if (data.stepperProgress == 3) {
       return StepThreeWidget();
+      //onclick: () { data.stepperProgressPage(3); },
     } else {
       return StepFourWidget();
     }

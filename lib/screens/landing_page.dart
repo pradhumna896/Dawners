@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dawners/helper/box_shadow.dart';
+import 'package:dawners/model/login_model.dart';
 import 'package:dawners/model/sign_up_modal.dart';
 
 // import 'package:dawners/model/dot_slider.dart';
@@ -41,11 +42,36 @@ class _LandingScreenState extends State<LandingScreen> {
 
   final _formkey = GlobalKey<FormState>();
 
+  // void login(mobileNumber) async {
+  //   setState(() {
+  //     isSumitted = true;
+  //   });
+  //   Uri uri = Uri.parse(ApiNetwork.signUp);
+  //   Map<String, String> map = {'mobile': mobileNumber};
+  //   final response = await http.post(uri, body: map);
+  //   if (response.statusCode == 200) {
+  //     print("object ${response.statusCode}");
+  //     setState(() {
+  //       isSumitted = false;
+  //     });
+  //     SignUpModal login = SignUpModal.fromJson(jsonDecode(response.body));
+  //     if (login.result == "signup Successfull") {
+  //       Navigator.push(context, MaterialPageRoute(builder: (ctx) => OtpScreen(mobileNumber: mobileController.text)));
+  //       return;
+  //     } else {
+  //       isSumitted = false;
+  //       ScaffoldMessenger.of(context)
+  //           .showSnackBar(SnackBar(content: Text("Error")));
+  //       return;
+  //     }
+  //   }
+  // }
+
   void login(mobileNumber) async {
     setState(() {
       isSumitted = true;
     });
-    Uri uri = Uri.parse(ApiNetwork.signUp);
+    Uri uri = Uri.parse(ApiNetwork.login);
     Map<String, String> map = {'mobile': mobileNumber};
     final response = await http.post(uri, body: map);
     if (response.statusCode == 200) {
@@ -53,11 +79,12 @@ class _LandingScreenState extends State<LandingScreen> {
       setState(() {
         isSumitted = false;
       });
-      SignUpModal login = SignUpModal.fromJson(jsonDecode(response.body));
-      if (login.result == "signup Successfull") {
+      LoginModel login =LoginModel.fromJson(jsonDecode(response.body));
+      if (login.result ==  "Login Successfull") {
         Navigator.push(context, MaterialPageRoute(builder: (ctx) => OtpScreen(mobileNumber: mobileController.text)));
         return;
       } else {
+        isSumitted = false;
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Error")));
         return;

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dawners/helper/appbar_back_button.dart';
 import 'package:dawners/helper/custom_botton_purple.dart';
+import 'package:dawners/helper/custom_text.dart';
 import 'package:dawners/helper/ktext_class.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,8 @@ class _ReworkPageState extends State<ReworkPage> {
                     height: Dimentions.height183,
                     width: Dimentions.width183,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimentions.height26),
+                        borderRadius:
+                            BorderRadius.circular(Dimentions.height26),
                         color: Color(0xffFAF0DB)),
                     child: pickedImage != null
                         ? ClipRRect(
@@ -104,18 +106,21 @@ class _ReworkPageState extends State<ReworkPage> {
                   child: SizedBox(
                     width: double.maxFinite,
                     child: TextFormField(
+                      maxLines: 5,
                       decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: Dimentions.height60, left: Dimentions.width10),
                           filled: true,
                           fillColor: Color(0xffF7F0DB),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(Dimentions.height20),
+                              borderRadius:
+                                  BorderRadius.circular(Dimentions.height20),
                               borderSide: BorderSide(color: Color(0xffF7F0DB))),
                           enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(Dimentions.height20),
+                              borderRadius:
+                                  BorderRadius.circular(Dimentions.height20),
                               borderSide: BorderSide(color: Color(0xffF7F0DB))),
                           focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(Dimentions.height20),
+                              borderRadius:
+                                  BorderRadius.circular(Dimentions.height20),
                               borderSide: BorderSide(color: Color(0xffF7F0DB))),
                           hintText: "Write your note here.",
                           hintStyle: TextStyle(
@@ -129,21 +134,18 @@ class _ReworkPageState extends State<ReworkPage> {
               ),
               Gap(Dimentions.height20),
               Padding(
-                padding:  EdgeInsets.symmetric(horizontal: Dimentions.width25),
+                padding: EdgeInsets.symmetric(horizontal: Dimentions.width25),
                 child: Row(
                   children: [
-                    Text(
-                      "Your Vehicles ",
-                      style: TextStyle(
-                          color: Color(0xff7B8D9E),
-                          fontSize: 12,
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w700),
-                    )
+                    CustomText(
+                        title: "Your Vehicles",
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xff7b8d9e),
+                        fontSize: 12)
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               SizedBox(
@@ -214,7 +216,7 @@ class _ReworkPageState extends State<ReworkPage> {
                                                     decoration: BoxDecoration(
                                                         border: index == 0
                                                             ? Border.all(
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xff6739B7))
                                                             : Border(),
                                                         color:
@@ -277,7 +279,8 @@ class _ReworkPageState extends State<ReworkPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return Dialog(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -307,8 +310,7 @@ class _ReworkPageState extends State<ReworkPage> {
                                     height: 83,
                                     width: 83,
                                     decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(83),
+                                        borderRadius: BorderRadius.circular(83),
                                         color: Color(0xffDCEDF9)),
                                     child: Center(
                                       child: SvgPicture.asset(
@@ -344,8 +346,7 @@ class _ReworkPageState extends State<ReworkPage> {
                                     width: 193,
                                     decoration: BoxDecoration(
                                         gradient: kPurplegradient,
-                                        borderRadius:
-                                            BorderRadius.circular(14),
+                                        borderRadius: BorderRadius.circular(14),
                                         color: Color(0xff6A3ABC)),
                                     child: Center(
                                       child: Text(
@@ -374,8 +375,8 @@ class _ReworkPageState extends State<ReworkPage> {
                                     )),
                                 Gap(20),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                   child: Container(
                                     child: Center(
                                       child: Column(
@@ -386,8 +387,7 @@ class _ReworkPageState extends State<ReworkPage> {
                                                     "2 OUT OF 4 REWORKS REQUESTED, ",
                                                 style: TextStyle(
                                                     color: Color(0xff83939E),
-                                                    fontWeight:
-                                                        FontWeight.w800,
+                                                    fontWeight: FontWeight.w800,
                                                     fontSize: 12,
                                                     fontFamily:
                                                         "Montserrat-SemiBold"),
@@ -396,8 +396,8 @@ class _ReworkPageState extends State<ReworkPage> {
                                                       text:
                                                           "FOR MORE REQUESTS, ",
                                                       style: TextStyle(
-                                                          color: Color(
-                                                              0xff83939E),
+                                                          color:
+                                                              Color(0xff83939E),
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontSize: 12,
@@ -419,19 +419,16 @@ class _ReworkPageState extends State<ReworkPage> {
                                           ),
                                           Gap(20),
                                           Padding(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 8),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8),
                                             child: Text(
                                                 "ENJOY PRIORITY TREATMENT WITH PREMIUM SERVICES.",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: Color(0xff83939E),
-                                                    fontWeight:
-                                                        FontWeight.w800,
+                                                    fontWeight: FontWeight.w800,
                                                     fontSize: 12,
-                                                    fontFamily:
-                                                        "Montserrat")),
+                                                    fontFamily: "Montserrat")),
                                           )
                                         ],
                                       ),
@@ -471,7 +468,10 @@ class _ReworkPageState extends State<ReworkPage> {
                 children: [
                   const Text(
                     "Pic Image From",
-                    style: TextStyle(fontFamily:"Montserrat",fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(
@@ -482,14 +482,20 @@ class _ReworkPageState extends State<ReworkPage> {
                       pickImage(ImageSource.camera);
                     },
                     icon: const Icon(Icons.camera),
-                    label:  Text("CAMERA",style: GoogleFonts.montserrat(),),
+                    label: Text(
+                      "CAMERA",
+                      style: GoogleFonts.montserrat(),
+                    ),
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
                       pickImage(ImageSource.gallery);
                     },
                     icon: const Icon(Icons.image),
-                    label: Text("GALLERY",style: GoogleFonts.montserrat(),),
+                    label: Text(
+                      "GALLERY",
+                      style: GoogleFonts.montserrat(),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -499,7 +505,10 @@ class _ReworkPageState extends State<ReworkPage> {
                       Get.back();
                     },
                     icon: const Icon(Icons.close),
-                    label:Text("CANCEL",style: GoogleFonts.montserrat(),),
+                    label: Text(
+                      "CANCEL",
+                      style: GoogleFonts.montserrat(),
+                    ),
                   ),
                 ],
               ),
@@ -531,7 +540,8 @@ void uploadFeedback(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -636,15 +646,15 @@ void uploadFeedback(BuildContext context) {
 
 void viewDetails(BuildContext context) {
   showDialog(
-
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Container(
             width: double.maxFinite,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Color(0xff6739B7), width: 2)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -825,9 +835,9 @@ void upgradePack(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: Container(
-            
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

@@ -32,7 +32,7 @@ class HomeWhiteSlider extends StatelessWidget {
                   width:data.homeWhiteIndex== 0?18: 6,
                   height: 6,
                   decoration: BoxDecoration(
-                      color:Color(0xffFFFFFF),
+                      color:const Color(0xffFFFFFF),
                       borderRadius: BorderRadius.circular(6.0)),
                 ),
                 AnimatedContainer(

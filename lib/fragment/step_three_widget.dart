@@ -1,12 +1,17 @@
 import 'package:dawners/provider/app_controller.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:dawners/screens/loginPage/payment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class StepThreeWidget extends StatefulWidget {
-   StepThreeWidget({Key? key}) : super(key: key);
+
+
+
+
+   StepThreeWidget({Key? key, }) : super(key: key);
 
   @override
   State<StepThreeWidget> createState() => _StepThreeWidgetState();
@@ -20,28 +25,30 @@ class _StepThreeWidgetState extends State<StepThreeWidget> {
     final data = Provider.of<AppController>(context);
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 27),
-          child: TableCalendar(
-            calendarFormat: CalendarFormat.month,
-            daysOfWeekVisible: true,
-            headerStyle: HeaderStyle(
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 27),
+            child: TableCalendar(
+              calendarFormat: CalendarFormat.month,
+              daysOfWeekVisible: true,
+              headerStyle: HeaderStyle(
 
 
-              titleCentered: true,
-              formatButtonVisible: false,
+                titleCentered: true,
+                formatButtonVisible: false,
 
-              titleTextStyle: TextStyle(
-                color: Color(0xff0E1012),fontSize: 20,fontFamily: "Montserrat-ExtraBold",fontWeight: FontWeight.bold
-              )
+                titleTextStyle: TextStyle(
+                  color: Color(0xff0E1012),fontSize: 20,fontFamily: "Montserrat-ExtraBold",fontWeight: FontWeight.bold
+                )
 
-            ),
-            firstDay: DateTime.utc(2010, 10, 16),
-            lastDay: DateTime.utc(2030, 3, 14),
-            focusedDay: DateTime.now(),
-            calendarStyle: CalendarStyle(
-              todayDecoration: BoxDecoration(color: Color(0xff6739B7),
-              borderRadius: BorderRadius.circular(10))
+              ),
+              firstDay: DateTime.utc(2010, 10, 16),
+              lastDay: DateTime.utc(2030, 3, 14),
+              focusedDay: DateTime.now(),
+              calendarStyle: CalendarStyle(
+                todayDecoration: BoxDecoration(color: Color(0xff6739B7),
+                borderRadius: BorderRadius.circular(10))
+              ),
             ),
           ),
         ),
@@ -108,8 +115,8 @@ class _StepThreeWidgetState extends State<StepThreeWidget> {
                     borderRadius: BorderRadius.circular(14),
                     elevation: 5,
                     child: InkWell(
-                      onTap: (){
-                        data.stepperProgressPage(4);
+                      onTap:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (ctx)=>PaymentPage()));
                       },
                       child: Container(
                         height: Dimentions.height56,

@@ -7,7 +7,12 @@ import 'package:gap/gap.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class SelectServiceSlot extends StatefulWidget {
-  const SelectServiceSlot({Key? key}) : super(key: key);
+  String typeOfService;
+  String vehicleNumber;
+
+  SelectServiceSlot(
+      {Key? key, required this.typeOfService, required this.vehicleNumber})
+      : super(key: key);
 
   @override
   State<SelectServiceSlot> createState() => _SelectServiceSlotState();
@@ -19,6 +24,8 @@ class _SelectServiceSlotState extends State<SelectServiceSlot> {
 
   @override
   Widget build(BuildContext context) {
+    String typeOfService = widget.typeOfService;
+    String vehicleNumber = widget.vehicleNumber;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -98,11 +105,10 @@ class _SelectServiceSlotState extends State<SelectServiceSlot> {
                     fontWeight: FontWeight.w700,
                     fontFamily: "Montserrat"),
               ),
-              headerStyle:  HeaderStyle(
+              headerStyle: HeaderStyle(
                   titleCentered: true,
                   formatButtonVisible: false,
                   titleTextStyle: TextStyle(
-
                       color: Color(0xff0E1012),
                       fontSize: Dimentions.font20,
                       fontFamily: "Montserrat",
@@ -112,33 +118,27 @@ class _SelectServiceSlotState extends State<SelectServiceSlot> {
               currentDay: _chosenDate,
               focusedDay: DateTime.now(),
               calendarStyle: CalendarStyle(
-                cellMargin: EdgeInsets.all(8),
-                markerMargin: EdgeInsets.symmetric(horizontal: 0),
+                  cellMargin: EdgeInsets.all(8),
+                  markerMargin: EdgeInsets.symmetric(horizontal: 0),
+                  weekendDecoration: const BoxDecoration(
+                      // color: Color(0xff6ACA69),
 
-                weekendDecoration:  const BoxDecoration(
-                  // color: Color(0xff6ACA69),
-
-                ),
-
-                holidayDecoration:const BoxDecoration(
-
-                  color: Color(0xff07A605)
-                ),
+                      ),
+                  holidayDecoration:
+                      const BoxDecoration(color: Color(0xff07A605)),
                   selectedTextStyle: const TextStyle(
-
                       color: Color(0xffFFFFFF),
                       fontSize: 15,
                       fontFamily: "Poppins",
                       fontWeight: FontWeight.w500),
-                  selectedDecoration:
-                      BoxDecoration(color: const Color(0xff07A605),borderRadius: BorderRadius.circular(14)),
+                  selectedDecoration: BoxDecoration(
+                      color: const Color(0xff07A605),
+                      borderRadius: BorderRadius.circular(14)),
                   todayDecoration: BoxDecoration(
-                      color:Color(0xff6ACA69),
-                      )),
-
+                    color: Color(0xff6ACA69),
+                  )),
             ),
             Container(
-             
               width: double.maxFinite,
               decoration: BoxDecoration(
                   color: Color(0xff6739B7),
@@ -212,7 +212,12 @@ class _SelectServiceSlotState extends State<SelectServiceSlot> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (ctx) => AddOnServicePage()));
+                                    builder: (ctx) => AddOnServicePage(
+                                          dateTime: "10-10-22",
+                                          time: "9:30AM",
+                                          typeOfService: typeOfService,
+                                          vehicleNumber: vehicleNumber,
+                                        )));
                           },
                           child: Container(
                             height: 56,

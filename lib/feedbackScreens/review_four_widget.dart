@@ -91,7 +91,7 @@ class ReviewFourWidget extends StatelessWidget {
                             child: Text("be as particular as you can,so we can deliver the same!\n......start typing.......",
                               textAlign: TextAlign.center,
                             style: TextStyle(color: Color(0xff7B8D9E),fontSize: 10,
-                            fontFamily: "Montserrat-Regular"),),
+                            fontFamily: "Montserrat"),),
                           ),
                         ),
                       ),

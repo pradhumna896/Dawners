@@ -1,5 +1,7 @@
 import 'package:dawners/helper/custom_button.dart';
+import 'package:dawners/screens/confirmfation_screen.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:dawners/screens/loginPage/login_confirm_details.dart';
 import 'package:dawners/screens/step_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                     text: "Great, Contiue!",
                     onclick: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => StepProgress()));
+                          MaterialPageRoute(builder: (_) =>LoginConfirmDetails()));
                     }),
                 Gap(Dimentions.height44)
               ],

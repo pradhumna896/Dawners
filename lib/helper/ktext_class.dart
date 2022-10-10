@@ -15,7 +15,7 @@ const ksubHeading = TextStyle(
 const kOrangeButtonGradient = LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomLeft,
-      // stops: [0.3,0.6,0.9],
+
       colors: [
 
         Color(0xffFAA53A),

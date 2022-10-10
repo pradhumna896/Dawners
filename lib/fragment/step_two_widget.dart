@@ -265,7 +265,7 @@ class StepTwoWidget extends StatelessWidget {
                   Row(
                     children: [
                       CustomText(title: "ENTER VEHICLE NAME",
-                          textAlign: TextAlign.start, fontWeight: FontWeight.w400, color: Color(0xff000000), fontSize: 12),
+                          textAlign: TextAlign.start, fontWeight: FontWeight.w400, color: Color(0xff000000), fontSize: 11),
                     ],
                   ),
                   Material(
@@ -315,7 +315,7 @@ class StepTwoWidget extends StatelessWidget {
                   Row(
                     children: [
                       CustomText(title: "ENTER VEHICLE REGISTRATION NUMBER",
-                          textAlign: TextAlign.start, fontWeight: FontWeight.w400, color: Color(0xff000000), fontSize: 12),
+                          textAlign: TextAlign.start, fontWeight: FontWeight.w400, color: Color(0xff000000), fontSize: 11),
                     ],
                   ),
                   Material(
