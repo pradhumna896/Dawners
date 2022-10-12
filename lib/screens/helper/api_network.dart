@@ -16,4 +16,6 @@ class ApiNetwork{
   static const otpResend = baseUrl+"process.php?action=resend_otp";
   static const editInfo = baseUrl+"process.php?action=edit_user_info";
   static const showUserShedule = baseUrl + "process.php?action=show_user_schedule";
+  static const showStories = baseUrl + "process.php?action=show_stories";
+
 }

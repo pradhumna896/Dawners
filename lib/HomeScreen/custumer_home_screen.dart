@@ -26,6 +26,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:status_view/status_view.dart';
+import 'package:intl/intl.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   CustomerHomeScreen({Key? key}) : super(key: key);
@@ -192,7 +193,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 child: Text(
                   "Today's Notification",
                   style: TextStyle(
-                      color: Color(0xff7B8D9E),
+                      color: const Color(0xff7B8D9E),
                       fontFamily: "Montserrat",
                       fontWeight: FontWeight.w800,
                       fontSize: Dimentions.font12),
@@ -402,9 +403,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 height: 150,
                 child: FutureBuilder(future:apiData.showUserShedule() ,
                   builder: (context , snapshot){
-                    if(snapshot.connectionState == ConnectionState.waiting){
-                      return const Center(child: CupertinoActivityIndicator(radius: 20,),);
-                    }
+                    // if(snapshot.connectionState == ConnectionState.waiting){
+                    //   return const Center(child: CupertinoActivityIndicator(radius: 20,),);
+                    // }
                     return ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
@@ -648,13 +649,9 @@ class AfterSheduleContainer extends StatelessWidget {
     Key? key,
     required this.dataForSwitch,required this.index
   }) : super(key: key);
-
-  final CardController dataForSwitch;
-
+   final CardController dataForSwitch;
   @override
   Widget build(BuildContext context) {
-
-
     final apiData = Provider.of<ApiProvider>(context);
     return Container(
       height: 150,

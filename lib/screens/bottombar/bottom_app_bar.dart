@@ -10,6 +10,7 @@ import 'package:dawners/provider/card_controller.dart';
 import 'package:dawners/rework/rework_screen.dart';
 import 'package:dawners/screens/confirmfation_screen.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:dawners/screens/loginPage/login_confirm_details.dart';
 import 'package:dawners/subscribescreen/subscribe_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _CurveAppBarState extends State<CurveAppBar> {
    const ReworkPage(),
    SubscribeScreen(),
    const MyOrderScreen(),
-   ConfirmMationScreen()
+   LoginConfirmDetails()
    // UpdateScreen()
  ];
  int _activePage=0;
