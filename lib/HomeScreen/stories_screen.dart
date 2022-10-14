@@ -76,7 +76,6 @@ class _StoriesScreenState extends State<StoriesScreen> {
           Gap(10),
           Expanded(child: FutureBuilder(
             future: getStories(),
-            
             builder: (context, snapshot) {
 
               // Timer(Duration(seconds: 4), () {
@@ -133,5 +132,6 @@ class _StoriesScreenState extends State<StoriesScreen> {
         ],
       ),
     );
+
   }
 }

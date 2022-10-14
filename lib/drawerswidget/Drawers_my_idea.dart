@@ -1,15 +1,52 @@
+
+
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dawners/helper/appbar_back_button.dart';
 import 'package:dawners/helper/custom_botton_purple.dart';
 import 'package:dawners/helper/ktext_class.dart';
+import 'package:dawners/model/user_idea_model.dart';
+import 'package:dawners/screens/helper/api_network.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:dawners/screens/helper/sessionmanager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
-class DrawersMyIdea extends StatelessWidget {
+class DrawersMyIdea extends StatefulWidget {
   const DrawersMyIdea({Key? key}) : super(key: key);
 
+  @override
+  State<DrawersMyIdea> createState() => _DrawersMyIdeaState();
+}
+
+class _DrawersMyIdeaState extends State<DrawersMyIdea> {
+  File? pickedImage;
+  TextEditingController descriptionControlller= TextEditingController();
+  postUserIdea()async{
+    Uri uri = Uri.parse(ApiNetwork.userIdea);
+    Map<String ,String> map = {
+      'user_id':SessionManager.getUserID(),
+      'image':pickedImage.toString(),
+      'description':descriptionControlller.text
+    };
+    final response =await  http.post(uri,body: map);
+    if (response.statusCode == 200){
+
+      UserIdeaModel getIdea =UserIdeaModel.fromJson(jsonDecode(response.body));
+      if(getIdea.result=="User Idea Add  Successfull"){
+        ideaSubmittedPopUp(context);
+      }else{
+        print("error");
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,15 +77,28 @@ class DrawersMyIdea extends StatelessWidget {
                       Material(
                         borderRadius: BorderRadius.circular(Dimentions.height26),
                         elevation: 5,
-                        child: Container(
-                          height: Dimentions.height183,
-                          width: Dimentions.width183,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(Dimentions.height26),
-                              color: Color(0xffFAF0DB)),
-                          child: Center(
-                            child: SvgPicture.asset(
-                                "assets/svg/fluent_camera-add-48-filled.svg"),
+                        child: InkWell(
+                          onTap: (){
+                            imagePickerOption();
+                          },
+                          child: Container(
+                            height: Dimentions.height183,
+                            width: Dimentions.width183,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(Dimentions.height26),
+                                color: Color(0xffFAF0DB)),
+                            child:  pickedImage != null
+                                ? ClipRRect(
+                              borderRadius:
+                              BorderRadius.circular(Dimentions.height14),
+                              child: Image.file(
+                                pickedImage!,
+                                fit: BoxFit.fill,
+                              ),
+                            ):Center(
+                              child: SvgPicture.asset(
+                                  "assets/svg/fluent_camera-add-48-filled.svg"),
+                            ),
                           ),
                         ),
                       ),
@@ -87,6 +137,7 @@ class DrawersMyIdea extends StatelessWidget {
                         //     borderRadius: BorderRadius.circular(25),
                         //     color: Color(0xffF7F0DB)),
                         child: TextFormField(
+                          controller: descriptionControlller,
                           decoration: InputDecoration(
                               contentPadding:
                                   EdgeInsets.only(bottom: 60, left: 10),
@@ -117,7 +168,16 @@ class DrawersMyIdea extends StatelessWidget {
                     CustomBottonPurple(
                         title: "Submit",
                         onClick: () {
-                          ideaSubmittedPopUp(context);
+                          if(pickedImage.toString().isNotEmpty&&descriptionControlller.text.isNotEmpty){
+                            postUserIdea();
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('Enter 10 digit mobile number'),
+                              backgroundColor: Colors.red,
+                            ));
+                            return ;
+                          }
+
                         },
                         height: Dimentions.height56)
                 ],
@@ -128,6 +188,90 @@ class DrawersMyIdea extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void imagePickerOption() {
+    Get.bottomSheet(
+      SingleChildScrollView(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(10.0),
+            topLeft: Radius.circular(10.0),
+          ),
+          child: Container(
+            color: Colors.white,
+            height: 250,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    "Pic Image From",
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      pickImage(ImageSource.camera);
+                    },
+                    icon: const Icon(Icons.camera),
+                    label: Text(
+                      "CAMERA",
+                      style: GoogleFonts.montserrat(),
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      pickImage(ImageSource.gallery);
+                    },
+                    icon: const Icon(Icons.image),
+                    label: Text(
+                      "GALLERY",
+                      style: GoogleFonts.montserrat(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.close),
+                    label: Text(
+                      "CANCEL",
+                      style: GoogleFonts.montserrat(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  pickImage(ImageSource imageType) async {
+    try {
+      final photo = await ImagePicker().pickImage(source: imageType);
+      if (photo == null) return;
+      final tempImage = File(photo.path);
+      setState(() {
+        pickedImage = tempImage;
+      });
+
+      Get.back();
+    } catch (error) {
+      debugPrint(error.toString());
+    }
   }
 }
 

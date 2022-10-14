@@ -3,12 +3,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SessionManager{
 
   static SharedPreferences? _preferences;
-
   static const _isLOGIN = "is_login";
   static const _userID = "user_id";
   static const _userFirstName = "first_name";
   static const _userLastName = "last_name";
-
   static const _userEMAIL = "email";
   static const _userMobile = "mobile";
   static const _authToken = 'token';

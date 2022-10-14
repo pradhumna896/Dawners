@@ -3,6 +3,7 @@ import 'package:dawners/provider/app_controller.dart';
 import 'package:dawners/provider/card_controller.dart';
 import 'package:dawners/screens/helper/sessionmanager.dart';
 import 'package:dawners/screens/landing_page.dart';
+import 'package:dawners/screens/welcome_screen_.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,7 @@ class _MyAppState extends State<MyApp> {
 
           primarySwatch: Colors.blue,
         ),
-        home: LandingScreen(),
+        home: SessionManager.getisLoggedIn()?WelcomeScreen():LandingScreen(),
       ),
     );
   }

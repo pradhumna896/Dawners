@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dawners/model/info_model.dart';
 import 'package:dawners/screens/details_edit_screen.dart';
 import 'package:dawners/screens/helper/api_network.dart';
+import 'package:dawners/screens/helper/sessionmanager.dart';
 import 'package:dawners/screens/loginPage/loginHelper/profile_detail.dart';
 import 'package:dawners/screens/loginPage/vehiclae_Packages.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _LoginConfirmDetailsState extends State<LoginConfirmDetails> {
 
   Future<InfoModel> showInfo() async {
     final response = await http.post(Uri.parse(ApiNetwork.info), body: {
-      "user_id": "1",
+      "user_id": SessionManager.getUserID(),
     });
 
     if (response.statusCode == 200) {
@@ -85,10 +86,12 @@ class _LoginConfirmDetailsState extends State<LoginConfirmDetails> {
           FutureBuilder<InfoModel>(
               future: infoModelFuture,
               builder: (context, snapshot) {
+
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
                 }
                 name = snapshot.data!.data!.userName!;
+                SessionManager.setFirstName(name);
                 mobile = snapshot.data!.data!.mobile!;
                 flatNumber = snapshot.data!.data!.flatNumber!;
                 societyName = snapshot.data!.societyAddress!.societyName!;

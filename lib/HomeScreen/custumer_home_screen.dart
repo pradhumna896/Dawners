@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dawners/HomeScreen/home_slider.dart';
 import 'package:dawners/HomeScreen/home_white_slider.dart';
 import 'package:dawners/HomeScreen/notification_screen.dart';
@@ -10,9 +12,12 @@ import 'package:dawners/helper/custom_text.dart';
 import 'package:dawners/helper/ktext_class.dart';
 import 'package:dawners/model/drawers_package_model.dart';
 import 'package:dawners/model/show_user_model.dart';
+import 'package:dawners/model/user_home_banner_model.dart';
 import 'package:dawners/provider/api_provider.dart';
 import 'package:dawners/provider/card_controller.dart';
+import 'package:dawners/screens/helper/api_network.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:dawners/screens/helper/sessionmanager.dart';
 import 'package:dawners/screens/loginPage/payment_method.dart';
 import 'package:dawners/screens/loginPage/payment_page.dart';
 import 'package:dawners/switch_screen.dart';
@@ -22,11 +27,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:status_view/status_view.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class CustomerHomeScreen extends StatefulWidget {
   CustomerHomeScreen({Key? key}) : super(key: key);
@@ -37,8 +44,33 @@ class CustomerHomeScreen extends StatefulWidget {
 
 class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   final globalKey = GlobalKey<ScaffoldState>();
+  late Future bannerFuture ;
+  Future getBannerFuture(){
+    return getUserBanner();
+  }
+  @override
+  initState(){
+    super.initState();
+    bannerFuture = getBannerFuture();
 
 
+  }
+
+  List<UserHomeBannerModel> getUserBannerList = [];
+  bool isSubmit = false;
+
+  Future getUserBanner() async {
+
+    final response = await http.post(Uri.parse(ApiNetwork.userHomeBanner));
+
+    if (response.statusCode == 200) {
+      print("successssssssssssssssss");
+
+      List jsonResponse = jsonDecode(response.body);
+      getUserBannerList = List<UserHomeBannerModel>.from(
+          jsonResponse.map((e) => UserHomeBannerModel.fromJson(e)));
+    }
+  }
 
 
   @override
@@ -71,13 +103,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           decoration: BoxDecoration(
                               color: Color(0xffF0EBF8),
                               borderRadius:
-                                  BorderRadius.circular(Dimentions.height14)),
+                              BorderRadius.circular(Dimentions.height14)),
                           child: Center(
                               child: SvgPicture.asset(
-                            "assets/svg_icon/menuicon.svg",
-                            height: Dimentions.height15,
-                            width: Dimentions.width17,
-                          )),
+                                "assets/svg_icon/menuicon.svg",
+                                height: Dimentions.height15,
+                                width: Dimentions.width17,
+                              )),
                         ),
                       ),
                       Container(
@@ -95,7 +127,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                             Row(
                               children: [
                                 Text(
-                                  "Amit",
+                                  SessionManager.getFirstName(),
                                   style: TextStyle(
                                       color: Color(0xff0E1012),
                                       fontWeight: FontWeight.w700,
@@ -214,13 +246,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           itemBuilder: (BuildContext context, index) {
                             return Padding(
                               padding:
-                                  EdgeInsets.only(left: Dimentions.width10),
+                              EdgeInsets.only(left: Dimentions.width10),
                               child: Stack(fit: StackFit.expand, children: [
                                 Positioned(
                                     child: Image.asset(
-                                  "assets/image/beutyfullVehicle.png",
-                                  fit: BoxFit.fill,
-                                )),
+                                      "assets/image/beutyfullVehicle.png",
+                                      fit: BoxFit.fill,
+                                    )),
                                 Positioned(
                                     right: 0,
                                     top: 0,
@@ -238,11 +270,11 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                                             vertical: Dimentions.height3),
                                         child: Center(
                                             child: Text(
-                                          "mH-14-KC-2787",
-                                          style: ksubHeading.copyWith(
-                                              color: Color(0xffFFFFFF),
-                                              fontSize: Dimentions.font9),
-                                        )),
+                                              "mH-14-KC-2787",
+                                              style: ksubHeading.copyWith(
+                                                  color: Color(0xffFFFFFF),
+                                                  fontSize: Dimentions.font9),
+                                            )),
                                       ),
                                     ))
                               ]),
@@ -267,64 +299,99 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                   fontSize: Dimentions.height12,),
               ),
               Gap(Dimentions.height10),
-              Container(
-                width: double.maxFinite,
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: PageView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  onPageChanged: (index) {
-                    data.homeIndexPage(index);
-                  },
-                  itemCount: 3,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return LayoutBuilder(builder: (BuildContext, constrains) {
-                      return Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          Image.asset(
-                            "assets/image/jackpotimage.png",
-                            fit: BoxFit.fill,
-                          ),
-                          Positioned(
-                            left: Dimentions.width20,
-                            bottom: Dimentions.height61,
-                            child: Container(
-                              height: Dimentions.height33,
-                              decoration: BoxDecoration(
-                                color: Color(0xffFAA53A),
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomLeft,
-                                    // stops: [0.3,0.6,0.9],
-                                    colors: [
-                                      Color(0xffFAA53A),
-                                      Color(0xffFE8E00),
-                                      Color(0xffFE8E00),
-                                      Color(0xffC06B00),
-                                    ]),
-                                borderRadius:
-                                    BorderRadius.circular(Dimentions.height14),
-                              ),
-                              child: Center(
-                                  child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: Dimentions.width20),
-                                child: Text(
-                                  "Subscribe Now",
-                                  style: GoogleFonts.nunitoSans(
-                                    color: Color(0xffFFFFFF),
-                                    fontSize: Dimentions.font14,
-                                  ),
-                                ),
-                              )),
+              FutureBuilder(
+                future: bannerFuture,
+                builder: (context, snapShot) {
+
+                  if(snapShot.connectionState == ConnectionState.waiting){
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return Container(
+                    width: double.maxFinite,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * 0.3,
+                    child: PageView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      onPageChanged: (index) {
+                        data.homeIndexPage(index);
+                      },
+                      itemCount: 3,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return isSubmit?Center(child: CircularProgressIndicator()):Container(
+                            width: double.maxFinite,
+                            height: MediaQuery
+                                .of(context)
+                                .size
+                                .height * 0.3,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(image: NetworkImage(
+                                    getUserBannerList[index].path! +
+                                        getUserBannerList[index].homeImage!),
+                                  fit: BoxFit.fill,)
                             ),
-                          )
-                        ],
-                      );
-                    });
-                  },
-                ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Gap(20),
+                                  CustomText(
+                                      title: 'DAWNERS autopay jackpot offers are live!',
+                                      fontWeight: FontWeight.w800,
+                                      color: Color(0xffFEF88B),
+                                      fontSize: Dimentions.font14),
+                                  CustomText(
+                                      title: 'redeem DAWNERS coins. win big',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xffFFFFFF),
+                                      fontSize: Dimentions.font10),
+                                  Spacer(),
+                                  Container(
+                                    width: 150,
+                                    height: Dimentions.height33,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffFAA53A),
+                                      gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomLeft,
+                                          // stops: [0.3,0.6,0.9],
+                                          colors: [
+                                            Color(0xffFAA53A),
+                                            Color(0xffFE8E00),
+                                            Color(0xffFE8E00),
+                                            Color(0xffC06B00),
+                                          ]),
+                                      borderRadius:
+                                      BorderRadius.circular(
+                                          Dimentions.height14),
+                                    ),
+                                    child: Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: Dimentions.width20),
+                                          child: Text(
+                                            "Subscribe Now",
+                                            style: GoogleFonts.nunitoSans(
+                                              color: Color(0xffFFFFFF),
+                                              fontSize: Dimentions.font14,
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                  Gap(20)
+
+                                ],),
+                            )
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
               Gap(Dimentions.height10),
               HomeSlider(),
@@ -401,21 +468,22 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
               ),
               SizedBox(
                 height: 150,
-                child: FutureBuilder(future:apiData.showUserShedule() ,
-                  builder: (context , snapshot){
+                child: FutureBuilder(future: apiData.showUserShedule(),
+                  builder: (context, snapshot) {
                     // if(snapshot.connectionState == ConnectionState.waiting){
                     //   return const Center(child: CupertinoActivityIndicator(radius: 20,),);
                     // }
                     return ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: apiData.showUserSheduleList.length+1,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (BuildContext context, index) {
-                        return index == apiData.showUserSheduleList.length
-                            ? ScheduleNow()
-                            : AfterSheduleContainer(dataForSwitch: dataForSwitch ,index:index);
-                      });
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: apiData.showUserSheduleList.length + 1,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (BuildContext context, index) {
+                          return index == apiData.showUserSheduleList.length
+                              ? ScheduleNow()
+                              : AfterSheduleContainer(
+                              dataForSwitch: dataForSwitch, index: index);
+                        });
                   },
                 ),
               ),
@@ -425,7 +493,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
         ),
       ),
       drawer: Drawer(
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.8,
         child: Column(
           children: [
             Gap(Dimentions.height33),
@@ -480,10 +551,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                       Row(
                         children: [
                           Text(
-                            "Amit!",
+                            SessionManager.getFirstName(),
                             style: TextStyle(
                                 color: Color(0xff161616),
-                                fontSize: Dimentions.font27,
+                                fontSize: Dimentions.font20,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: "Montserrat"),
                           ),
@@ -589,7 +660,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             ),
             Flexible(
               child: ListView.builder(
-                shrinkWrap:true,
+                  shrinkWrap: true,
                   itemCount: DrawersPackageModel.drawersPackageModel.length,
                   itemBuilder: (BuildContext context, index) {
                     return Padding(
@@ -601,7 +672,8 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => DrawersPackageModel
+                                  builder: (_) =>
+                                  DrawersPackageModel
                                       .drawersPackageModel[index].page!));
                         },
                         child: Row(
@@ -631,25 +703,29 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Icon(Icons.logout,color: Colors.red,),
+                Icon(Icons.logout, color: Colors.red,),
                 Gap(5),
-                CustomText(title: "Log Out", fontWeight: FontWeight.w700, color: Color(0xffFF6060), fontSize: 17)
-            ],)
+                CustomText(title: "Log Out",
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xffFF6060),
+                    fontSize: 17)
+              ],)
           ],
         ),
       ),
     );
-
   }
 }
 
 class AfterSheduleContainer extends StatelessWidget {
   int index;
-   AfterSheduleContainer({
+
+  AfterSheduleContainer({
     Key? key,
-    required this.dataForSwitch,required this.index
+    required this.dataForSwitch, required this.index
   }) : super(key: key);
-   final CardController dataForSwitch;
+  final CardController dataForSwitch;
+
   @override
   Widget build(BuildContext context) {
     final apiData = Provider.of<ApiProvider>(context);
@@ -714,7 +790,8 @@ class AfterSheduleContainer extends StatelessWidget {
                 Column(
                   children: [
                     CustomText(
-                        title: apiData.showUserSheduleList[index].userName!.vehicleReg!,
+                        title: apiData.showUserSheduleList[index].userName!
+                            .vehicleReg!,
                         fontWeight: FontWeight.w700,
                         color: Color(0xff6739B7),
                         fontSize: Dimentions.font16),
@@ -825,7 +902,10 @@ class ScheduleNow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             height: Dimentions.height77,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimentions.height24),
@@ -834,52 +914,55 @@ class ScheduleNow extends StatelessWidget {
               children: [
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width10),
-                  child: Text(
-                    "There Are No Upcoming Services!",
-                    style: TextStyle(
-                        color: Color(0xff7B8D9E),
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w500,
-                        fontSize: Dimentions.font12),
-                  ),
-                )),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimentions.width10),
+                      child: Text(
+                        "There Are No Upcoming Services!",
+                        style: TextStyle(
+                            color: Color(0xff7B8D9E),
+                            fontFamily: "Montserrat",
+                            fontWeight: FontWeight.w500,
+                            fontSize: Dimentions.font12),
+                      ),
+                    )),
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width10),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => SelectService()));
-                    },
-                    child: Container(
-                      height: Dimentions.height33,
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                          borderRadius:
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimentions.width10),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) =>
+                                  SelectService()));
+                        },
+                        child: Container(
+                          height: Dimentions.height33,
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                              borderRadius:
                               BorderRadius.circular(Dimentions.height24),
-                          color: Color(0xff009DC7)),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Schedule Now",
-                              style: GoogleFonts.nunitoSans(
-                                color: Color(0xffFFFFFF),
-                                fontSize: Dimentions.font12,
-                                fontWeight: FontWeight.w400,
-                              ),
+                              color: Color(0xff009DC7)),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Schedule Now",
+                                  style: GoogleFonts.nunitoSans(
+                                    color: Color(0xffFFFFFF),
+                                    fontSize: Dimentions.font12,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Gap(Dimentions.height10),
+                                SvgPicture.asset(
+                                    "assets/svg_icon/fluent_calendar-add-16-regular.svg")
+                              ],
                             ),
-                            Gap(Dimentions.height10),
-                            SvgPicture.asset(
-                                "assets/svg_icon/fluent_calendar-add-16-regular.svg")
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ))
+                    ))
               ],
             ),
           ),

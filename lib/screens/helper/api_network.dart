@@ -17,5 +17,11 @@ class ApiNetwork{
   static const editInfo = baseUrl+"process.php?action=edit_user_info";
   static const showUserShedule = baseUrl + "process.php?action=show_user_schedule";
   static const showStories = baseUrl + "process.php?action=show_stories";
+  static const showUserVihicle = baseUrl +"process.php?action=show_user_vehicle";
+  static const userBanner = baseUrl + "process.php?action=user_banner";
+  static const userHomeBanner = baseUrl + "process.php?action=user_home_banner";
+  static const userIdea = baseUrl + "process.php?action=user_idea";
+  static const userPremiumPackageDetail = baseUrl + "process.php?action=user_premium_package_detail";
+  static const showUserService = baseUrl +"process.php?action=user_show_service";
 
 }

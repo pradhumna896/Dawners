@@ -4,8 +4,9 @@ import 'package:provider/provider.dart';
 import '../provider/app_controller.dart';
 
 class ContainerSlider extends StatelessWidget {
+  int getLength ;
   ContainerSlider({
-    Key? key,
+    Key? key,required this.getLength
   }) : super(key: key);
 
 
@@ -17,7 +18,7 @@ class ContainerSlider extends StatelessWidget {
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
-        children: List.generate(4, (index) => Expanded(
+        children: List.generate(getLength, (index) => Expanded(
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 500),
             margin: const EdgeInsets.only(right: 10.0),

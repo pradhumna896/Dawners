@@ -12,6 +12,7 @@ import 'package:dawners/model/sign_up_modal.dart';
 // import 'package:dawners/model/ResendOtp.dart';
 import 'package:dawners/screens/helper/api_network.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
+import 'package:dawners/screens/helper/sessionmanager.dart';
 import 'package:dawners/screens/password_screen.dart';
 import 'package:dawners/screens/sign_up_page.dart';
 import 'package:dawners/screens/welcome_screen_.dart';
@@ -54,10 +55,13 @@ class _OtpScreenState extends State<OtpScreen> {
     OtpModel auth = OtpModel.fromJson(jsonDecode(response.body));
 
     if (auth.message == "verify successfully") {
+      SessionManager.setUserMobile(widget.mobileNumber);
       setState(() {
         isSumitted = false;
       });
       String id = auth.id!;
+      SessionManager.setUserID(id);
+      SessionManager.setUserLoggedIn(true);
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -84,6 +88,8 @@ class _OtpScreenState extends State<OtpScreen> {
       ResendOtpModal otp = ResendOtpModal.fromJson(jsonDecode(response.body));
 
       if (otp.message == "otp send successfully") {
+
+
         setState(() {
           isResendSumitted = false;
         });

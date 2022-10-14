@@ -8,6 +8,9 @@ import 'package:dawners/helper/custom_text_style.dart';
 import 'package:dawners/helper/ktext_class.dart';
 import 'package:dawners/model/faq_model.dart';
 import 'package:dawners/model/package_details_model.dart';
+import 'package:dawners/model/premium_package_details_model.dart';
+import 'package:dawners/model/show_user_service_model.dart';
+import 'package:dawners/model/user_banner_model.dart';
 import 'package:dawners/provider/api_provider.dart';
 
 // import 'package:dawners/model/container_slider.dart';
@@ -29,7 +32,6 @@ import 'package:dawners/helper/custom_white_botton.dart';
 import 'package:http/http.dart' as http;
 import 'package:video_player/video_player.dart';
 
-
 class PackageDetails extends StatefulWidget {
   PackageDetails({Key? key}) : super(key: key);
 
@@ -44,42 +46,33 @@ class _PackageDetailsState extends State<PackageDetails> {
   late VideoPlayerController _videoPlayerController2;
   late ChewieController _chewieController;
 
+  late Future bannerFuture;
+
+  Future getBannerFuture() {
+    return getUserBanner();
+  }
+
+  late Future serviceFuture;
+
+  Future getServiceFuture() {
+    return getUserService();
+  }
+
+
+
+  late Future premiumPackageDetailsFuture;
+  Future getPremiumPackageFuture() {
+    return getPremiumPackageDetails();
+  }
 
   @override
   void initState() {
     super.initState();
-    _videoPlayerController1 = VideoPlayerController.network("https://www.fluttercampus.com/video.mp4");
-    _videoPlayerController2 = VideoPlayerController.network(("https://www.fluttercampus.com/video.mp4"));
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController1,
-      aspectRatio: 6/3,
-      fullScreenByDefault: false,
-      allowFullScreen: true,
-      autoPlay: true,
-      zoomAndPan: true,
-      looping: false,
-      // Try playing around with some of these other options:
-
-      // showControls: false,
-      materialProgressColors: ChewieProgressColors(
-        playedColor: Colors.red,
-        handleColor: Colors.blue,
-        backgroundColor: Colors.grey,
-        bufferedColor: Colors.grey,
-      ),
-      // placeholder: Container(
-      //   color: Colors.grey,
-      // ),
-      // autoInitialize: true,
-    );
-
-    _videoPlayerController1.addListener(() {
-      if (_videoPlayerController1.value.position ==
-          _videoPlayerController1.value.duration) {
-        print('video Ended');
-      }
-    });
+    bannerFuture = getBannerFuture();
+    premiumPackageDetailsFuture = getPremiumPackageFuture();
+    serviceFuture = getServiceFuture();
   }
+
 
   @override
   void dispose() {
@@ -89,7 +82,19 @@ class _PackageDetailsState extends State<PackageDetails> {
     super.dispose();
   }
 
+  List<UserBannerModel> getUserBannerList = [];
 
+  Future getUserBanner() async {
+    final response = await http.get(Uri.parse(ApiNetwork.userBanner));
+    if (response.statusCode == 200) {
+      print("success");
+      List jsonResponse = jsonDecode(response.body);
+      getUserBannerList = List<UserBannerModel>.from(
+          jsonResponse.map((e) => UserBannerModel.fromJson(e)));
+    } else {
+      print("failed");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,406 +117,312 @@ class _PackageDetailsState extends State<PackageDetails> {
       ),
       body: Stack(children: [
         SingleChildScrollView(
-          child:FutureBuilder(
-              future: provider.getPackageDetailsData(),
-              builder: (context , snapsot){
-            return  Column(
-              children: [
-                SizedBox(
-                  height: Dimentions.height20,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+          children: [
+            SizedBox(
+              height: Dimentions.height20,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Grab The Best! ",
+                      style: TextStyle(
+                          color: Color(0xff0E1012),
+                          fontWeight: FontWeight.w700,
+                          fontSize: Dimentions.font24,
+                          fontFamily: "Montserrat"),
+                    ),
+                    Row(
                       children: [
                         Text(
-                          "Grab The Best! ",
+                          "Your vehicle Deserves it!",
                           style: TextStyle(
                               color: Color(0xff0E1012),
-                              fontWeight: FontWeight.w700,
-                              fontSize: Dimentions.font24,
-                              fontFamily: "Montserrat"),
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Montserrat",
+                              fontSize: Dimentions.font24),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              "Your vehicle Deserves it!",
-                              style: TextStyle(
-                                  color: Color(0xff0E1012),
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Montserrat",
-                                  fontSize: Dimentions.font24),
-                            ),
-                          ],
-                        ),
-                      ]),
-                ),
-                SizedBox(
-                  height: Dimentions.height10,
-                ),
-                Stack(children: [
-                  Container(
-                    width: double.maxFinite,
-                    height: Dimentions.height183,
-                    child: PageView.builder(
-                        controller: PageController(
-                          initialPage: 0,
-                          keepPage: true,
-                        ),
-                        onPageChanged: (index) {
-                          data.mediaselectedPage(index);
-                        },
-                        itemCount: 4,
-                        scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, index) {
-                          return Stack(
-                              fit: StackFit.expand,
-                              children: [
-                            Chewie( controller: _chewieController,),
-                            Positioned(
-                                left: 0,
-                                top: 0,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffFE8E00),
-                                      borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(
-                                              Dimentions.height10))),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: Dimentions.width15,
-                                        right: Dimentions.width15,
-                                        bottom: Dimentions.height10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "1 Month",
-                                          style: TextStyle(
-                                              color: Color(0xffFFFFFF),
-                                              fontSize: Dimentions.font10,
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: "Montserrat"),
-                                        ),
-                                        Text("Free Premium Add On Trial",
+                      ],
+                    ),
+                  ]),
+            ),
+            SizedBox(
+              height: Dimentions.height10,
+            ),
+            FutureBuilder(
+                future: bannerFuture,
+                builder: (context, snapshot) {
+                  return Stack(children: [
+                    Container(
+                      width: double.maxFinite,
+                      height: Dimentions.height183,
+                      child: PageView.builder(
+                          controller: PageController(
+                            initialPage: 0,
+                            keepPage: true,
+                          ),
+                          onPageChanged: (index) {
+                            data.mediaselectedPage(index);
+                          },
+                          itemCount: getUserBannerList.length,
+                          scrollDirection: Axis.horizontal,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (BuildContext context, index) {
+                            if (getUserBannerList[index]
+                                .file!
+                                .contains("mp4")) {
+                              _videoPlayerController1 =
+                                  VideoPlayerController.network(
+                                      getUserBannerList[index].path! +
+                                          getUserBannerList[index].file!);
+                              _videoPlayerController2 =
+                                  VideoPlayerController.network(
+                                      (getUserBannerList[index].path! +
+                                          getUserBannerList[index].file!));
+                              _chewieController = ChewieController(
+                                videoPlayerController: _videoPlayerController1,
+                                aspectRatio: 6 / 3,
+                                fullScreenByDefault: false,
+                                allowFullScreen: true,
+                                autoPlay: false,
+                                zoomAndPan: true,
+                                looping: false,
+                                // Try playing around with some of these other options:
+
+                                // showControls: false,
+                                materialProgressColors: ChewieProgressColors(
+                                  playedColor: Colors.red,
+                                  handleColor: Colors.blue,
+                                  backgroundColor: Colors.grey,
+                                  bufferedColor: Colors.grey,
+                                ),
+                                // placeholder: Container(
+                                //   color: Colors.grey,
+                                // ),
+                                // autoInitialize: true,
+                              );
+
+                              _videoPlayerController1.addListener(() {
+                                if (_videoPlayerController1.value.position ==
+                                    _videoPlayerController1.value.duration) {}
+                              });
+                            }
+                            return Stack(fit: StackFit.expand, children: [
+                              getUserBannerList[index].file!.contains("mp4")
+                                  ? Chewie(
+                                      controller: _chewieController,
+                                    )
+                                  : Image.network(
+                                      getUserBannerList[index].path! +
+                                          getUserBannerList[index].file!,
+                                      fit: BoxFit.cover,
+                                    ),
+                              Positioned(
+                                  left: 0,
+                                  top: 0,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Color(0xffFE8E00),
+                                        borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(
+                                                Dimentions.height10))),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: Dimentions.width15,
+                                          right: Dimentions.width15,
+                                          bottom: Dimentions.height10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "1 Month",
                                             style: TextStyle(
                                                 color: Color(0xffFFFFFF),
                                                 fontSize: Dimentions.font10,
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily: "Montserrat"))
-                                      ],
+                                                fontWeight: FontWeight.w400,
+                                                fontFamily: "Montserrat"),
+                                          ),
+                                          Text("Free Premium Add On Trial",
+                                              style: TextStyle(
+                                                  color: Color(0xffFFFFFF),
+                                                  fontSize: Dimentions.font10,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: "Montserrat"))
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                )),
-                            // Positioned(
-                            //     top: 0,
-                            //     bottom: 0,
-                            //     left: 0,
-                            //     right: 0,
-                            //     child: Image.asset("assets/image/mediaplay.png")),
-                          ]);
-                        }),
+                                  )),
+                              // Positioned(
+                              //     top: 0,
+                              //     bottom: 0,
+                              //     left: 0,
+                              //     right: 0,
+                              //     child: Image.asset("assets/image/mediaplay.png")),
+                            ]);
+                          }),
+                    ),
+                    Positioned(
+                        bottom: Dimentions.height20,
+                        left: Dimentions.width10,
+                        right: Dimentions.width10,
+                        child: ContainerSlider(
+                          getLength: getUserBannerList.length,
+                        ))
+                  ]);
+                }),
+            SizedBox(
+              height: Dimentions.height10,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Premium Pack"
+
+                    ,
+                    style: kFontSize15.copyWith(color: Color(0xff000000)),
                   ),
-                  Positioned(
-                      bottom: Dimentions.height20,
-                      left: Dimentions.width10,
-                      right: Dimentions.width10,
-                      child: ContainerSlider())
-                ]),
-                SizedBox(
-                  height: Dimentions.height10,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Premium Pack",
-                        style: kFontSize15.copyWith(color: Color(0xff000000)),
-                      ),
-                      SizedBox(
-                        height: Dimentions.height5,
-                      ),
-                      Text("What we use -",
-                          style: kFontSize12.copyWith(color: Color(0xff7B8D9E))),
-                      SizedBox(
-                        height: Dimentions.height8,
-                      ),
-                      Column(
-                        children: List.generate(
-                          4,
-                              (index) => Row(
-                            children: [
-                              Container(
-                                height: Dimentions.height3,
-                                width: Dimentions.width3,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(Dimentions.height3),
-                                    color: Color(0xff7B8D9E)),
-                              ),
-                              SizedBox(
-                                width: Dimentions.height5,
-                              ),
-                              Text("Ph-Neutral Shampoo ",
-                                  style: kFontSize12.copyWith(
-                                      color: Color(0xff7B8D9E),
-                                      fontWeight: FontWeight.w500)),
-                            ],
+                  SizedBox(
+                    height: Dimentions.height5,
+                  ),
+                  Text("What we use -",
+                      style: kFontSize12.copyWith(color: Color(0xff7B8D9E))),
+                  SizedBox(
+                    height: Dimentions.height8,
+                  ),
+                  FutureBuilder(
+                      future: premiumPackageDetailsFuture,
+                      builder: (context,snapshot){return Column(
+                    children: List.generate(
+                      premiumPackageDetailList.length,
+                          (index) => Row(
+                        children: [
+                          Container(
+                            height: Dimentions.height3,
+                            width: Dimentions.width3,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(Dimentions.height3),
+                                color: Color(0xff7B8D9E)),
                           ),
-                        ),
+                          SizedBox(
+                            width: Dimentions.height5,
+                          ),
+                          Text(premiumPackageDetailList[index].rowMaterialName!,
+                              style: kFontSize12.copyWith(
+                                  color: Color(0xff7B8D9E),
+                                  fontWeight: FontWeight.w500)),
+                        ],
                       ),
-                      SizedBox(
-                        height: Dimentions.height15,
-                      ),
-                      Text(
-                        "Special Offers",
-                        style: TextStyle(
-                            color: Color(0xff7B8D9E),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Montserrat",
-                            fontSize: Dimentions.font10),
-                      ),
-                      SizedBox(
-                        height: Dimentions.height10,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: Dimentions.width10,
-                                  vertical: Dimentions.height5),
-                              decoration: BoxDecoration(
-                                  borderRadius:
+                    ),
+                  );}),
+                  SizedBox(
+                    height: Dimentions.height15,
+                  ),
+                  Text(
+                    "Special Offers",
+                    style: TextStyle(
+                        color: Color(0xff7B8D9E),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Montserrat",
+                        fontSize: Dimentions.font10),
+                  ),
+                  SizedBox(
+                    height: Dimentions.height10,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimentions.width10,
+                              vertical: Dimentions.height5),
+                          decoration: BoxDecoration(
+                              borderRadius:
                                   BorderRadius.circular(Dimentions.height3),
-                                  color: Color(0xff009DC7)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              color: Color(0xff009DC7)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Save 40% Every Month",
+                                style: TextStyle(
+                                    fontSize: Dimentions.font10,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xffFFFFFF)),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Save 40% Every Month",
+                                    "Pay via AUTOPAY ",
                                     style: TextStyle(
                                         fontSize: Dimentions.font10,
                                         fontFamily: "Montserrat",
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w400,
                                         color: Color(0xffFFFFFF)),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Pay via AUTOPAY ",
-                                        style: TextStyle(
-                                            fontSize: Dimentions.font10,
-                                            fontFamily: "Montserrat",
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xffFFFFFF)),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      SvgPicture.asset(
-                                        "assets/svg_icon/Pericon.svg",
-                                        height: 14.13,
-                                        width: 13.48,
-                                      )
-                                    ],
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  SvgPicture.asset(
+                                    "assets/svg_icon/Pericon.svg",
+                                    height: 14.13,
+                                    width: 13.48,
                                   )
                                 ],
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: Dimentions.width5,
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: Color(0xff07A605)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Earn Cashback & Rewards Every Month",
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xffFFFFFF)),
                               ),
-                            ),
-                            SizedBox(
-                              width: Dimentions.width5,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 5),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(3),
-                                  color: Color(0xff07A605)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Earn Cashback & Rewards Every Month",
+                                    "Pay via AUTOPAY ",
                                     style: TextStyle(
                                         fontSize: 10,
                                         fontFamily: "Montserrat",
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w400,
                                         color: Color(0xffFFFFFF)),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Pay via AUTOPAY ",
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            fontFamily: "Montserrat",
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xffFFFFFF)),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Image.asset(
-                                        "assets/icons/Dcircle.png",
-                                        height: 14.13,
-                                        width: 13.48,
-                                      )
-                                    ],
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Image.asset(
+                                    "assets/icons/Dcircle.png",
+                                    height: 14.13,
+                                    width: 13.48,
                                   )
                                 ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "What’s Included -",
-                            style: TextStyle(
-                                fontSize: Dimentions.font12,
-                                color: Color(0xff7B8D9E),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Montserrat"),
-                          ),
-                          Text(
-                            "10 services",
-                            style: TextStyle(
-                                fontSize: Dimentions.font12,
-                                color: Color(0xff7B8D9E),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Montserrat"),
-                          ),
-                        ],
-                      ),
-                      Gap(Dimentions.height7),
-                      ListView.builder(
-                          itemCount: 8,
-                          shrinkWrap: true,
-                          padding: EdgeInsets.all(0),
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(
-                                    "assets/svg_icon/fluent_checkmark-circle-12-filled.svg"),
-                                SizedBox(
-                                  width: Dimentions.width8,
-                                ),
-                                Text(
-                                  "Exterior Cleaning - Daily  ",
-                                  style: TextStyle(
-                                      fontSize: Dimentions.font12,
-                                      color: Color(0xff7B8D9E),
-                                      fontFamily: "Montserrat"),
-                                ),
-                              ],
-                            );
-                          }),
-                      SizedBox(height: Dimentions.height20),
-                      Text(
-                        "Customer Reviews Near You",
-                        style: TextStyle(
-                            color: Color(0xff7B8D9E),
-                            fontSize: Dimentions.font12,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(
-                        height: Dimentions.height10,
-                      ),
-                    ],
-                  ),
-                ),
-                customerReview(context),
-                SizedBox(
-                  height: Dimentions.height20,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
-                  child: Row(
-                    children: [
-                      Text(
-                        "DAWNERS Benefits",
-                        style: kFontSize12.copyWith(color: Color(0xff7B8D9E)),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: Dimentions.height10,
-                ),
-                Container(
-                  width: double.maxFinite,
-                  color: Color(0xffFFC700),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: Dimentions.height5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: Dimentions.width81,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/svg/fluent_contact-card-ribbon-28-filled.svg",
-                              ),
-                              Text(
-                                "Trained Team",
-                                textAlign: TextAlign.center,
-                                style: kFontSize15.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: Dimentions.width81,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SvgPicture.asset(
-                                  "assets/svg/ic_twotone-workspace-premium.svg"),
-                              Text(
-                                "Premium Products",
-                                textAlign: TextAlign.center,
-                                style: kFontSize15.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: Dimentions.width100,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SvgPicture.asset(
-                                  "assets/svg/fluent_accessibility-checkmark-24-filled.svg"),
-                              Text(
-                                "Top Quality Packages",
-                                textAlign: TextAlign.center,
-                                style: kFontSize15.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                ),
                               )
                             ],
                           ),
@@ -519,40 +430,188 @@ class _PackageDetailsState extends State<PackageDetails> {
                       ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: Dimentions.height10,
-                ),
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Frequently Asked Questions",
-                              style: TextStyle(
-                                  color: Color(0xff7B8D9E),
-                                  fontSize: Dimentions.font12,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.w700),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "What’s Included -",
+                        style: TextStyle(
+                            fontSize: Dimentions.font12,
+                            color: Color(0xff7B8D9E),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Montserrat"),
+                      ),
+                      Text(
+                        "${showUserServiceList.length} services",
+                        style: TextStyle(
+                            fontSize: Dimentions.font12,
+                            color: Color(0xff7B8D9E),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Montserrat"),
+                      ),
+                    ],
+                  ),
+                  Gap(Dimentions.height7),
+                  FutureBuilder(
+                      future: serviceFuture,
+                      builder: (context,snapshot){
+                    return ListView.builder(
+                        itemCount: showUserServiceList.length,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.all(0),
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (BuildContext ctx, index) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SvgPicture.network(
+                                  showUserServiceList[index].path!+showUserServiceList[index].logoFile!),
+                              SizedBox(
+                                width: Dimentions.width8,
+                              ),
+                              Text(
+                                showUserServiceList[index].servicesName!,
+                                style: TextStyle(
+                                    fontSize: Dimentions.font12,
+                                    color: Color(0xff7B8D9E),
+                                    fontFamily: "Montserrat"),
+                              ),
+                            ],
+                          );
+                        });
+                  }),
+                  SizedBox(height: Dimentions.height20),
+                  Text(
+                    "Customer Reviews Near You",
+                    style: TextStyle(
+                        color: Color(0xff7B8D9E),
+                        fontSize: Dimentions.font12,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(
+                    height: Dimentions.height10,
+                  ),
+                ],
+              ),
+            ),
+            customerReview(context),
+            SizedBox(
+              height: Dimentions.height20,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
+              child: Row(
+                children: [
+                  Text(
+                    "DAWNERS Benefits",
+                    style: kFontSize12.copyWith(color: Color(0xff7B8D9E)),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: Dimentions.height10,
+            ),
+            Container(
+              width: double.maxFinite,
+              color: Color(0xffFFC700),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: Dimentions.height5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: Dimentions.width81,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/svg/fluent_contact-card-ribbon-28-filled.svg",
+                          ),
+                          Text(
+                            "Trained Team",
+                            textAlign: TextAlign.center,
+                            style: kFontSize15.copyWith(
+                              fontWeight: FontWeight.w800,
                             ),
-                          ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: Dimentions.width81,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                              "assets/svg/ic_twotone-workspace-premium.svg"),
+                          Text(
+                            "Premium Products",
+                            textAlign: TextAlign.center,
+                            style: kFontSize15.copyWith(
+                              fontWeight: FontWeight.w800,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: Dimentions.width100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                              "assets/svg/fluent_accessibility-checkmark-24-filled.svg"),
+                          Text(
+                            "Top Quality Packages",
+                            textAlign: TextAlign.center,
+                            style: kFontSize15.copyWith(
+                              fontWeight: FontWeight.w800,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: Dimentions.height10,
+            ),
+            Container(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Frequently Asked Questions",
+                          style: TextStyle(
+                              color: Color(0xff7B8D9E),
+                              fontSize: Dimentions.font12,
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.w700),
                         ),
-                        Gap(Dimentions.height7),
-                        FAQPage()
                       ],
                     ),
-                  ),
+                    Gap(Dimentions.height7),
+                    FAQPage()
+                  ],
                 ),
-                SizedBox(
-                  height: Dimentions.height100,
-                )
-              ],
-            );
-          }),
-        ),
+              ),
+            ),
+            SizedBox(
+              height: Dimentions.height100,
+            )
+          ],
+        )),
         Positioned(
           bottom: 28,
           left: 28,
@@ -622,6 +681,32 @@ class _PackageDetailsState extends State<PackageDetails> {
     );
   }
 
+  List<PremiumPackageDetailsModel> premiumPackageDetailList = [];
+
+  getPremiumPackageDetails() async {
+    final response =
+        await http.post(Uri.parse(ApiNetwork.userPremiumPackageDetail));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = jsonDecode(response.body);
+      premiumPackageDetailList = List<PremiumPackageDetailsModel>.from(
+          jsonResponse.map((e) => PremiumPackageDetailsModel.fromJson(e)));
+    }
+  }
+
+  List<UserShowServiceModel> showUserServiceList = [];
+
+  getUserService() async {
+    final response =
+    await http.post(Uri.parse(ApiNetwork.showUserService));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = jsonDecode(response.body);
+      showUserServiceList = List<UserShowServiceModel>.from(
+          jsonResponse.map((e) => UserShowServiceModel.fromJson(e)));
+    }
+  }
+
   FutureBuilder<Object?> customerReview(BuildContext context) {
     final provider = Provider.of<ApiProvider>(context);
     return FutureBuilder(
@@ -663,13 +748,16 @@ class _PackageDetailsState extends State<PackageDetails> {
                                           shape: BoxShape.circle,
                                           color: Color(0xff07A605)),
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(18),
-                                          child: Image.network(provider
-                                                  .showAdminCommentList[index]
-                                                  .path! +
-                                              provider
-                                                  .showAdminCommentList[index]
-                                                  .image!,fit: BoxFit.cover,)),
+                                          borderRadius:
+                                              BorderRadius.circular(18),
+                                          child: Image.network(
+                                            provider.showAdminCommentList[index]
+                                                    .path! +
+                                                provider
+                                                    .showAdminCommentList[index]
+                                                    .image!,
+                                            fit: BoxFit.cover,
+                                          )),
                                     ),
                                     SizedBox(
                                       width: Dimentions.width12,
