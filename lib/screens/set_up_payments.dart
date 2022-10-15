@@ -187,8 +187,12 @@ class SetUpPayment extends StatelessWidget {
               child: CustomBottonPurple(
                 height: 56,
                 title: 'Continue',
-                onClick: () {     Navigator.push(context,
-                  MaterialPageRoute(builder: (ctx) => PaymentPage())); },),
+                onClick: () {
+                  // Navigator.push(context,
+                  // MaterialPageRoute(builder: (ctx) => PaymentPage()));
+                  //
+
+                  },),
             ),
             SizedBox(
               height: 10,

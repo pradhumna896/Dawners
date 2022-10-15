@@ -306,7 +306,7 @@ class _VehiclePackageState extends State<VehiclePackage> {
                                                   bottomRight:
                                                       Radius.circular(20)),
                                               color: Color(0xff6A3ABC)),
-                                          child: Center(
+                                          child: const Center(
                                             child: Text(
                                               "Daily Cleaning",
                                               style: TextStyle(
@@ -604,6 +604,7 @@ class _VehiclePackageState extends State<VehiclePackage> {
             ],
           ),
           Gap(14),
+          totalPrice(),
 
           SizedBox(
             height: 20,

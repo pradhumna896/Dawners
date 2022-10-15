@@ -49,19 +49,19 @@ class _MyPackageCardState extends State<MyPackageCard> {
                     context,
                     MaterialPageRoute(
                         builder: (ctx) =>
-                            UpgradePackage()));
+                            UpgradePackage(id: showPremiumPackageList[i].id!,price: showPremiumPackageList[i].firstMonthPrice!)));
               } else if (i == 1) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (ctx) =>
-                            PackageDetails()));
+                            PackageDetails(id:showPremiumPackageList[i].id!,price: showPremiumPackageList[i].firstMonthPrice!,)));
               } else {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (ctx) =>
-                            PackageDetails()));
+                            PackageDetails(id:showPremiumPackageList[i].id!,price: showPremiumPackageList[i].firstMonthPrice!)));
               }
             },
             child: Card(

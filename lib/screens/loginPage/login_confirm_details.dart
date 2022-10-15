@@ -36,9 +36,12 @@ class _LoginConfirmDetailsState extends State<LoginConfirmDetails> {
   late Future<InfoModel> infoModelFuture;
 
   Future<InfoModel> showInfo() async {
+    print(SessionManager.getUserID());
     final response = await http.post(Uri.parse(ApiNetwork.info), body: {
-      "user_id": SessionManager.getUserID(),
+
+      "user_id": "1",
     });
+
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
@@ -88,7 +91,7 @@ class _LoginConfirmDetailsState extends State<LoginConfirmDetails> {
               builder: (context, snapshot) {
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
                 name = snapshot.data!.data!.userName!;
                 SessionManager.setFirstName(name);

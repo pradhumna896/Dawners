@@ -16,7 +16,10 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class UpgradePackage extends StatefulWidget {
-  UpgradePackage({Key? key}) : super(key: key);
+  String id;
+  String price;
+
+  UpgradePackage({Key? key, required this.id , required this.price}) : super(key: key);
 
   @override
   State<UpgradePackage> createState() => _UpgradePackageState();
@@ -473,7 +476,7 @@ class _UpgradePackageState extends State<UpgradePackage> {
               height: Dimentions.height56,
               onClick: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (ctx) => PackageDetails()));
+                    MaterialPageRoute(builder: (ctx) => PackageDetails(id: "1",price: "500",)));
               },
             ),
           ),

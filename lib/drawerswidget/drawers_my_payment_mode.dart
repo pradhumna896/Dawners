@@ -21,6 +21,8 @@ import 'package:provider/provider.dart';
 class DrawersMyPaymentMode extends StatelessWidget {
   DrawersMyPaymentMode({Key? key}) : super(key: key);
 
+  DateTime time = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<AppController>(context);
@@ -626,7 +628,7 @@ class DrawersMyPaymentMode extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx) => PaymentPage()));
+                      MaterialPageRoute(builder: (ctx) => PaymentPage(date:time,time: "9:00",)));
                 },
                 child: CustomBottonPurple(
                   height: Dimentions.height56,

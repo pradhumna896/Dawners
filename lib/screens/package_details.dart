@@ -6,6 +6,7 @@ import 'package:dawners/helper/custom_botton_purple.dart';
 import 'package:dawners/helper/custom_button.dart';
 import 'package:dawners/helper/custom_text_style.dart';
 import 'package:dawners/helper/ktext_class.dart';
+import 'package:dawners/model/add_to_card_model.dart';
 import 'package:dawners/model/faq_model.dart';
 import 'package:dawners/model/package_details_model.dart';
 import 'package:dawners/model/premium_package_details_model.dart';
@@ -16,6 +17,7 @@ import 'package:dawners/provider/api_provider.dart';
 // import 'package:dawners/model/container_slider.dart';
 import 'package:dawners/provider/app_controller.dart';
 import 'package:dawners/screens/helper/api_network.dart';
+import 'package:dawners/screens/helper/dimentions/api_helper.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:dawners/screens/loginPage/vehiclae_Packages.dart';
 import 'package:dawners/screens/set_up_payments.dart';
@@ -33,7 +35,9 @@ import 'package:http/http.dart' as http;
 import 'package:video_player/video_player.dart';
 
 class PackageDetails extends StatefulWidget {
-  PackageDetails({Key? key}) : super(key: key);
+  String id;
+  String price;
+  PackageDetails({Key? key,required this.id,required this.price}) : super(key: key);
 
   @override
   State<PackageDetails> createState() => _PackageDetailsState();
@@ -46,6 +50,53 @@ class _PackageDetailsState extends State<PackageDetails> {
   late VideoPlayerController _videoPlayerController2;
   late ChewieController _chewieController;
 
+  addToCard()async{
+    setState((){
+      isAdd =true;
+    });
+
+    Uri uri = Uri.parse(ApiNetwork.addToCard);
+    Map<String , String > map={
+      'user_id':'1',
+      'package_id':widget.id,
+      'price':widget.price,
+      'type':'2'
+    };
+    final response = await http.post(uri,body: map);
+    if(response.statusCode ==200){
+      setState((){
+        isAdd =false;
+      });
+
+      AddToCardModel addCard = AddToCardModel.fromJson(jsonDecode(response.body));
+      print(addCard);
+      if(addCard.result=="add to cart Successfull"){
+        setState((){
+          isAdd =false;
+        });
+
+        _settingModalBottomSheet(context);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Add To Card Success'),
+          backgroundColor: Colors.red,
+        ));
+        return;
+
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Add To Card Failed'),
+          backgroundColor: Colors.red,
+        ));
+        return;
+        setState((){
+          isAdd =false;
+        });
+
+      }
+
+    }
+    }
+
   late Future bannerFuture;
 
   Future getBannerFuture() {
@@ -55,14 +106,14 @@ class _PackageDetailsState extends State<PackageDetails> {
   late Future serviceFuture;
 
   Future getServiceFuture() {
-    return getUserService();
+    return ApiHelper.getUserService();
   }
 
 
 
   late Future premiumPackageDetailsFuture;
   Future getPremiumPackageFuture() {
-    return getPremiumPackageDetails();
+    return ApiHelper.getPremiumPackageDetails();
   }
 
   @override
@@ -102,6 +153,7 @@ class _PackageDetailsState extends State<PackageDetails> {
     final provider = Provider.of<ApiProvider>(context);
 
     final data = Provider.of<AppController>(context);
+    final cardPrice = widget.price;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -300,7 +352,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                       future: premiumPackageDetailsFuture,
                       builder: (context,snapshot){return Column(
                     children: List.generate(
-                      premiumPackageDetailList.length,
+                      ApiHelper.premiumPackageDetailList.length,
                           (index) => Row(
                         children: [
                           Container(
@@ -314,7 +366,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                           SizedBox(
                             width: Dimentions.height5,
                           ),
-                          Text(premiumPackageDetailList[index].rowMaterialName!,
+                          Text(ApiHelper.premiumPackageDetailList[index].rowMaterialName!,
                               style: kFontSize12.copyWith(
                                   color: Color(0xff7B8D9E),
                                   fontWeight: FontWeight.w500)),
@@ -440,15 +492,15 @@ class _PackageDetailsState extends State<PackageDetails> {
                         "What’s Included -",
                         style: TextStyle(
                             fontSize: Dimentions.font12,
-                            color: Color(0xff7B8D9E),
+                            color: const Color(0xff7B8D9E),
                             fontWeight: FontWeight.w700,
                             fontFamily: "Montserrat"),
                       ),
                       Text(
-                        "${showUserServiceList.length} services",
+                        "${ApiHelper.showUserServiceList.length} services",
                         style: TextStyle(
                             fontSize: Dimentions.font12,
-                            color: Color(0xff7B8D9E),
+                            color: const Color(0xff7B8D9E),
                             fontWeight: FontWeight.w700,
                             fontFamily: "Montserrat"),
                       ),
@@ -459,25 +511,25 @@ class _PackageDetailsState extends State<PackageDetails> {
                       future: serviceFuture,
                       builder: (context,snapshot){
                     return ListView.builder(
-                        itemCount: showUserServiceList.length,
+                        itemCount: ApiHelper.showUserServiceList.length,
                         shrinkWrap: true,
-                        padding: EdgeInsets.all(0),
-                        physics: NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.all(0),
+                        physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext ctx, index) {
                           return Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SvgPicture.network(
-                                  showUserServiceList[index].path!+showUserServiceList[index].logoFile!),
+                                  ApiHelper.showUserServiceList[index].path!+ApiHelper.showUserServiceList[index].logoFile!),
                               SizedBox(
                                 width: Dimentions.width8,
                               ),
                               Text(
-                                showUserServiceList[index].servicesName!,
+                                ApiHelper.showUserServiceList[index].servicesName!,
                                 style: TextStyle(
                                     fontSize: Dimentions.font12,
-                                    color: Color(0xff7B8D9E),
+                                    color: const Color(0xff7B8D9E),
                                     fontFamily: "Montserrat"),
                               ),
                             ],
@@ -488,7 +540,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                   Text(
                     "Customer Reviews Near You",
                     style: TextStyle(
-                        color: Color(0xff7B8D9E),
+                        color: const Color(0xff7B8D9E),
                         fontSize: Dimentions.font12,
                         fontFamily: "Montserrat",
                         fontWeight: FontWeight.w700),
@@ -509,7 +561,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                 children: [
                   Text(
                     "DAWNERS Benefits",
-                    style: kFontSize12.copyWith(color: Color(0xff7B8D9E)),
+                    style: kFontSize12.copyWith(color: const Color(0xff7B8D9E)),
                   ),
                 ],
               ),
@@ -618,9 +670,10 @@ class _PackageDetailsState extends State<PackageDetails> {
           right: 28,
           child: InkWell(
             onTap: () {
-              _settingModalBottomSheet(context);
+              addToCard();
+
             },
-            child: Container(
+            child: isAdd?Center(child: CircularProgressIndicator(),):Container(
                 width: double.maxFinite,
                 height: 60,
                 decoration: BoxDecoration(
@@ -644,28 +697,28 @@ class _PackageDetailsState extends State<PackageDetails> {
                       height: 20,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                        children: const [
                           Icon(Icons.currency_rupee,
                               size: 15, color: Color(0xffFFFFFF)),
                         ],
                       ),
                     ),
                     Text(
-                      "500",
-                      style: TextStyle(
+                      cardPrice ,
+                      style: const TextStyle(
                         color: Color(0xffFFFFFF),
                         fontSize: 24,
                         fontFamily: "Montserrat",
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 30,
                     ),
                     Image.asset("assets/icons/verticaldivider.png"),
-                    SizedBox(
+                    const SizedBox(
                       width: 30,
                     ),
-                    Text(
+                    const Text(
                       "Add to Cart",
                       style: TextStyle(
                           color: Color(0xffFFFFFF),
@@ -680,32 +733,10 @@ class _PackageDetailsState extends State<PackageDetails> {
       ]),
     );
   }
+  bool isAdd =false;
 
-  List<PremiumPackageDetailsModel> premiumPackageDetailList = [];
 
-  getPremiumPackageDetails() async {
-    final response =
-        await http.post(Uri.parse(ApiNetwork.userPremiumPackageDetail));
 
-    if (response.statusCode == 200) {
-      List jsonResponse = jsonDecode(response.body);
-      premiumPackageDetailList = List<PremiumPackageDetailsModel>.from(
-          jsonResponse.map((e) => PremiumPackageDetailsModel.fromJson(e)));
-    }
-  }
-
-  List<UserShowServiceModel> showUserServiceList = [];
-
-  getUserService() async {
-    final response =
-    await http.post(Uri.parse(ApiNetwork.showUserService));
-
-    if (response.statusCode == 200) {
-      List jsonResponse = jsonDecode(response.body);
-      showUserServiceList = List<UserShowServiceModel>.from(
-          jsonResponse.map((e) => UserShowServiceModel.fromJson(e)));
-    }
-  }
 
   FutureBuilder<Object?> customerReview(BuildContext context) {
     final provider = Provider.of<ApiProvider>(context);

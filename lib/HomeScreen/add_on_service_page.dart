@@ -202,7 +202,7 @@ class _AddOnServicePageState extends State<AddOnServicePage> {
         return InkWell(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (ctx) => PackageDetails()));
+                context, MaterialPageRoute(builder: (ctx) => PackageDetails(price: "500",id: "1",)));
           },
           child: Card(
             elevation: 2,

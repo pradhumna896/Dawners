@@ -1,18 +1,71 @@
+import 'dart:convert';
+
 import 'package:dawners/feedbackScreens/service_details_one.dart';
 import 'package:dawners/helper/appbar_back_button.dart';
 import 'package:dawners/helper/custom_botton_purple.dart';
 import 'package:dawners/helper/custom_button.dart';
 import 'package:dawners/helper/custom_text_style.dart';
+import 'package:dawners/model/user_order_now_model.dart';
 import 'package:dawners/screens/bottombar/bottom_app_bar.dart';
+import 'package:dawners/screens/helper/api_network.dart';
 import 'package:dawners/screens/helper/dimentions/dimentions.dart';
 import 'package:dawners/screens/loading_screen.dart';
 import 'package:dawners/screens/loginPage/payment_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart' as http;
 
-class PaymentPage extends StatelessWidget {
-  const PaymentPage({Key? key}) : super(key: key);
+class PaymentPage extends StatefulWidget {
+  String time;
+  DateTime date;
+
+  PaymentPage({Key? key, required this.time, required this.date})
+      : super(key: key);
+
+  @override
+  State<PaymentPage> createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  bool isOrderAdd = false;
+
+  getUserOrderNow() async {
+    setState(() {
+      isOrderAdd = true;
+    });
+    Uri uri = Uri.parse(ApiNetwork.userOrderNow);
+    Map<String, String> map = {
+      'user_id': '1',
+      'payment_type': '1',
+      'date': widget.date.toString(),
+      'time': widget.time,
+      'grand_total': '1250'
+    };
+    final response = await http.post(uri, body: map);
+    if (response.statusCode == 200) {
+      setState(() {
+        isOrderAdd = false;
+      });
+      UserOrderNowModel userOrder =
+          UserOrderNowModel.fromJson(jsonDecode(response.body));
+      if (userOrder.result == "Order Successfull") {
+        setState(() {
+          isOrderAdd = false;
+        });
+        Navigator.push(
+            context, MaterialPageRoute(builder: (ctx) => ServiceDetailsOne()));
+      } else {
+        setState(() {
+          isOrderAdd = false;
+        });
+      }
+    } else {
+      setState(() {
+        isOrderAdd = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +74,11 @@ class PaymentPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        leading: AppBarBackButton(onclick: () { Navigator.pop(context); },),
+        leading: AppBarBackButton(
+          onclick: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           "Payment Page",
           style: TextStyle(
@@ -59,7 +116,8 @@ class PaymentPage extends StatelessWidget {
                     ),
                     Gap(Dimentions.height33),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal:Dimentions.width20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Dimentions.width20),
                       child: Row(
                         children: [
                           RichText(
@@ -135,17 +193,18 @@ class PaymentPage extends StatelessWidget {
                     ),
                     Gap(Dimentions.height10),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Dimentions.width20),
                       child: Row(
                         children: [
                           RichText(
                               text: TextSpan(
                                   text: "MH-14-KC-8002 -",
-                                  style: kFontSize12.copyWith(fontWeight: FontWeight.w400),
+                                  style: kFontSize12.copyWith(
+                                      fontWeight: FontWeight.w400),
                                   children: [
                                 TextSpan(
-                                    text: " Prime Pack",
-                                    style: kFontSize12)
+                                    text: " Prime Pack", style: kFontSize12)
                               ])),
                           Spacer(),
                           Icon(
@@ -154,7 +213,8 @@ class PaymentPage extends StatelessWidget {
                             size: 12,
                           ),
                           Text("500",
-                              style: kFontSize12.copyWith(fontWeight: FontWeight.w400))
+                              style: kFontSize12.copyWith(
+                                  fontWeight: FontWeight.w400))
                         ],
                       ),
                     ),
@@ -163,21 +223,26 @@ class PaymentPage extends StatelessWidget {
                     ),
                     Gap(Dimentions.height10),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: Dimentions.width20),
                       child: Row(
                         children: [
                           Text("DAWNERS COIN DISCOUNT",
-                              style:kFontSize12.copyWith(fontWeight: FontWeight.w400)),
+                              style: kFontSize12.copyWith(
+                                  fontWeight: FontWeight.w400)),
                           Spacer(),
                           Text("-",
-                              style: kFontSize12.copyWith(fontWeight: FontWeight.w400,color: Color(0xff07A605))),
+                              style: kFontSize12.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff07A605))),
                           Icon(
                             Icons.currency_rupee,
                             color: Color(0xff07A605),
                             size: Dimentions.size12,
                           ),
                           Text("100",
-                              style: kFontSize12.copyWith(color: Color(0xff07A605)))
+                              style: kFontSize12.copyWith(
+                                  color: Color(0xff07A605)))
                         ],
                       ),
                     ),
@@ -190,17 +255,21 @@ class PaymentPage extends StatelessWidget {
                       child: Row(
                         children: [
                           Text("COUPON DISCOUNT",
-                              style: kFontSize12.copyWith(fontWeight: FontWeight.w400)),
+                              style: kFontSize12.copyWith(
+                                  fontWeight: FontWeight.w400)),
                           Spacer(),
                           Text("-",
-                              style:kFontSize12.copyWith(color: Color(0xff07A605),fontWeight: FontWeight.w400)),
+                              style: kFontSize12.copyWith(
+                                  color: Color(0xff07A605),
+                                  fontWeight: FontWeight.w400)),
                           Icon(
                             Icons.currency_rupee,
                             color: Color(0xff07A605),
                             size: 12,
                           ),
                           Text("150",
-                              style:kFontSize12.copyWith(color: Color(0xff07A605)))
+                              style: kFontSize12.copyWith(
+                                  color: Color(0xff07A605)))
                         ],
                       ),
                     ),
@@ -212,7 +281,6 @@ class PaymentPage extends StatelessWidget {
                 height: Dimentions.height64,
                 width: double.maxFinite,
                 decoration: BoxDecoration(
-
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(Dimentions.height24),
                         bottomLeft: Radius.circular(Dimentions.height24)),
@@ -221,8 +289,7 @@ class PaymentPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: Dimentions.width20),
                   child: Row(
                     children: [
-                      Text("THIS MONTHS AMOUNT",
-                          style: kFontSize15),
+                      Text("THIS MONTHS AMOUNT", style: kFontSize15),
                       Spacer(),
                       Icon(
                         Icons.currency_rupee,
@@ -230,7 +297,8 @@ class PaymentPage extends StatelessWidget {
                         size: Dimentions.size20,
                       ),
                       Text("500",
-                          style:kFontSize15.copyWith(fontSize: Dimentions.font20))
+                          style:
+                              kFontSize15.copyWith(fontSize: Dimentions.font20))
                     ],
                   ),
                 ),
@@ -241,7 +309,9 @@ class PaymentPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Text("Amount From Next Month",
-                        style:kFontSize12.copyWith(color: const Color(0xff6739B7),fontWeight: FontWeight.w400)),
+                        style: kFontSize12.copyWith(
+                            color: const Color(0xff6739B7),
+                            fontWeight: FontWeight.w400)),
                     Spacer(),
                     Icon(
                       Icons.currency_rupee,
@@ -249,7 +319,8 @@ class PaymentPage extends StatelessWidget {
                       size: Dimentions.size12,
                     ),
                     Text("649",
-                        style: kFontSize12.copyWith(color: const Color(0xff6739B7)))
+                        style: kFontSize12.copyWith(
+                            color: const Color(0xff6739B7)))
                   ],
                 ),
               ),
@@ -268,11 +339,13 @@ class PaymentPage extends StatelessWidget {
                   Expanded(
                       child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xff614AD3), width: Dimentions.width2),
+                        border: Border.all(
+                            color: Color(0xff614AD3), width: Dimentions.width2),
                         borderRadius: BorderRadius.circular(50)),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: Dimentions.width10, vertical: Dimentions.height12),
+                          horizontal: Dimentions.width10,
+                          vertical: Dimentions.height12),
                       child: Row(
                         children: [
                           Expanded(
@@ -280,15 +353,20 @@ class PaymentPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: Color(0xffC2B0E2),
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(Dimentions.height50),
-                                    bottomLeft: Radius.circular(Dimentions.height50))),
+                                    topLeft:
+                                        Radius.circular(Dimentions.height50),
+                                    bottomLeft:
+                                        Radius.circular(Dimentions.height50))),
                             child: Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: Dimentions.width8, vertical: Dimentions.height5),
+                                  horizontal: Dimentions.width8,
+                                  vertical: Dimentions.height5),
                               child: Text(
                                 "AUTOPAYOFFER",
-                                style: kFontSize12.copyWith( color: Color(0xffFFFFFF),
-                                  fontSize: 11,),
+                                style: kFontSize12.copyWith(
+                                  color: Color(0xffFFFFFF),
+                                  fontSize: 11,
+                                ),
                               ),
                             ),
                           )),
@@ -299,11 +377,14 @@ class PaymentPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: const Color(0xffC2B0E2),
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(Dimentions.height50),
-                                    bottomRight: Radius.circular(Dimentions.height50))),
+                                    topRight:
+                                        Radius.circular(Dimentions.height50),
+                                    bottomRight:
+                                        Radius.circular(Dimentions.height50))),
                             child: Padding(
-                              padding:EdgeInsets.symmetric(
-                                  horizontal: Dimentions.width8, vertical: Dimentions.height5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: Dimentions.width8,
+                                  vertical: Dimentions.height5),
                               child: SvgPicture.asset(
                                 "assets/image/closecircle.svg",
                                 height: Dimentions.height13,
@@ -318,26 +399,39 @@ class PaymentPage extends StatelessWidget {
                   Gap(Dimentions.height5),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimentions.height50),
-                        border: Border.all(color: Color(0xff07A605), width: Dimentions.width2)),
+                        borderRadius:
+                            BorderRadius.circular(Dimentions.height50),
+                        border: Border.all(
+                            color: Color(0xff07A605),
+                            width: Dimentions.width2)),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: Dimentions.width14, vertical: Dimentions.height17),
+                          horizontal: Dimentions.width14,
+                          vertical: Dimentions.height17),
                       child: Text(
                         "Coupon Applied",
-                        style: kFontSize12.copyWith(color: const Color(0xff07A605),
-                          fontSize: Dimentions.font11,),
+                        style: kFontSize12.copyWith(
+                          color: const Color(0xff07A605),
+                          fontSize: Dimentions.font11,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
               Gap(Dimentions.height30),
-              CustomBottonPurple(
-                title: "Subscribe",textsize: Dimentions.font24,
-                onClick: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx)=>ServiceDetailsOne()));}, height: Dimentions.height56,
-              ),
+              isOrderAdd
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : CustomBottonPurple(
+                      title: "Subscribe",
+                      textsize: Dimentions.font24,
+                      onClick: () {
+                        getUserOrderNow();
+                      },
+                      height: Dimentions.height56,
+                    ),
               Gap(Dimentions.height20)
             ],
           ),
@@ -345,6 +439,7 @@ class PaymentPage extends StatelessWidget {
       ),
     );
   }
+
   void _currentCleanersPopUp(BuildContext context) {
     showModalBottomSheet(
         backgroundColor: Colors.black87,
@@ -365,7 +460,7 @@ class PaymentPage extends StatelessWidget {
                   Gap(Dimentions.height20),
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                        EdgeInsets.symmetric(horizontal: Dimentions.width20),
                     child: Row(
                       children: [
                         Text(
@@ -382,7 +477,7 @@ class PaymentPage extends StatelessWidget {
                   Gap(Dimentions.height20),
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                        EdgeInsets.symmetric(horizontal: Dimentions.width20),
                     child: Material(
                       borderRadius: BorderRadius.circular(Dimentions.height20),
                       elevation: 5,
@@ -404,7 +499,7 @@ class PaymentPage extends StatelessWidget {
                                 // Color(0xffA9ADB4),
                               ]),
                           borderRadius:
-                          BorderRadius.circular(Dimentions.height20),
+                              BorderRadius.circular(Dimentions.height20),
                         ),
                         child: TextFormField(
                           decoration: InputDecoration(
@@ -422,14 +517,14 @@ class PaymentPage extends StatelessWidget {
                             ),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.circular(Dimentions.height20),
+                                    BorderRadius.circular(Dimentions.height20),
                                 borderSide: BorderSide(
                                   color: Colors.white,
                                 )),
                             filled: true,
                             border: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.circular(Dimentions.height20),
+                                  BorderRadius.circular(Dimentions.height20),
                               borderSide: BorderSide(
                                 color: Colors.white,
                               ),
@@ -444,7 +539,7 @@ class PaymentPage extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                        EdgeInsets.symmetric(horizontal: Dimentions.width20),
                     child: CustomButton(
                         text: "Submit",
                         onclick: () {
@@ -456,10 +551,10 @@ class PaymentPage extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                        EdgeInsets.symmetric(horizontal: Dimentions.width20),
                     child: Material(
                         borderRadius:
-                        BorderRadius.circular(Dimentions.height14),
+                            BorderRadius.circular(Dimentions.height14),
                         elevation: 5,
                         child: Container(
                           height: Dimentions.height56,
@@ -478,17 +573,17 @@ class PaymentPage extends StatelessWidget {
                                   Color(0xffC1C1C1),
                                 ]),
                             borderRadius:
-                            BorderRadius.circular(Dimentions.height14),
+                                BorderRadius.circular(Dimentions.height14),
                           ),
                           child: Center(
                               child: Text(
-                                "I Dont Have One",
-                                style: TextStyle(
-                                    fontSize: Dimentions.font24,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily: "Montserrat",
-                                    color: Color(0xffFE8E00)),
-                              )),
+                            "I Dont Have One",
+                            style: TextStyle(
+                                fontSize: Dimentions.font24,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "Montserrat",
+                                color: Color(0xffFE8E00)),
+                          )),
                         )),
                   ),
                   Gap(Dimentions.height5)
@@ -514,7 +609,7 @@ class PaymentPage extends StatelessWidget {
                   Gap(Dimentions.height30),
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: Dimentions.width15),
+                        EdgeInsets.symmetric(horizontal: Dimentions.width15),
                     child: CustomButton(
                         text: "Great,Thanks",
                         onclick: () {
@@ -529,10 +624,10 @@ class PaymentPage extends StatelessWidget {
                   ),
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: Dimentions.width20),
+                        EdgeInsets.symmetric(horizontal: Dimentions.width20),
                     child: Material(
                         borderRadius:
-                        BorderRadius.circular(Dimentions.height14),
+                            BorderRadius.circular(Dimentions.height14),
                         elevation: 5,
                         child: Container(
                           height: Dimentions.height56,
@@ -551,17 +646,17 @@ class PaymentPage extends StatelessWidget {
                                   Color(0xffC1C1C1),
                                 ]),
                             borderRadius:
-                            BorderRadius.circular(Dimentions.height14),
+                                BorderRadius.circular(Dimentions.height14),
                           ),
                           child: Center(
                               child: Text(
-                                "Review Details",
-                                style: TextStyle(
-                                    fontSize: Dimentions.font24,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily: "Montserrat",
-                                    color: Color(0xffFE8E00)),
-                              )),
+                            "Review Details",
+                            style: TextStyle(
+                                fontSize: Dimentions.font24,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: "Montserrat",
+                                color: Color(0xffFE8E00)),
+                          )),
                         )),
                   ),
                 ],

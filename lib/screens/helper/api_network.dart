@@ -23,5 +23,8 @@ class ApiNetwork{
   static const userIdea = baseUrl + "process.php?action=user_idea";
   static const userPremiumPackageDetail = baseUrl + "process.php?action=user_premium_package_detail";
   static const showUserService = baseUrl +"process.php?action=user_show_service";
+  static const addToCard = baseUrl +"process.php?action=user_add_cart";
+  static const userOrderNow = baseUrl +"process.php?action=user_order_now";
+
 
 }
